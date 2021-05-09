@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnett.Automation.Core", "Magnett.Automation.Core\Magnett.Automation.Core.csproj", "{A829C39D-90E0-43A5-A43F-CB9B8EF1345D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnett.Automation.Core.Test", "Magnett.Automation.Core.Test\Magnett.Automation.Core.Test.csproj", "{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A829C39D-90E0-43A5-A43F-CB9B8EF1345D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A829C39D-90E0-43A5-A43F-CB9B8EF1345D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A829C39D-90E0-43A5-A43F-CB9B8EF1345D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A829C39D-90E0-43A5-A43F-CB9B8EF1345D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

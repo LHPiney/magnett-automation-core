@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Magnett.Automation.Core</RootNamespace>
+        <Title>Magnett Automation</Title>
+        <Authors>Magnett</Authors>
+        <Description>Magnett automation is build to facilitate de creation of automatic process.      </Description>
+        <AssemblyName>Magnett.Automation.Core</AssemblyName>
+        <Product>Magnett.Automation.Core</Product>
+    </PropertyGroup>
+
+</Project>
