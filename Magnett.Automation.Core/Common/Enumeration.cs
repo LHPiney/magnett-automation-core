@@ -2,10 +2,10 @@
 {
     public abstract class Enumeration
     {
-        public int Id { get; init; }
+        private int Id { get; init; }
         public string Name { get; init; }
 
-        public Enumeration(int id, string name)
+        protected Enumeration(int id, string name)
         {
             Id = id;
             Name = name;
