@@ -1,4 +1,5 @@
 ﻿using System;
+using Magnett.Automation.Core.Common;
 using Magnett.Automation.Core.StateMachine.Collections;
 
 namespace Magnett.Automation.Core.StateMachine.Builders
@@ -30,6 +31,11 @@ namespace Magnett.Automation.Core.StateMachine.Builders
 
             return this;
         }
+        
+        public TransitionBuilder OnAction(Enumeration action)
+        {
+            return TransitionBuilder.Create(action.Name, StoreTransition);
+        }        
         
         public TransitionBuilder OnAction(string actionName)
         {

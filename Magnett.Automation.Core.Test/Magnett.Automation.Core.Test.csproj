@@ -24,4 +24,8 @@
       <ProjectReference Include="..\Magnett.Automation.Core\Magnett.Automation.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Integration\SimpleMachine\Definitions" />
+    </ItemGroup>
+
 </Project>

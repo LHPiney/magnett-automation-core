@@ -1,4 +1,5 @@
 ﻿using System;
+using Magnett.Automation.Core.Common;
 
 namespace Magnett.Automation.Core.StateMachine.Builders
 {
@@ -20,6 +21,11 @@ namespace Magnett.Automation.Core.StateMachine.Builders
                            throw new ArgumentNullException(nameof(storeAction));
         }
 
+        public StateBuilder ToState(Enumeration state)
+        {
+            return ToState(state.Name);
+        }
+        
         public StateBuilder ToState(string stateName)
         {
             _targetStateName = stateName;
@@ -27,7 +33,7 @@ namespace Magnett.Automation.Core.StateMachine.Builders
             return _storeAction.Invoke(
                 Transition.Create(_actionName, _targetStateName));
         }
-
+        
         public static TransitionBuilder Create(
             string actionName,
             Func<ITransition, StateBuilder> storeAction)

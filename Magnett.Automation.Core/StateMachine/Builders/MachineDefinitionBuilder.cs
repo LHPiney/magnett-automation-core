@@ -1,4 +1,5 @@
-﻿using Magnett.Automation.Core.StateMachine.Collections;
+﻿using Magnett.Automation.Core.Common;
+using Magnett.Automation.Core.StateMachine.Collections;
 
 namespace Magnett.Automation.Core.StateMachine.Builders
 {
@@ -26,11 +27,21 @@ namespace Magnett.Automation.Core.StateMachine.Builders
             return this;
         }
         
+        public StateBuilder InitialState(Enumeration state)
+        {
+            return StateBuilder.Create(state.Name, true, StoreState);
+        }
+
         public StateBuilder InitialState(string name)
         {
             return StateBuilder.Create(name, true, StoreState);
         }
 
+        public StateBuilder AddState(Enumeration state)
+        {
+            return StateBuilder.Create(state.Name, false, StoreState);
+        }
+        
         public StateBuilder AddState(string name)
         {
             return StateBuilder.Create(name, false, StoreState);
