@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnett.Automation.Core", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnett.Automation.Core.Test", "Magnett.Automation.Core.Test\Magnett.Automation.Core.Test.csproj", "{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{4D68F7D4-937B-4744-9A14-A0831BA0E4A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{9FFAE5CC-73CE-4BE9-B0AC-23BC52ED4AC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnett.Automation.Core.IntegrationTest", "Magnett.Automation.Core.IntegrationTest\Magnett.Automation.Core.IntegrationTest.csproj", "{BE6C9A35-F7A6-4780-8A43-C104CDDA434B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,14 @@ Global
 		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE6C9A35-F7A6-4780-8A43-C104CDDA434B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6C9A35-F7A6-4780-8A43-C104CDDA434B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE6C9A35-F7A6-4780-8A43-C104CDDA434B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE6C9A35-F7A6-4780-8A43-C104CDDA434B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F12F2ADE-9ACD-4000-9FB5-DB3E4B4B3008} = {4D68F7D4-937B-4744-9A14-A0831BA0E4A2}
+		{A829C39D-90E0-43A5-A43F-CB9B8EF1345D} = {9FFAE5CC-73CE-4BE9-B0AC-23BC52ED4AC1}
+		{BE6C9A35-F7A6-4780-8A43-C104CDDA434B} = {4D68F7D4-937B-4744-9A14-A0831BA0E4A2}
 	EndGlobalSection
 EndGlobal

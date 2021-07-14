@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Magnett.Automation.Core.Test.StateMachine.Mockups;
+using Magnett.Automation.Core.Test.StateMachine.Helpers;
 using Moq;
 using Xunit;
 
