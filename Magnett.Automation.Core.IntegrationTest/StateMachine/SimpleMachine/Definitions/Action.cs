@@ -1,6 +1,6 @@
 ﻿using Magnett.Automation.Core.Common;
 
-namespace Magnett.Automation.Core.Test.Integration.SimpleMachine.Definitions
+namespace Magnett.Automation.Core.IntegrationTest.StateMachine.SimpleMachine.Definitions
 {
     public class Action : Enumeration
     {

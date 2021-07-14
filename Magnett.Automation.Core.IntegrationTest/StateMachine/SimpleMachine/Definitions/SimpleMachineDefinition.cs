@@ -1,8 +1,9 @@
 ﻿using Magnett.Automation.Core.StateMachine;
 using Magnett.Automation.Core.StateMachine.Builders;
+
 using State = Magnett.Automation.Core.Test.Integration.SimpleMachine.Definitions.State;
 
-namespace Magnett.Automation.Core.Test.Integration.SimpleMachine.Definitions
+namespace Magnett.Automation.Core.IntegrationTest.StateMachine.SimpleMachine.Definitions
 {
     public static class SimpleMachineDefinition
     {
