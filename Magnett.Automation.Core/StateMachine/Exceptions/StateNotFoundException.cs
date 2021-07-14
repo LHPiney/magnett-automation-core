@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Magnett.Automation.Core.StateMachine.Exceptions
 {
@@ -9,6 +10,11 @@ namespace Magnett.Automation.Core.StateMachine.Exceptions
             : base($"State [{stateName}] not found")
         {
 
+        }
+        
+        public StateNotFoundException(SerializationInfo info, StreamingContext context): 
+            base(info, context)
+        {
         }
     }
 }
