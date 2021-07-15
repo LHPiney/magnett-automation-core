@@ -4,7 +4,7 @@
     {
         public static TransitionList Create()
         {
-            return new ();
+            return new();
         }
     }
 }

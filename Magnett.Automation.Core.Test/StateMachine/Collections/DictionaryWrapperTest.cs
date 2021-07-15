@@ -74,5 +74,33 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
                 dic => dic.ContainsKey(Key), 
                 Times.Once);
         }
+        
+        [Fact]
+        public void Count_When_Invoke_Get_Call_Dictionary_IndexProperty()
+        {
+            var dictionary = new Mock<IDictionary<string, string>>();
+            var dictionaryWrapper = DictionaryWrapperMockup
+                .Create(dictionary.Object);
+            
+            dictionaryWrapper.Get(Key);
+
+            dictionary.Verify(
+                dic => dic[Key], 
+                Times.Once);
+        }
+        
+        [Fact]
+        public void Count_When_Invoke_Call_Dictionary_Count()
+        {
+            var dictionary = new Mock<IDictionary<string, string>>();
+            var dictionaryWrapper = DictionaryWrapperMockup
+                .Create(dictionary.Object);
+            
+            _ = dictionaryWrapper.Count;
+
+            dictionary.Verify(
+                dic => dic.Count, 
+                Times.Once);
+        }
     }
 }

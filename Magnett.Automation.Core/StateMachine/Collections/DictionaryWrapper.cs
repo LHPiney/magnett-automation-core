@@ -8,8 +8,6 @@ namespace Magnett.Automation.Core.StateMachine.Collections
     public class DictionaryWrapper<TItem>
     {
         private readonly IDictionary<string, TItem> _values;
-
-        public IReadOnlyList<TItem> Values => _values.Values.ToList().AsReadOnly();
         
         public int Count => _values.Count;
 
