@@ -12,7 +12,7 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
         private const string Key = "Key";
 
         [Fact]
-        public void Constructor_When_Values_IsNull_Throw_Exception()
+        public void Create_When_Values_IsNull_Throw_Exception()
         {
             Assert.Throws<ArgumentNullException>(() => 
                 DictionaryWrapperMockup.Create(null));

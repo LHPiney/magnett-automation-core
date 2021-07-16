@@ -4,15 +4,14 @@ using System.Runtime.Serialization;
 namespace Magnett.Automation.Core.StateMachine.Exceptions
 {
     [Serializable]
-    public class StateNotFoundException : Exception
+    public class InvalidMachineDefinitionException : Exception
     {
-        public StateNotFoundException(string stateName)
-            : base($"State [{stateName}] not found")
+        public InvalidMachineDefinitionException(string message)
+            : base($"Invalid Machine definition [{message}]")
         {
-
         }
         
-        public StateNotFoundException(SerializationInfo info, StreamingContext context): 
+        public InvalidMachineDefinitionException(SerializationInfo info, StreamingContext context): 
             base(info, context)
         {
         }
