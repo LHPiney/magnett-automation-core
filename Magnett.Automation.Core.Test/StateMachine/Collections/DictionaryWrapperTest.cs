@@ -47,6 +47,7 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
             Assert.Throws<ArgumentNullException>(() =>
                 dictionaryWrapper.Add(Key, null));
         }
+        
         [Fact]
         public void Add_When_Invoke_Call_Dictionary_Add()
         {

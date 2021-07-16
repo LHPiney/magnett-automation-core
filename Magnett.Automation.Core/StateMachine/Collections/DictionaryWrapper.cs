@@ -31,12 +31,12 @@ namespace Magnett.Automation.Core.StateMachine.Collections
             _values.Add(key, item);
         }
 
-        public TItem Get(string key)
+        public virtual TItem Get(string key)
         {
             return _values[key];
         }
 
-        public bool HasItem(string key)
+        public virtual bool HasItem(string key)
         {
             return _values.ContainsKey(key);
         }
