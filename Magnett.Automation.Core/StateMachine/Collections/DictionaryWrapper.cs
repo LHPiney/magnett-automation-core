@@ -8,8 +8,6 @@ namespace Magnett.Automation.Core.StateMachine.Collections
     public class DictionaryWrapper<TItem>
     {
         private readonly IDictionary<string, TItem> _values;
-
-        public IReadOnlyList<TItem> Values => _values.Values.ToList().AsReadOnly();
         
         public int Count => _values.Count;
 
@@ -33,12 +31,12 @@ namespace Magnett.Automation.Core.StateMachine.Collections
             _values.Add(key, item);
         }
 
-        public TItem Get(string key)
+        public virtual TItem Get(string key)
         {
             return _values[key];
         }
 
-        public bool HasItem(string key)
+        public virtual bool HasItem(string key)
         {
             return _values.ContainsKey(key);
         }

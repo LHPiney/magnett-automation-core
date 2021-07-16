@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Magnett.Automation.Core.Test.StateMachine.Mockups;
+using Magnett.Automation.Core.Test.StateMachine.Helpers;
 using Moq;
 using Xunit;
 
@@ -12,7 +12,7 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
         private const string Key = "Key";
 
         [Fact]
-        public void Constructor_When_Values_IsNull_Throw_Exception()
+        public void Create_When_Values_IsNull_Throw_Exception()
         {
             Assert.Throws<ArgumentNullException>(() => 
                 DictionaryWrapperMockup.Create(null));
@@ -47,6 +47,7 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
             Assert.Throws<ArgumentNullException>(() =>
                 dictionaryWrapper.Add(Key, null));
         }
+        
         [Fact]
         public void Add_When_Invoke_Call_Dictionary_Add()
         {
@@ -72,6 +73,34 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
 
             dictionary.Verify(
                 dic => dic.ContainsKey(Key), 
+                Times.Once);
+        }
+        
+        [Fact]
+        public void Count_When_Invoke_Get_Call_Dictionary_IndexProperty()
+        {
+            var dictionary = new Mock<IDictionary<string, string>>();
+            var dictionaryWrapper = DictionaryWrapperMockup
+                .Create(dictionary.Object);
+            
+            dictionaryWrapper.Get(Key);
+
+            dictionary.Verify(
+                dic => dic[Key], 
+                Times.Once);
+        }
+        
+        [Fact]
+        public void Count_When_Invoke_Call_Dictionary_Count()
+        {
+            var dictionary = new Mock<IDictionary<string, string>>();
+            var dictionaryWrapper = DictionaryWrapperMockup
+                .Create(dictionary.Object);
+            
+            _ = dictionaryWrapper.Count;
+
+            dictionary.Verify(
+                dic => dic.Count, 
                 Times.Once);
         }
     }

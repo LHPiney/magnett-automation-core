@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Magnett.Automation.Core.StateMachine.Collections;
 
-namespace Magnett.Automation.Core.Test.StateMachine.Mockups
+namespace Magnett.Automation.Core.Test.StateMachine.Helpers
 {
     public class DictionaryWrapperMockup : DictionaryWrapper<string>
     {

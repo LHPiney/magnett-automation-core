@@ -4,8 +4,6 @@
     {
         string Name { get; }
 
-        public bool CanManageAction(string actionName);
-
         public ITransition ManageAction(string actionName);
 
         public bool IsFinalState();

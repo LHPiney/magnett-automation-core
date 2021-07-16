@@ -23,7 +23,7 @@ namespace Magnett.Automation.Core.StateMachine
         
         #region IMachineDefinition
 
-        public IState InitialState { get; private init; }
+        public IState InitialState { get; }
         
         public bool HasState(string stateName)
         {

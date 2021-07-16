@@ -1,16 +1,13 @@
 ﻿using Xunit;
 
 using Magnett.Automation.Core.StateMachine;
-using Magnett.Automation.Core.StateMachine.Exceptions;
 
 namespace Magnett.Automation.Core.Test.StateMachine
 {
     public class StateTest
     {
         private const string InitialStateName  = "Init";
-        private const string PreparedStateName = "Prepared";
-        private const string PrepareActionName = "Prepare";
-            
+
         [Fact]
         public void Create_When_Invoke_Return_Instance()
         {

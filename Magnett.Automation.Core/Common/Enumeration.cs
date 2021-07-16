@@ -2,8 +2,8 @@
 {
     public abstract class Enumeration
     {
-        private int Id { get; init; }
-        public string Name { get; init; }
+        protected int Id { get; private init; }
+        public string Name { get; private init; }
 
         protected Enumeration(int id, string name)
         {

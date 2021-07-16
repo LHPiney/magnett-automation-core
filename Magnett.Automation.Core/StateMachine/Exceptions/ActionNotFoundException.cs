@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Magnett.Automation.Core.StateMachine.Exceptions
 {
@@ -10,5 +11,11 @@ namespace Magnett.Automation.Core.StateMachine.Exceptions
         {
 
         }
+        
+        public ActionNotFoundException(SerializationInfo info, StreamingContext context): 
+            base(info, context)
+        {
+        }
+        
     }
 }
