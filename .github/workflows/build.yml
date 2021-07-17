@@ -42,8 +42,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
+            
           dotnet restore
           dotnet build --no-restore
-          dotnet test --no-build --verbosity normal
+          dotnet test ./Magnett.Automation.Core.Test/Magnett.Automation.Core.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
