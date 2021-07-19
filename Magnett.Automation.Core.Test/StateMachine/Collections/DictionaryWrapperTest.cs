@@ -77,7 +77,7 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
         }
         
         [Fact]
-        public void Count_When_Invoke_Get_Call_Dictionary_IndexProperty()
+        public void GetItem_When_Invoke_Call_Dictionary_IndexProperty()
         {
             var dictionary = new Mock<IDictionary<string, string>>();
             var dictionaryWrapper = DictionaryWrapperMockup
@@ -102,6 +102,40 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
             dictionary.Verify(
                 dic => dic.Count, 
                 Times.Once);
+        }
+        
+        [Fact]
+        public void IsEmpty_When_Count_Is_Zero_Return_True()
+        {
+            var dictionary = new Mock<IDictionary<string, string>>();
+
+            dictionary
+                .SetupGet(dic => dic.Count)
+                .Returns(default(int));
+            
+            var dictionaryWrapper = DictionaryWrapperMockup
+                .Create(dictionary.Object);
+
+            var result = dictionaryWrapper.IsEmpty();
+
+            Assert.True(result);
+        }
+        
+        [Fact]
+        public void IsEmpty_When_Count_Greater_Than_Zero_Return_False()
+        {
+            var dictionary = new Mock<IDictionary<string, string>>();
+
+            dictionary
+                .SetupGet(dic => dic.Count)
+                .Returns(default(int) + 1);
+            
+            var dictionaryWrapper = DictionaryWrapperMockup
+                .Create(dictionary.Object);
+
+            var result = dictionaryWrapper.IsEmpty();
+
+            Assert.False(result);
         }
     }
 }

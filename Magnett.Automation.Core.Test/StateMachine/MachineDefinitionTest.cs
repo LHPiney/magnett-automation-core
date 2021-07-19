@@ -44,6 +44,20 @@ namespace Magnett.Automation.Core.Test.StateMachine
         }
         
         [Fact]
+        public void Create_When_InitialState_Is_Good_Is_Proper_Stored()
+        {
+            var initialState = new Mock<IState>();
+            var stateList    = new Mock<StateList>();
+
+            var definition = MachineDefinition.Create(
+                initialState.Object, 
+                stateList.Object);
+
+            Assert.NotNull(definition.InitialState);
+            Assert.Equal(initialState.Object, definition.InitialState);
+        }
+        
+        [Fact]
         public void HasState_When_Invoke_Call_StateList_HasItem()
         {
             var initialState = new Mock<IState>();
