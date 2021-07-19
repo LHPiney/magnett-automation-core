@@ -7,6 +7,8 @@ namespace Magnett.Automation.Core.StateMachine.Collections
 {
     public class DictionaryWrapper<TItem>
     {
+        private const int Zero = 0;
+            
         private readonly IDictionary<string, TItem> _values;
         
         public int Count => _values.Count;
@@ -31,7 +33,7 @@ namespace Magnett.Automation.Core.StateMachine.Collections
             _values.Add(key, item);
         }
 
-        public virtual TItem Get(string key)
+        public virtual TItem GetItem(string key)
         {
             return _values[key];
         }
@@ -39,6 +41,11 @@ namespace Magnett.Automation.Core.StateMachine.Collections
         public virtual bool HasItem(string key)
         {
             return _values.ContainsKey(key);
+        }
+
+        public virtual bool IsEmpty()
+        {
+            return _values.Count == Zero;
         }
     }
 }

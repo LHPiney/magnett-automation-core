@@ -83,7 +83,7 @@ namespace Magnett.Automation.Core.Test.StateMachine.Collections
             var dictionaryWrapper = DictionaryWrapperMockup
                 .Create(dictionary.Object);
             
-            dictionaryWrapper.Get(Key);
+            dictionaryWrapper.GetItem(Key);
 
             dictionary.Verify(
                 dic => dic[Key], 
