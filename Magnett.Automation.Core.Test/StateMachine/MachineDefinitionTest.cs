@@ -71,13 +71,13 @@ namespace Magnett.Automation.Core.Test.StateMachine
                 stateList.Object);
 
             stateList
-                .Setup(list => list.Get(InitialStateName))
+                .Setup(list => list.GetItem(InitialStateName))
                 .Returns(initialState.Object);
 
             _ = definition.GetState(InitialStateName);
             
             stateList.Verify(
-                dic =>  dic.Get(InitialStateName), 
+                dic =>  dic.GetItem(InitialStateName), 
                 Times.Once);
         }
     }

@@ -32,7 +32,7 @@ namespace Magnett.Automation.Core.StateMachine
 
         public IState GetState(string stateName)
         {
-            return _states.Get(stateName);
+            return _states.GetItem(stateName);
         }
 
         #endregion
