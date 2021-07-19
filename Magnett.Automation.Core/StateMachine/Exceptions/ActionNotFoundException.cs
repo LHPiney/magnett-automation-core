@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace Magnett.Automation.Core.StateMachine.Exceptions
 {
-    [Serializable]
     public class ActionNotFoundException : Exception 
     {
         public ActionNotFoundException(string stateName, string actionName)
@@ -11,11 +10,5 @@ namespace Magnett.Automation.Core.StateMachine.Exceptions
         {
 
         }
-        
-        public ActionNotFoundException(SerializationInfo info, StreamingContext context): 
-            base(info, context)
-        {
-        }
-        
     }
 }

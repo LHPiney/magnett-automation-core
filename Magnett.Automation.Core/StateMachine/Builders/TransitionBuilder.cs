@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Magnett.Automation.Core.Common;
 
 namespace Magnett.Automation.Core.StateMachine.Builders
