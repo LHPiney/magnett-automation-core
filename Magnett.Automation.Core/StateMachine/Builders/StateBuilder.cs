@@ -12,6 +12,9 @@ namespace Magnett.Automation.Core.StateMachine.Builders
         
         private readonly Func<IState, bool, MachineDefinitionBuilder> _storeAction;
         
+        public string StateName => _stateName;
+        public bool IsInitialState => _isInitialState;
+        
         private StateBuilder(
             string stateName,
             bool isInitialState,
