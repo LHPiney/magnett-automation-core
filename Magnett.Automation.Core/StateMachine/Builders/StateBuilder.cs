@@ -9,6 +9,7 @@ namespace Magnett.Automation.Core.StateMachine.Builders
         private readonly string _stateName;
         private readonly bool _isInitialState;
         private readonly TransitionList _transitions;
+        
         private readonly Func<IState, bool, MachineDefinitionBuilder> _storeAction;
         
         private StateBuilder(
@@ -44,7 +45,7 @@ namespace Magnett.Automation.Core.StateMachine.Builders
 
         public MachineDefinitionBuilder Build()
         {
-            var state = State.Create(_stateName);
+            var state = State.Create(_stateName, _transitions);
 
             return _storeAction.Invoke(state, _isInitialState);
         }

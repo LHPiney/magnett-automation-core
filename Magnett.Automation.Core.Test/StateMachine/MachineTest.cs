@@ -20,7 +20,8 @@ namespace Magnett.Automation.Core.Test.StateMachine
             var state      = new Mock<IState>();
 
             definition
-                .Setup(def => def.InitialState).Returns(state.Object);
+                .Setup(def => def.InitialState)
+                .Returns(state.Object);
             
             var instance = Machine.Create(definition.Object);
             
@@ -72,6 +73,7 @@ namespace Magnett.Automation.Core.Test.StateMachine
                 .Returns(false);
 
             var machine = Machine.Create(definition.Object);
+            
             Assert.Throws<StateNotFoundException>(() =>
                 machine.Dispatch("AnyAction"));
         }

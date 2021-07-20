@@ -11,40 +11,40 @@ namespace Magnett.Automation.Core.StateMachine
     {
         private readonly TransitionList _transitions;
         
-        public string Name { get; private init; }
+        public string Name { get; }
 
-        private State(string name)
+        private State(string name, TransitionList transitions)
         {
             Name = name 
                    ?? throw new ArgumentNullException(nameof(name));
-            
-            _transitions = TransitionList.Create();
+
+            _transitions = transitions
+                           ?? throw new ArgumentNullException(nameof(transitions));
         }
-
-        #region IState
-
-        public bool CanManageAction(string actionName)
+        
+        private bool CanManageAction(string actionName)
         {
             return _transitions.HasItem(actionName);
         }
 
+        #region IState
         public ITransition ManageAction(string actionName)
         {
             return CanManageAction(actionName)
-                ? _transitions.Get(actionName)
+                ? _transitions.GetItem(actionName)
                 : throw new ActionNotFoundException(Name, actionName);
         }
 
         public bool IsFinalState()
         {
-            return _transitions.Count == 0;
+            return _transitions.IsEmpty();
         }
 
         #endregion
         
-        public static State Create(string name)
+        public static State Create(string name, TransitionList transitions)
         {
-            return new(name);
+            return new(name, transitions);
         }
     }
 }

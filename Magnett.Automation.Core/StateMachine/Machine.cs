@@ -7,7 +7,6 @@ namespace Magnett.Automation.Core.StateMachine
     public class Machine : IMachine
     {
         private readonly IMachineDefinition _definition;
-        private IState _state;
 
         private Machine(IMachineDefinition definition)
         {
@@ -23,24 +22,24 @@ namespace Magnett.Automation.Core.StateMachine
                 ? _definition.GetState(transition.ToStateName)
                 : throw new StateNotFoundException(transition.ToStateName);
 
-            _state = newState;
+            State = newState;
         }
         
         private void Init()
         {
-            _state = _definition.InitialState
+            State = _definition.InitialState
                 ?? throw new InvalidMachineDefinitionException("No initial state found");
         }
 
         # region IMachine
         public IMachine Dispatch(string actionName)
         {
-            Transit(_state.ManageAction(actionName));
+            Transit(State.ManageAction(actionName));
             
             return this;
         }
 
-        public IState State => _state;
+        public IState State { get; private set; }
 
         #endregion
 

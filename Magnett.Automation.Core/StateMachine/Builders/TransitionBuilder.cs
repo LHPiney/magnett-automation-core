@@ -1,9 +1,11 @@
 ﻿using System;
+
 using Magnett.Automation.Core.Common;
 
 namespace Magnett.Automation.Core.StateMachine.Builders
 {
-    public class TransitionBuilder
+    public class 
+    TransitionBuilder
     {
         private readonly string _actionName;
         private readonly Func<ITransition, StateBuilder> _storeAction;

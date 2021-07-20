@@ -5,6 +5,5 @@
         IState State { get; }
         
         IMachine Dispatch(string action);
-
     }
 }
