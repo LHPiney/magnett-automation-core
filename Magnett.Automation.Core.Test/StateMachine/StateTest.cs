@@ -63,6 +63,7 @@ namespace Magnett.Automation.Core.Test.StateMachine
 
         [Fact] public void ManageAction_When_Action_Is_Found_Call_Transactions_Get()
         {
+            var transition = new Mock<ITransition>();
             var transitions = new Mock<TransitionList>();
 
             transitions
@@ -71,7 +72,7 @@ namespace Magnett.Automation.Core.Test.StateMachine
             
             transitions
                 .Setup(list => list.GetItem(AnyActionName))
-                .Returns(Transition.Create(AnyActionName, TargetStateName));
+                .Returns(transition.Object);
             
             var state = State.Create(InitialStateName,
                 transitions.Object);

@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Magnett.Automation.Core.Test")]
 namespace Magnett.Automation.Core.StateMachine
 {
     internal class Transition : ITransition
     {
-        public string ToStateName { get; private init; }
-        public string Action { get; private init; } 
+        public string ToStateName { get; }
+        public string Action { get; } 
         
         private Transition(
             string action,
@@ -17,7 +19,7 @@ namespace Magnett.Automation.Core.StateMachine
             if (string.IsNullOrEmpty(targetStateName)) 
                 throw new ArgumentNullException(nameof(targetStateName));
             
-            Action = action;
+            Action      = action;
             ToStateName = targetStateName;
         }
 
