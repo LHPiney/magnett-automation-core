@@ -1,15 +1,16 @@
 ﻿using System;
 using Xunit;
+using Moq;
 
+using Magnett.Automation.Core.Common;
 using Magnett.Automation.Core.StateMachine;
 using Magnett.Automation.Core.StateMachine.Collections;
-using Moq;
 
 namespace Magnett.Automation.Core.Test.StateMachine
 {
     public class MachineDefinitionTest
     {
-        private const string InitialStateName = "InitialState";
+        private static readonly CommonNamedKey InitialStateKey = CommonNamedKey.Create("InitialState");
 
         [Fact]
         public void Create_When_Invoke_Without_InitialState_Throws_Exception()
@@ -67,10 +68,10 @@ namespace Magnett.Automation.Core.Test.StateMachine
                 initialState.Object, 
                 stateList.Object);
 
-            _ = definition.HasState(InitialStateName);
+            _ = definition.HasState(InitialStateKey);
             
             stateList.Verify(
-                dic =>  dic.HasItem(InitialStateName), 
+                dic =>  dic.HasItem(InitialStateKey), 
                 Times.Once);
         }
         
@@ -85,13 +86,13 @@ namespace Magnett.Automation.Core.Test.StateMachine
                 stateList.Object);
 
             stateList
-                .Setup(list => list.GetItem(InitialStateName))
+                .Setup(list => list.Get(InitialStateKey))
                 .Returns(initialState.Object);
 
-            _ = definition.GetState(InitialStateName);
+            _ = definition.GetState(InitialStateKey);
             
             stateList.Verify(
-                dic =>  dic.GetItem(InitialStateName), 
+                dic =>  dic.Get(InitialStateKey), 
                 Times.Once);
         }
     }

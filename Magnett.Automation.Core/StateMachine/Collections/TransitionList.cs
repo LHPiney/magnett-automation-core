@@ -1,4 +1,6 @@
-﻿namespace Magnett.Automation.Core.StateMachine.Collections
+﻿using Magnett.Automation.Core.Common;
+
+namespace Magnett.Automation.Core.StateMachine.Collections
 {
     public class TransitionList : DictionaryWrapper<ITransition>
     {

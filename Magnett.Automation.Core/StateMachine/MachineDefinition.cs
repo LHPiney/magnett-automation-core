@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
+using Magnett.Automation.Core.Common;
 using Magnett.Automation.Core.StateMachine.Collections;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.Test")]
@@ -8,7 +9,7 @@ namespace Magnett.Automation.Core.StateMachine
 {
     internal class MachineDefinition : IMachineDefinition
     {
-        private readonly StateList _states; 
+        private readonly StateList _stateList; 
         
         private MachineDefinition(
             IState initialState, 
@@ -17,7 +18,7 @@ namespace Magnett.Automation.Core.StateMachine
             InitialState = initialState ??
                            throw new ArgumentNullException(nameof(initialState));
                            
-            _states = stateList ??
+            _stateList = stateList ??
                       throw new ArgumentNullException(nameof(stateList));
         }
         
@@ -25,14 +26,14 @@ namespace Magnett.Automation.Core.StateMachine
 
         public IState InitialState { get; }
         
-        public bool HasState(string stateName)
+        public bool HasState(CommonNamedKey stateKey)
         {
-            return _states.HasItem(stateName);
+            return _stateList.HasItem(stateKey);
         }
 
-        public IState GetState(string stateName)
+        public IState GetState(CommonNamedKey stateKey)
         {
-            return _states.GetItem(stateName);
+            return _stateList.Get(stateKey);
         }
 
         #endregion

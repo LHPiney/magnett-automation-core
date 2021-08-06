@@ -23,7 +23,7 @@ namespace Magnett.Automation.Core.Test.StateMachine
         {
             var instance = Transition.Create(ActionName, StateName);
             
-            Assert.Equal(ActionName, instance.Action);
+            Assert.Equal(ActionName, instance.ActionKey.Name);
         }
         
         [Fact]
@@ -31,25 +31,7 @@ namespace Magnett.Automation.Core.Test.StateMachine
         {
             var instance = Transition.Create(ActionName, StateName);
             
-            Assert.Equal(StateName, instance.ToStateName);
-        }
-
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        public void Create_When_Invoke_With_NullOrEmpty_Action_Throw_Exception(string action)
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                Transition.Create(action, StateName));
-        }
-        
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        public void Create_When_Invoke_With_NullOrEmpty_TargetStateName_Throw_Exception(string stateName)
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                Transition.Create(ActionName, stateName));
+            Assert.Equal(StateName, instance.ToStateKey.Name);
         }
     }
 }

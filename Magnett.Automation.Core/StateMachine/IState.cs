@@ -1,10 +1,12 @@
-﻿namespace Magnett.Automation.Core.StateMachine
+﻿using Magnett.Automation.Core.Common;
+
+namespace Magnett.Automation.Core.StateMachine
 {
     public interface IState
     {
-        string Name { get; }
+        CommonNamedKey Key { get; }
 
-        public ITransition ManageAction(string actionName);
+        public ITransition ManageAction(CommonNamedKey actionName);
 
         public bool IsFinalState();
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-
+using Magnett.Automation.Core.Common;
 using Magnett.Automation.Core.StateMachine.Collections;
 using Magnett.Automation.Core.StateMachine.Exceptions;
 
@@ -9,42 +9,42 @@ namespace Magnett.Automation.Core.StateMachine
 {
     internal class State : IState
     {
-        private readonly TransitionList _transitions;
+        private readonly TransitionList _transitionList;
         
-        public string Name { get; }
+        public CommonNamedKey Key { get; }
 
-        private State(string name, TransitionList transitions)
+        private State(string name, TransitionList transitionList)
         {
-            Name = name 
-                   ?? throw new ArgumentNullException(nameof(name));
+            Key = CommonNamedKey.Create(name);
 
-            _transitions = transitions
-                           ?? throw new ArgumentNullException(nameof(transitions));
+            _transitionList = transitionList
+                              ?? throw new ArgumentNullException(nameof(transitionList));
         }
         
-        private bool CanManageAction(string actionName)
+        private bool CanManageAction(CommonNamedKey actionName)
         {
-            return _transitions.HasItem(actionName);
+            return _transitionList
+                .HasItem(actionName);
         }
 
         #region IState
-        public ITransition ManageAction(string actionName)
+        public ITransition ManageAction(CommonNamedKey actionName)
         {
             return CanManageAction(actionName)
-                ? _transitions.GetItem(actionName)
-                : throw new ActionNotFoundException(Name, actionName);
+                ? _transitionList.Get(actionName)
+                : throw new ActionNotFoundException(Key.Name, actionName.Name);
         }
 
         public bool IsFinalState()
         {
-            return _transitions.IsEmpty();
+            return _transitionList.IsEmpty();
         }
 
         #endregion
         
-        public static State Create(string name, TransitionList transitions)
+        public static State Create(string name, TransitionList transitionList)
         {
-            return new(name, transitions);
+            return new(name, transitionList);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Magnett.Automation.Core.StateMachine.Builders
 
         private StateBuilder StoreTransition(ITransition transition)
         {
-            _transitions.Add(transition.Action, transition);
+            _transitions.Add(transition.ActionKey, transition);
 
             return this;
         }

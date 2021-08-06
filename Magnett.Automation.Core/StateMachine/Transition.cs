@@ -1,33 +1,28 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
+
+using Magnett.Automation.Core.Common;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.Test")]
 namespace Magnett.Automation.Core.StateMachine
 {
     internal class Transition : ITransition
     {
-        public string ToStateName { get; }
-        public string Action { get; } 
+        public CommonNamedKey ToStateKey { get; }
+        public CommonNamedKey ActionKey { get; } 
         
         private Transition(
-            string action,
-            string targetStateName)
+            string actionName,
+            string toStateName)
         {
-            if (string.IsNullOrEmpty(action)) 
-                throw new ArgumentNullException(nameof(action));
-            
-            if (string.IsNullOrEmpty(targetStateName)) 
-                throw new ArgumentNullException(nameof(targetStateName));
-            
-            Action      = action;
-            ToStateName = targetStateName;
+            ActionKey  = CommonNamedKey.Create(actionName);
+            ToStateKey = CommonNamedKey.Create(toStateName);
         }
 
         public static Transition Create(
-            string action,
-            string targetStateName)
+            string actionName,
+            string toStateName)
         {
-            return new(action, targetStateName);
+            return new(actionName, toStateName);
         }
         
     }

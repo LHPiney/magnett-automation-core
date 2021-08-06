@@ -1,4 +1,5 @@
 ﻿using System;
+using Magnett.Automation.Core.Common;
 using Xunit;
 using Moq;
 
@@ -10,39 +11,40 @@ namespace Magnett.Automation.Core.Test.StateMachine
 {
     public class StateTest
     {
-        private const string InitialStateName   = "Initial";
-        private const string NotFoundActionName = "NotFoundAction";
-        private const string AnyActionName      = "AnyAction";
-        private const string TargetStateName    = "TargetState";
-
+        private static readonly CommonNamedKey InitialStateKey = 
+            CommonNamedKey.Create("Initial");
+        private static readonly CommonNamedKey NotFoundAction = 
+            CommonNamedKey.Create("NotFoundAction");
+        private static readonly CommonNamedKey AnyAction = 
+            CommonNamedKey.Create("AnyAction");
+        
         [Fact]
         public void Create_When_Invoke_Return_Instance()
         {
-            var instance = State.Create(InitialStateName, TransitionList.Create());
+            var instance = State.Create(
+                InitialStateKey.Name, 
+                TransitionList.Create());
 
             Assert.NotNull(instance);
         }
-
-        [Fact]
-        public void Create_When_Invoke_With_Null_Name_Throw_Exception()
-        {
-            Assert. Throws<ArgumentNullException>(() =>
-                State.Create(null, TransitionList.Create()));
-        }
         
         [Fact]
-        public void Create_When_Invoke_With_Null_Transition_Throw_Exception()
+        public void Create_When_Invoke_With_Null_TransitionList_Throw_Exception()
         {
             Assert. Throws<ArgumentNullException>(() =>
-                State.Create(InitialStateName,null));
+                State.Create(
+                    InitialStateKey.Name,
+                    null));
         }
         
         [Fact]
         public void Create_When_Name_Is_Good_Is_Proper_Stored()
         {
-            var instance = State.Create(InitialStateName, TransitionList.Create());
+            var instance = State.Create(
+                InitialStateKey.Name, 
+                TransitionList.Create());
             
-            Assert.Equal(InitialStateName, instance.Name);
+            Assert.Equal(InitialStateKey.Name, instance.Key.Name);
         }
 
         [Fact]
@@ -51,14 +53,14 @@ namespace Magnett.Automation.Core.Test.StateMachine
             var transitions = new Mock<TransitionList>();
 
             transitions
-                .Setup(list => list.HasItem(NotFoundActionName))
+                .Setup(list => list.HasItem(NotFoundAction))
                 .Returns(false);
             
-            var state = State.Create(InitialStateName,
+            var state = State.Create(InitialStateKey.Name,
                                      transitions.Object);
             
             Assert.Throws<ActionNotFoundException>(() =>
-                state.ManageAction(NotFoundActionName));
+                state.ManageAction(NotFoundAction));
         }
 
         [Fact] public void ManageAction_When_Action_Is_Found_Call_Transactions_Get()
@@ -67,20 +69,21 @@ namespace Magnett.Automation.Core.Test.StateMachine
             var transitions = new Mock<TransitionList>();
 
             transitions
-                .Setup(list => list.HasItem(AnyActionName))
+                .Setup(list => list.HasItem(AnyAction))
                 .Returns(true);
             
             transitions
-                .Setup(list => list.GetItem(AnyActionName))
+                .Setup(list => list.Get(AnyAction))
                 .Returns(transition.Object);
             
-            var state = State.Create(InitialStateName,
+            var state = State.Create(
+                InitialStateKey.Name,
                 transitions.Object);
 
-            _ = state.ManageAction(AnyActionName);
+            _ = state.ManageAction(AnyAction);
             
             transitions.Verify(
-                dic =>  dic.GetItem(AnyActionName), 
+                dic =>  dic.Get(AnyAction), 
                 Times.Once);
         }
         
@@ -88,7 +91,8 @@ namespace Magnett.Automation.Core.Test.StateMachine
         {
             var transitions = new Mock<TransitionList>();
 
-            var state = State.Create(InitialStateName,
+            var state = State.Create(
+                InitialStateKey.Name,
                 transitions.Object);
 
             _ = state.IsFinalState();

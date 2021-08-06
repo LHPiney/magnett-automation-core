@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Magnett.Automation.Core.Common;
 using Magnett.Automation.Core.StateMachine.Exceptions;
 
 namespace Magnett.Automation.Core.StateMachine
@@ -18,9 +19,9 @@ namespace Magnett.Automation.Core.StateMachine
 
         private void Transit(ITransition transition)
         {
-            var newState = _definition.HasState(transition.ToStateName)
-                ? _definition.GetState(transition.ToStateName)
-                : throw new StateNotFoundException(transition.ToStateName);
+            var newState = _definition.HasState(transition.ToStateKey)
+                ? _definition.GetState(transition.ToStateKey)
+                : throw new StateNotFoundException(transition.ToStateKey.Name);
 
             State = newState;
         }
@@ -34,7 +35,8 @@ namespace Magnett.Automation.Core.StateMachine
         # region IMachine
         public IMachine Dispatch(string actionName)
         {
-            Transit(State.ManageAction(actionName));
+            Transit(State
+                .ManageAction(CommonNamedKey.Create(actionName)));
             
             return this;
         }

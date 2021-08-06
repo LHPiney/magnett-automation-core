@@ -17,7 +17,7 @@ namespace Magnett.Automation.Core.StateMachine.Builders
             IState state, 
             bool isInitialState)
         {
-            _states.Add(state.Name, state);
+            _states.Add(state.Key, state);
 
             if (isInitialState)
             {

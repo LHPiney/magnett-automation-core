@@ -1,4 +1,5 @@
 ﻿using System;
+using Magnett.Automation.Core.Common;
 using Moq;
 using Xunit;
 
@@ -9,9 +10,12 @@ namespace Magnett.Automation.Core.Test.StateMachine
 {
     public class MachineTest
     {
-        private const string InitialStateName  = "InitialState";
-        private const string FinalStateName    = "FinalState";
-        private const string NotFoundStateName = "NotFound";
+        private static readonly CommonNamedKey InitialStateKey  = 
+            CommonNamedKey.Create("InitialState");
+        private static readonly CommonNamedKey FinalStateKey    = 
+            CommonNamedKey.Create("FinalState");
+        private static readonly CommonNamedKey NotFoundStateKey = 
+            CommonNamedKey.Create("NotFound");
         
         [Fact]
         public void Create_When_Invoke_Return_Instance()
@@ -56,11 +60,11 @@ namespace Magnett.Automation.Core.Test.StateMachine
             var initialState = new Mock<IState>();
 
             transition
-                .Setup(tra => tra.ToStateName)
-                .Returns(NotFoundStateName);
+                .Setup(tra => tra.ToStateKey)
+                .Returns(NotFoundStateKey);
 
             initialState
-                .Setup(sta => sta.ManageAction(It.IsAny<string>()))
+                .Setup(sta => sta.ManageAction(It.IsAny<CommonNamedKey>()))
                 .Returns(transition.Object);
             
             definition
@@ -69,7 +73,7 @@ namespace Magnett.Automation.Core.Test.StateMachine
 
             definition
                 .Setup(def => 
-                    def.HasState(It.Is<string>(val => val.Equals(NotFoundStateName))))
+                    def.HasState(It.Is<CommonNamedKey>(val => val.Equals(NotFoundStateKey))))
                 .Returns(false);
 
             var machine = Machine.Create(definition.Object);
@@ -86,20 +90,20 @@ namespace Magnett.Automation.Core.Test.StateMachine
             var finalState   = new Mock<IState>();
             
             transition
-                .Setup(tra => tra.ToStateName)
-                .Returns(FinalStateName);
+                .Setup(tra => tra.ToStateKey)
+                .Returns(FinalStateKey);
 
             initialState
-                .Setup(sta => sta.ManageAction(It.IsAny<string>()))
+                .Setup(sta => sta.ManageAction(It.IsAny<CommonNamedKey>()))
                 .Returns(transition.Object);
             
             initialState
-                .Setup(sta => sta.Name)
-                .Returns(InitialStateName);
+                .Setup(sta => sta.Key)
+                .Returns(InitialStateKey);
             
             finalState
-                .Setup(sta => sta.Name)
-                .Returns(FinalStateName);
+                .Setup(sta => sta.Key)
+                .Returns(FinalStateKey);
             
             definition
                 .Setup(def => def.InitialState)
@@ -107,23 +111,23 @@ namespace Magnett.Automation.Core.Test.StateMachine
 
             definition
                 .Setup(def => 
-                    def.HasState(It.Is<string>(val => val.Equals(FinalStateName))))
+                    def.HasState(It.Is<CommonNamedKey>(val => val.Equals(FinalStateKey))))
                 .Returns(true);
             
             definition
                 .Setup(def => 
-                    def.GetState(It.Is<string>(val => val.Equals(FinalStateName))))
+                    def.GetState(It.Is<CommonNamedKey>(val => val.Equals(FinalStateKey))))
                 .Returns(finalState.Object);
             
             var machine = Machine.Create(definition.Object);
                 
-            var firstStateName = machine.State.Name;
+            var firstStateName = machine.State.Key;
             machine.Dispatch("AnyAction");
-            var secondStateName = machine.State.Name;
+            var secondStateName = machine.State.Key;
             
             Assert.NotNull(machine.State);
             Assert.NotEqual(firstStateName, secondStateName);
-            Assert.Equal(FinalStateName, secondStateName);
+            Assert.Equal(FinalStateKey, secondStateName);
         }
     }
 }
