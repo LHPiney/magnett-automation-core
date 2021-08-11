@@ -28,8 +28,4 @@
       <ProjectReference Include="..\Magnett.Automation.Core\Magnett.Automation.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Context" />
-    </ItemGroup>
-
 </Project>
