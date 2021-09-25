@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines.Collections;
 
-[assembly: InternalsVisibleTo("Magnett.Automation.Core.Test")]
+
 namespace Magnett.Automation.Core.StateMachines
 {
     internal class MachineDefinition : IMachineDefinition

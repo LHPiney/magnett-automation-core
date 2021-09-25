@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines.Exceptions;
 

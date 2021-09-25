@@ -15,18 +15,23 @@ namespace Magnett.Automation.Core.IntegrationTest.StateMachines.SimpleMachine.De
         private static void CreateDefinition()
         {
             _definition = MachineDefinitionBuilder.Create()
+                
                 .InitialState(State.Init)
                     .OnAction(Action.Start).ToState(State.Working)
                     .Build()
+                
                 .AddState(State.Working)
                     .OnAction(Action.Pause).ToState(State.Paused)
                     .OnAction(Action.Finish).ToState(State.Finished)
                     .Build()
+                
                 .AddState(State.Paused)
                     .OnAction(Action.Continue).ToState(State.Working)
                     .Build()
+                
                 .AddState(State.Finished)
                     .Build()
+                
                 .BuildDefinition();
         }
 
