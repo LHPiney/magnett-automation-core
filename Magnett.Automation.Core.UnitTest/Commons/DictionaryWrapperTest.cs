@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Magnett.Automation.Core.Commons;
-using Magnett.Automation.Core.Test.Commons.Helpers;
+using Magnett.Automation.Core.UnitTest.Commons.Helpers;
 using Moq;
 using Xunit;
 
-namespace Magnett.Automation.Core.Test.Commons
+namespace Magnett.Automation.Core.UnitTest.Commons
 {
     public class DictionaryWrapperTest
     {

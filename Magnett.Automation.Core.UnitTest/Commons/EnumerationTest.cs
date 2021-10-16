@@ -1,7 +1,7 @@
-﻿using Magnett.Automation.Core.Test.Commons.Helpers;
+﻿using Magnett.Automation.Core.UnitTest.Commons.Helpers;
 using Xunit;
 
-namespace Magnett.Automation.Core.Test.Commons
+namespace Magnett.Automation.Core.UnitTest.Commons
 {
     public class EnumerationTest
     {

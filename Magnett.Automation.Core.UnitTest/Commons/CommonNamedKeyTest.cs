@@ -2,7 +2,7 @@
 using Magnett.Automation.Core.Commons;
 using Xunit;
 
-namespace Magnett.Automation.Core.Test.Commons
+namespace Magnett.Automation.Core.UnitTest.Commons
 {
     public class CommonNamedKeyTest
     {

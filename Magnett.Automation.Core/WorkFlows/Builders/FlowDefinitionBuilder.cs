@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Magnett.Automation.Core.StateMachines.Builders;
 using Magnett.Automation.Core.WorkFlows.Collections;
 using Magnett.Automation.Core.WorkFlows.Implementations;
 
@@ -6,33 +6,54 @@ namespace Magnett.Automation.Core.WorkFlows.Builders
 {
     public class FlowDefinitionBuilder
     {
-        private readonly NodeList _nodeList;
+        private readonly NodeList     _nodes;
+        private readonly NodeLinkList _links;
+        
         private INodeBase _initialNode;
 
         private FlowDefinitionBuilder()
         {
-            _nodeList = new NodeList();
+            _nodes = new NodeList();
+            _links = new NodeLinkList();
         }
 
-        public FlowDefinitionBuilder WithInitialNode(INodeBase node)
+        private INodeLinkBuilder StoreNodeLink(
+            INodeBase sourceNode,
+            INodeLink nodeLink)
         {
-            _nodeList.Add(node.Key, node);
+            _links.Add(nodeLink.Key, nodeLink);
 
+            return NodeLinkBuilder.Create(
+                sourceNode, 
+                StoreNodeLink, 
+                () => this);
+        }
+
+        public INodeLinkBuilder WithInitialNode(INodeBase node)
+        {
             _initialNode = node;
 
-            return this;
-        }
-        
-        public FlowDefinitionBuilder WithNode(INodeBase node)
-        {
-            _nodeList.Add(node.Key, node);
-
-            return this;
+            return WithNode(node);
         }
 
-        public IFlowDefinition Build()
+        public INodeLinkBuilder WithNode(INodeBase node)
         {
-            return FlowDefinition.Create(_initialNode, _nodeList);
+            _nodes.Add(node.Key, node);
+
+            return NodeLinkBuilder.Create(
+                node, 
+                StoreNodeLink, 
+                () => this);
+        }
+
+        public IFlowDefinition BuildDefinition()
+        {
+            return FlowDefinition.Create(_initialNode, _nodes, _links);
+        }
+
+        public static FlowDefinitionBuilder Create()
+        {
+            return new FlowDefinitionBuilder();
         }
     }
 }

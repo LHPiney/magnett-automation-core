@@ -1,6 +1,6 @@
 ﻿using Magnett.Automation.Core.Commons;
 
-namespace Magnett.Automation.Core.Test.Commons.Helpers
+namespace Magnett.Automation.Core.UnitTest.Commons.Helpers
 {
     public class EnumerationMockup : Enumeration
     {

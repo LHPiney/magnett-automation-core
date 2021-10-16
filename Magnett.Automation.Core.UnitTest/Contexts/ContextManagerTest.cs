@@ -4,7 +4,7 @@ using Xunit;
 
 using Magnett.Automation.Core.Contexts;
 
-namespace Magnett.Automation.Core.Test.Contexts
+namespace Magnett.Automation.Core.UnitTest.Contexts
 {
     public class ContextManagerTest
     {

@@ -5,7 +5,7 @@ using Magnett.Automation.Core.StateMachines.Collections;
 using Moq;
 using Xunit;
 
-namespace Magnett.Automation.Core.Test.StateMachines
+namespace Magnett.Automation.Core.UnitTest.StateMachines
 {
     public class MachineDefinitionTest
     {

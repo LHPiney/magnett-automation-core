@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Magnett.Automation.Core.Commons;
 
-[assembly: InternalsVisibleTo("Magnett.Automation.Core.Test")]
+[assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.StateMachines
 {
     internal class Transition : ITransition

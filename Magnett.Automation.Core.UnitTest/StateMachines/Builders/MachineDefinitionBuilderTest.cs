@@ -1,8 +1,8 @@
 ﻿using Magnett.Automation.Core.StateMachines.Builders;
-using Magnett.Automation.Core.Test.Commons.Helpers;
+using Magnett.Automation.Core.UnitTest.Commons.Helpers;
 using Xunit;
 
-namespace Magnett.Automation.Core.Test.StateMachines.Builders
+namespace Magnett.Automation.Core.UnitTest.StateMachines.Builders
 {
     public class MachineDefinitionBuilderTest
     {
