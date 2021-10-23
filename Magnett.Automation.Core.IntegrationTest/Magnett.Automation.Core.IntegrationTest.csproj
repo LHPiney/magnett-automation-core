@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="StateMachine" />
+      <Folder Include="StateMachines" />
     </ItemGroup>
 
     <ItemGroup>
