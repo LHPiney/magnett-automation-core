@@ -4,6 +4,10 @@
         <TargetFramework>net5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <Company>Magnett</Company>
+
+        <AssemblyVersion>0.5.0</AssemblyVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Magnett.Automation.Core\Magnett.Automation.Core.csproj" />
+      <ProjectReference Include="..\..\src\Magnett.Automation.Core\Magnett.Automation.Core.csproj" />
     </ItemGroup>
 
 </Project>

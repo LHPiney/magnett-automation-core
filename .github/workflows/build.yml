@@ -46,6 +46,6 @@ jobs:
             
           dotnet restore
           dotnet build --no-restore
-          dotnet test ./Magnett.Automation.Core.Test/Magnett.Automation.Core.Test.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-          
+          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
