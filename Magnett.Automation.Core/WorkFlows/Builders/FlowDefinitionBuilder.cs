@@ -13,8 +13,8 @@ namespace Magnett.Automation.Core.WorkFlows.Builders
 
         private FlowDefinitionBuilder()
         {
-            _nodes = new NodeList();
-            _links = new NodeLinkList();
+            _nodes = NodeList.Create();
+            _links = NodeLinkList.Create();
         }
 
         private INodeLinkBuilder StoreNodeLink(

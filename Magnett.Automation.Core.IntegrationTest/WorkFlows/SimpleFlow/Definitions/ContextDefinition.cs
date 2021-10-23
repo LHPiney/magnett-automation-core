@@ -10,9 +10,9 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitio
 
         private ContextDefinition()
         {
-            FirstDigit  =  ContextField<int>.Create("FirstDigit");           
-            SecondDigit =  ContextField<int>.Create("SecondDigit");           
-            Result      =  ContextField<int>.Create("Result");
+            FirstDigit  =  ContextField<int>.Create("FieldOne");           
+            SecondDigit =  ContextField<int>.Create("FieldTwo");           
+            Result      =  ContextField<int>.Create("FieldResult");
         }
 
         public static ContextDefinition Create()

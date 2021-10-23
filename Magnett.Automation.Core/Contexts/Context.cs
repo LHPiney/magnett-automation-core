@@ -33,5 +33,10 @@ namespace Magnett.Automation.Core.Contexts
         {
             return new Context(contextVault);
         }
+        
+        public static Context Create()
+        {
+            return new Context(ContextVault.Create());
+        }
     }
 }

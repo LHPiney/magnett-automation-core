@@ -2,6 +2,6 @@
 {
     public interface INode : INodeBase
     {
-        public void Execute();
+        public NodeExit Execute();
     }
 }

@@ -24,7 +24,7 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
             Code = code;
             
             //Generate Unique key
-            Key = CommonNamedKey.Create($"{FromNodeKey.Name}.{Code}");
+            Key = NodeLinkKey.Create(FromNodeKey, code);
         }
 
         public static INodeLink Create(

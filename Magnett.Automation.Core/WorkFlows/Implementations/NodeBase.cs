@@ -9,6 +9,7 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
         protected Context GlobalContext { get; private set; }
 
         public CommonNamedKey Key { get; }
+        public bool IsInit { get; private set; }
         
         protected NodeBase(string name) : this(CommonNamedKey.Create(name))
         {
@@ -25,6 +26,8 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
         {
             GlobalContext = globalContext
                            ?? throw new ArgumentNullException(nameof(globalContext));
+
+            IsInit = true;
         }
     }
 }

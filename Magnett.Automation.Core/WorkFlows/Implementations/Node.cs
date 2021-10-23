@@ -14,6 +14,6 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
             
         }
         
-        public abstract void Execute();
+        public abstract NodeExit Execute();
     }
 }
