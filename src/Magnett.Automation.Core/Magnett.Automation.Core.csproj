@@ -5,9 +5,13 @@
         <RootNamespace>Magnett.Automation.Core</RootNamespace>
         <Title>Magnett Automation</Title>
         <Authors>Magnett</Authors>
-        <Description>Magnett automation is build to facilitate de creation of automatic process.      </Description>
-        <AssemblyName>Magnett.Automation.Core</AssemblyName>
+        <Description>Magnett automation is build to facilitate de creation of automatic process and workflows using code.</Description>
+        <AssemblyName>Magnett</AssemblyName>
         <Product>Magnett.Automation.Core</Product>
+        <PackageVersion>0.5.0</PackageVersion>
+        <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
+        <PackageTags>worlfow automation statemachine</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
 </Project>
