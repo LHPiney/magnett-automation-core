@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines.Collections;
 
-
-namespace Magnett.Automation.Core.StateMachines
+namespace Magnett.Automation.Core.StateMachines.Implementations
 {
     internal class MachineDefinition : IMachineDefinition
     {

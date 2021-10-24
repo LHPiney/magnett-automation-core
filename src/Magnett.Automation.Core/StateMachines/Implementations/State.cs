@@ -5,7 +5,7 @@ using Magnett.Automation.Core.StateMachines.Collections;
 using Magnett.Automation.Core.StateMachines.Exceptions;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
-namespace Magnett.Automation.Core.StateMachines
+namespace Magnett.Automation.Core.StateMachines.Implementations
 {
     internal class State : IState
     {

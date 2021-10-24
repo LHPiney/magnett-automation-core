@@ -1,9 +1,8 @@
 ﻿using System;
-
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines.Exceptions;
 
-namespace Magnett.Automation.Core.StateMachines
+namespace Magnett.Automation.Core.StateMachines.Implementations
 {
     public class Machine : IMachine
     {

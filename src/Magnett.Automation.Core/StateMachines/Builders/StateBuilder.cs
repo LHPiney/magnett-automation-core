@@ -1,6 +1,7 @@
 ﻿using System;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines.Collections;
+using Magnett.Automation.Core.StateMachines.Implementations;
 
 namespace Magnett.Automation.Core.StateMachines.Builders
 {
