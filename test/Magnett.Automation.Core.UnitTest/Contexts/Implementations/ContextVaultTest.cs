@@ -1,4 +1,5 @@
 ﻿using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Contexts.Implementations;
 using Xunit;
 
 namespace Magnett.Automation.Core.UnitTest.Contexts

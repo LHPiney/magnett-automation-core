@@ -1,4 +1,5 @@
 ﻿using Magnett.Automation.Core.StateMachines;
+using Magnett.Automation.Core.StateMachines.Implementations;
 using Xunit;
 
 namespace Magnett.Automation.Core.UnitTest.StateMachines

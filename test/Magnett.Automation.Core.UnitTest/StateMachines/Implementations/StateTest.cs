@@ -3,6 +3,7 @@ using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines;
 using Magnett.Automation.Core.StateMachines.Collections;
 using Magnett.Automation.Core.StateMachines.Exceptions;
+using Magnett.Automation.Core.StateMachines.Implementations;
 using Moq;
 using Xunit;
 
