@@ -8,7 +8,6 @@ namespace Magnett.Automation.Core.StateMachines.Builders
     {
         private readonly string _actionName;
         private readonly Func<ITransition, StateBuilder> _storeAction;
-        private string _targetStateName;
         
         private TransitionBuilder(
             string actionName, 
@@ -29,10 +28,8 @@ namespace Magnett.Automation.Core.StateMachines.Builders
         
         public StateBuilder ToState(string stateName)
         {
-            _targetStateName = stateName;
-
             return _storeAction.Invoke(
-                Transition.Create(_actionName, _targetStateName));
+                Transition.Create(_actionName, stateName));
         }
         
         public static TransitionBuilder Create(

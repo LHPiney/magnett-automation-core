@@ -10,7 +10,6 @@
             private readonly Func<INodeBase, INodeLink, INodeLinkBuilder> _storeAction;
             private readonly Func<FlowDefinitionBuilder> _returnAction;
             
-            private CommonNamedKey _toNodeKey;
             private string         _code;
             
             private NodeLinkBuilder(
@@ -48,11 +47,9 @@
             #region IGotoNodeLinkBuilder
             public INodeLinkBuilder GoTo(CommonNamedKey toNodeKey)
             {
-                _toNodeKey = toNodeKey;
-
                 return _storeAction.Invoke(
                     _fromNode,
-                    NodeLink.Create(_fromNode.Key, _toNodeKey, _code));
+                    NodeLink.Create(_fromNode.Key, toNodeKey, _code));
             }
             #endregion
 

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Magnett.Automation.Core.Commons
 {
-    public class CommonNamedKey
+    public class CommonNamedKey : IEqualityComparer<CommonNamedKey>
     {
         public string Name { get; }
 
@@ -28,12 +29,7 @@ namespace Magnett.Automation.Core.Commons
         {
             return obj is CommonNamedKey key && Name.Equals(key.Name);
         }
-
-        protected bool Equals(CommonNamedKey other)
-        {
-            return Name == other.Name;
-        }
-
+        
         public override int GetHashCode()
         {
             return (Name != null ? Name.GetHashCode() : 0);
@@ -42,6 +38,21 @@ namespace Magnett.Automation.Core.Commons
         public static CommonNamedKey Create(string name)
         {
             return new CommonNamedKey(name);
+        }
+
+        public bool Equals(CommonNamedKey x, CommonNamedKey y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            if (ReferenceEquals(x, null)) return false;
+            if (ReferenceEquals(y, null)) return false;
+            if (x.GetType() != y.GetType()) return false;
+                
+            return x.Name == y.Name;
+        }
+
+        public int GetHashCode(CommonNamedKey obj)
+        {
+            return obj.Name.GetHashCode();
         }
     }
 }

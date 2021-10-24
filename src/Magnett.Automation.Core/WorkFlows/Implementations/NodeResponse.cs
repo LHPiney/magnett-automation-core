@@ -21,7 +21,7 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
         public string NodeName { get; private set; }
         public string ResponseCode { get; private set; }
 
-        public NodeResponse Create(string nodeName, string responseCode)
+        public static NodeResponse Create(string nodeName, string responseCode)
         {
             return new NodeResponse(nodeName, responseCode);
         }

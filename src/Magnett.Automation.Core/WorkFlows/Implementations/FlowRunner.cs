@@ -27,7 +27,7 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
         }
         
         #endregion
-
+        
         public static IFlowRunner  Create(IFlowDefinition definition, Context context)
         {
             return new FlowRunner(definition, context);

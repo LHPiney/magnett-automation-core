@@ -26,7 +26,6 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
             Assert.Throws<ArgumentNullException>(() =>
                 FlowRunner.Create(definition.Object, null));
         }
-        #endregion
         
         [Fact]
         public void Create_WhenDefinitionIsValid_ReturnInstance()
@@ -38,5 +37,6 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
             Assert.NotNull(instance);
             Assert.IsAssignableFrom<IFlowRunner>(instance);
         }
+        #endregion
     }
 }

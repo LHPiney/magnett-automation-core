@@ -4,6 +4,6 @@
     {
         IState State { get; }
         
-        IMachine Dispatch(string action);
+        IMachine Dispatch(string actionName);
     }
 }
