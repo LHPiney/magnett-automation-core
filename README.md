@@ -21,17 +21,26 @@ The concept context is something very generic and is used in several fields. For
 
 We are, therefore, in front of a key/value system, where the values will be of any type.
 
-*** All: graph of two components passing information through a ctx.
-
 Structure
 
-The structure of the context is simple, it is formed only by the Context class, which will be our input and retrieval of values class, and the IContextVault interface which will be the definition of the vault where the values are stored.
+The structure of the context is simple, it is formed only by the *Context* class, which will be our input and retrieval of values class, and the *IContextVault* interface which will be the definition of the vault where the values are stored.
 
-By default, we will have an implementation of the IContextVault, where it will store the values in memory, but will be open for any other implementation that stores these values in any other way.
-Examples
+By default, we will have an implementation of the *IContextVault*, where it will store the values in memory, but will be open for any other implementation that stores these values in any other way.
 
-*** All: context definition code.
-*** All: code for reading/writing a value.
+We will use the class *ContextField* to Get and Set values in a context, with this class we can define the type and the name of the class.
+
+Example of how to Get / Set value in a context
+
+```csharp
+var context = Context.Create();
+var field   = ContextField<int>.Create("FieldName");
+
+//Set Value
+context.Store(field, random.Next(1000));
+
+//Get Value
+var value  = context.Value(field);
+ ```
 
 ## StateMachine
 
