@@ -11,8 +11,6 @@ Structure
 
 In this repository, will be the core classes of this ecosystem, grouped under the namespace magnett.automation.core. Some of these classes can be used outside the scope of creating a workflow, as they are generic enough to be useful independently.
 
-*** All: logical division graphic.
-
 - Context.
 - StateMachine.
 - Workflows.
@@ -24,6 +22,7 @@ The concept context is something very generic and is used in several fields. For
 We are, therefore, in front of a key/value system, where the values will be of any type.
 
 *** All: graph of two components passing information through a ctx.
+
 Structure
 
 The structure of the context is simple, it is formed only by the Context class, which will be our input and retrieval of values class, and the IContextVault interface which will be the definition of the vault where the values are stored.
