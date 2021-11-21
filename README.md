@@ -70,7 +70,6 @@ Example of machine definition code
 
 
 ```csharp
-
 //Helper class with states enumeration
 public class State : Enumeration
 {
@@ -122,6 +121,15 @@ _definition = MachineDefinitionBuilder.Create()
  ```
 
 Example of machine creation and usage code.
+
+```csharp
+var machine = Machine
+    .Create(SimpleMachineDefinition.GetDefinition());
+
+machine.Dispatch(Action.Start);
+
+var currentState = machine.State;
+```
 
 ## Workflows    
 
