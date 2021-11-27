@@ -141,10 +141,23 @@ This separation will be done using the *IWorkflowDefinition* and IWorkflowRunner
 
 Example workflow definition code.
 
+```csharp
+
+ ```
+
 A runner, to instantiate itself, will need to receive the workflow definition and a context instance that will be used to share information between nodes. Once the workflow has been executed we can retrieve return values if there are any.
 
 To encapsulate the definition and execution we have the *IFlow* interface, this interface will allow us in the future to build subflows, create flows that are encapsulated as a service within more complex applications... etc.
 
 Example Flow runner
 
+```csharp
 
+ ```
+We have to node types sync and async, under the *INode* and *INodeAsync* interfaces, so we can use nodes as a wrapper of both type of process.
+
+Example Node
+
+```csharp
+
+ ```
