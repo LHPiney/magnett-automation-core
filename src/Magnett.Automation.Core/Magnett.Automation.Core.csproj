@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>Magnett.Automation.Core</RootNamespace>
         <Title>Magnett Automation</Title>
         <Authors>Magnett</Authors>
@@ -12,6 +11,8 @@
         <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
         <PackageTags>worlfow automation statemachine</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <LangVersion>10</LangVersion>
+        <TargetFrameworks>net6.0;net6.0-windows</TargetFrameworks>
     </PropertyGroup>
 
 </Project>

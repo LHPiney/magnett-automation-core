@@ -2,7 +2,7 @@
 
 namespace Magnett.Automation.Core.WorkFlows.Collections
 {
-    internal class NodeLinkList : DictionaryWrapper<INodeLink>
+    public class NodeLinkList : DictionaryWrapper<INodeLink>
     {
         public static NodeLinkList Create()
         {

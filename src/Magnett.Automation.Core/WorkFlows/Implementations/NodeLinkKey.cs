@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Magnett.Automation.Core.Commons;
 
+[assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.WorkFlows.Implementations
 {
     internal class NodeLinkKey : CommonNamedKey 

@@ -7,7 +7,6 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
     public abstract class NodeBase
     {
         protected Context GlobalContext { get; private set; }
-
         public CommonNamedKey Key { get; }
         public bool IsInit { get; private set; }
         

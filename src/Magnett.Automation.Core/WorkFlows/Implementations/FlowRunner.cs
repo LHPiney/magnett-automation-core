@@ -3,27 +3,30 @@ using Magnett.Automation.Core.Contexts;
 
 namespace Magnett.Automation.Core.WorkFlows.Implementations
 {
-    public class FlowRunner : FlowRunnerBase
+    public sealed class FlowRunner : FlowRunnerBase
     {
         private FlowRunner(IFlowDefinition definition, Context context) : base(definition, context)
         {
         }
 
         #region IFlowRunner
-
-        public override async Task Start()
+    
+        public override async Task<NodeExit> Start()
         {
             var isFlowFinished = false;
+            NodeExit nodeExit;
             
             do
             {
-                var nodeExit = await ExecuteNode(NodeToRun);
+                nodeExit = await ExecuteNode(NodeToRun);
                 
                 NodeToRun = Definition.GetNode(NodeToRun, nodeExit.Code);
 
                 isFlowFinished = (NodeToRun == null);
 
             } while (!isFlowFinished);
+
+            return nodeExit;
         }
         
         #endregion

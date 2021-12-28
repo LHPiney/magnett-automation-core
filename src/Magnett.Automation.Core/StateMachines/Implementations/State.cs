@@ -7,7 +7,7 @@ using Magnett.Automation.Core.StateMachines.Exceptions;
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.StateMachines.Implementations
 {
-    internal class State : IState
+    internal  class State : IState
     {
         private readonly TransitionList _transitionList;
         

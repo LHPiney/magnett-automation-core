@@ -35,24 +35,23 @@ namespace Magnett.Automation.Core.Commons
             return (Name != null ? Name.GetHashCode() : 0);
         }
 
-        public static CommonNamedKey Create(string name)
-        {
-            return new CommonNamedKey(name);
-        }
-
         public bool Equals(CommonNamedKey x, CommonNamedKey y)
         {
             if (ReferenceEquals(x, y)) return true;
             if (ReferenceEquals(x, null)) return false;
             if (ReferenceEquals(y, null)) return false;
-            if (x.GetType() != y.GetType()) return false;
-                
-            return x.Name == y.Name;
+            
+            return x.GetType() == y.GetType() && x.Name.Equals(y.Name);
         }
 
         public int GetHashCode(CommonNamedKey obj)
         {
             return obj.Name.GetHashCode();
+        }
+        
+        public static CommonNamedKey Create(string name)
+        {
+            return new CommonNamedKey(name);
         }
     }
 }

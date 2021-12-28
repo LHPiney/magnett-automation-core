@@ -7,9 +7,7 @@ namespace Magnett.Automation.Core.WorkFlows
     {
         public CommonNamedKey Key { get; }
         public bool IsInit { get; }
-
         public string Name => Key?.Name;
-
         void Init(Context flowContext);
     }
 }

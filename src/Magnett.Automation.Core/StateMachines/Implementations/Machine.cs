@@ -32,6 +32,12 @@ namespace Magnett.Automation.Core.StateMachines.Implementations
         }
 
         # region IMachine
+        
+        public IMachine Dispatch(Enumeration action)
+        {
+            return Dispatch(action.Name);
+        }
+        
         public IMachine Dispatch(string actionName)
         {
             Transit(State
