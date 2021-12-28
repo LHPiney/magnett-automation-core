@@ -12,6 +12,7 @@ namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations
     {
         private static readonly CommonNamedKey InitialStateKey = CommonNamedKey.Create("InitialState");
 
+        #region Create
         [Fact]
         public void Create_When_Invoke_Without_InitialState_Throws_Exception()
         {
@@ -57,6 +58,8 @@ namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations
             Assert.NotNull(definition.InitialState);
             Assert.Equal(initialState.Object, definition.InitialState);
         }
+        
+        #endregion
         
         [Fact]
         public void HasState_When_Invoke_Call_StateList_HasItem()
