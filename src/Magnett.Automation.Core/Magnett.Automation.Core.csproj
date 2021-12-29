@@ -12,7 +12,7 @@
         <PackageTags>worlfow automation statemachine</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <LangVersion>10</LangVersion>
-        <TargetFrameworks>net6.0;net6.0-windows</TargetFrameworks>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
 </Project>
