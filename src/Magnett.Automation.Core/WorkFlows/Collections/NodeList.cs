@@ -2,7 +2,7 @@
 
 namespace Magnett.Automation.Core.WorkFlows.Collections
 {
-    internal class NodeList : DictionaryWrapper<INodeBase>
+    public class NodeList : DictionaryWrapper<INodeBase>
     {
         public static NodeList Create()
         {

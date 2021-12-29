@@ -2,15 +2,17 @@
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines;
 using Magnett.Automation.Core.StateMachines.Collections;
+using Magnett.Automation.Core.StateMachines.Implementations;
 using Moq;
 using Xunit;
 
-namespace Magnett.Automation.Core.UnitTest.StateMachines
+namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations
 {
     public class MachineDefinitionTest
     {
         private static readonly CommonNamedKey InitialStateKey = CommonNamedKey.Create("InitialState");
 
+        #region Create
         [Fact]
         public void Create_When_Invoke_Without_InitialState_Throws_Exception()
         {
@@ -56,6 +58,8 @@ namespace Magnett.Automation.Core.UnitTest.StateMachines
             Assert.NotNull(definition.InitialState);
             Assert.Equal(initialState.Object, definition.InitialState);
         }
+        
+        #endregion
         
         [Fact]
         public void HasState_When_Invoke_Call_StateList_HasItem()

@@ -2,7 +2,7 @@
 using Magnett.Automation.Core.Commons;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
-namespace Magnett.Automation.Core.StateMachines
+namespace Magnett.Automation.Core.StateMachines.Implementations
 {
     internal class Transition : ITransition
     {

@@ -11,7 +11,7 @@ namespace Magnett.Automation.Core.StateMachines.Exceptions
         {
         }
         
-        public StateNotFoundException(SerializationInfo info, StreamingContext context) :
+        protected StateNotFoundException(SerializationInfo info, StreamingContext context) :
             base(info, context)
         {
             

@@ -1,118 +1,183 @@
 ﻿using System;
-using System.Collections.Generic;
+using Xunit;
+
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.UnitTest.Commons.Helpers;
-using Xunit;
 
 namespace Magnett.Automation.Core.UnitTest.Commons
 {
-    public class CommonNamedKeyTest
-
+    public class CommonNamedKeyTest 
     {
-    private const string KeyName = "Key";
-    private const string AlternativeKeyName = "AlternativeKey";
+        private const string KeyName = "Key";
+        private const string AlternativeKeyName = "AlternativeKey";
 
-    #region Create
+        #region Create
 
-    [Fact]
-    public void Create_When_Invoke_Return_Instance()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
+        [Fact]
+        public void Create_When_Invoke_Return_Instance()
+        {
+            var instance = CommonNamedKey.Create(KeyName);
 
-        Assert.NotNull(instance);
-        Assert.IsType<CommonNamedKey>(instance);
-    }
+            Assert.NotNull(instance);
+            Assert.IsType<CommonNamedKey>(instance);
+        }
 
-    [Fact]
-    public void Create_When_Invoke_With_Valid_Name_Is_Proper_Stored()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
+        [Fact]
+        public void Create_When_Invoke_With_Valid_Name_Is_Proper_Stored()
+        {
+            var instance = CommonNamedKey.Create(KeyName);
 
-        Assert.Equal(KeyName, instance.Name);
-    }
+            Assert.Equal(KeyName, instance.Name);
+        }
 
-    [Fact]
-    public void Create_When_Invoke_With_Null_KeyName_Throws_Exception()
-    {
-        Assert.Throws<ArgumentNullException>(() =>
-            CommonNamedKey.Create(null));
+        [Fact]
+        public void Create_When_Invoke_With_Null_KeyName_Throws_Exception()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                CommonNamedKey.Create(null));
 
-    }
+        }
 
-    [Fact]
-    public void Create_When_Invoke_With_Empty_KeyName_Throws_Exception()
-    {
-        Assert.Throws<ArgumentNullException>(() =>
-            CommonNamedKey.Create(""));
+        [Fact]
+        public void Create_When_Invoke_With_Empty_KeyName_Throws_Exception()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                CommonNamedKey.Create(""));
 
-    }
+        }
 
-    #endregion
+        #endregion
 
-    [Fact]
-    public void Equals_WhenTwoDifferentsInstancesWithSameKeyAreCompared_ShouldReturnTrue()
-    {
-        var instanceOne = CommonNamedKey.Create(KeyName);
-        var instanceTwo = CommonNamedKey.Create(KeyName);
+        #region Equals
+        [Fact]
+        public void Equals_WhenTwoDifferentInstancesWithSameKeyAreCompared_ShouldReturnTrue()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            var instanceTwo = CommonNamedKey.Create(KeyName);
 
-        var areEquals = instanceOne.Equals(instanceTwo);
+            var areEquals = instanceOne.Equals(instanceTwo);
 
-        Assert.True(areEquals);
-    }
+            Assert.True(areEquals);
+        }
 
-    [Fact]
-    public void Equals_WhenTwoDifferentsInstancesWithDifferentKeyAreCompared_ShouldReturnFalse()
-    {
-        var instanceOne = CommonNamedKey.Create(KeyName);
-        var instanceTwo = CommonNamedKey.Create(AlternativeKeyName);
+        [Fact]
+        public void Equals_WhenTwoDifferentInstancesWithDifferentKeyAreCompared_ShouldReturnFalse()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            var instanceTwo = CommonNamedKey.Create(AlternativeKeyName);
 
-        var areEquals = instanceOne.Equals(instanceTwo);
+            var areEquals = instanceOne.Equals(instanceTwo);
 
-        Assert.False(areEquals);
-    }
+            Assert.False(areEquals);
+        }
 
-    [Fact]
-    public void Equals_WhenComparedToEqualsString_ShouldReturnTrue()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
+        [Fact]
+        public void Equals_WhenComparedToEqualsString_ShouldReturnTrue()
+        {
+            var instance = CommonNamedKey.Create(KeyName);
 
-        var areEquals = instance.Equals(KeyName);
+            var areEquals = instance.Equals(KeyName);
 
-        Assert.True(areEquals);
-    }
+            Assert.True(areEquals);
+        }
 
-    [Fact]
-    public void Equals_WhenComparedToNotEqualsString_ShouldReturnFalse()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
+        [Fact]
+        public void Equals_WhenComparedToNotEqualsString_ShouldReturnFalse()
+        {
+            var instance = CommonNamedKey.Create(KeyName);
 
-        var areEquals = instance.Equals("Dummy");
+            var areEquals = instance.Equals("Dummy");
 
-        Assert.False(areEquals);
-    }
+            Assert.False(areEquals);
+        }
 
-    [Fact]
-    public void Equals_WhenComparedToEnumerationWithEqualsKey_ShouldReturnTrue()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
-        var enumeration = new EnumerationMockup(0, KeyName);
+        [Fact]
+        public void Equals_WhenComparedToEnumerationWithEqualsKey_ShouldReturnTrue()
+        {
+            var instance = CommonNamedKey.Create(KeyName);
+            var enumeration = new EnumerationMockup(0, KeyName);
 
-        var areEquals = instance.Equals(enumeration);
+            var areEquals = instance.Equals(enumeration);
 
-        Assert.True(areEquals);
-    }
+            Assert.True(areEquals);
+        }
 
-    [Fact]
-    public void Equals_WhenComparedToEnumerationWithNotEqualsKey__ShouldReturnFalse()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
-        var enumeration = new EnumerationMockup(0, "Dummy");
+        [Fact]
+        public void Equals_WhenComparedToEnumerationWithNotEqualsKey__ShouldReturnFalse()
+        {
+            var instance = CommonNamedKey.Create(KeyName);
+            var enumeration = new EnumerationMockup(0, "Dummy");
 
-        var areEquals = instance.Equals(enumeration);
+            var areEquals = instance.Equals(enumeration);
 
-        Assert.False(areEquals);
-    }
+            Assert.False(areEquals);
+        }
+        #endregion
 
+        #region IEqualityComparer
+        
+        [Fact]
+        public void Equals_WhenSameInstanceIsCompared_ShouldReturnTrue()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            
+            var areEquals = instanceOne.Equals(instanceOne, instanceOne);
 
+            Assert.True(areEquals);
+        }
+        
+        [Fact]
+        public void Equals_WhenFirstInstanceIsNull_ShouldReturnFalse()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            
+            var areEquals = instanceOne.Equals(null, instanceOne);
+
+            Assert.False(areEquals);
+        }
+
+        [Fact]
+        public void Equals_WhenSecondInstanceIsNull_ShouldReturnFalse()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            
+            var areEquals = instanceOne.Equals(instanceOne, null);
+
+            Assert.False(areEquals);
+        }        
+            
+        [Fact]
+        public void Equals_WhenInstancesHasSameName_ShouldReturnTrue()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            var instanceTwo = CommonNamedKey.Create(KeyName);
+            
+            var areEquals = instanceOne.Equals(instanceOne, instanceTwo);
+
+            Assert.True(areEquals);
+        }  
+        
+        [Fact]
+        public void Equals_WhenInstancesHasDifferentName_ShouldReturnTrue()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            var instanceTwo = CommonNamedKey.Create(AlternativeKeyName);
+            
+            var areEquals = instanceOne.Equals(instanceOne, instanceTwo);
+
+            Assert.False(areEquals);
+        }          
+        
+        [Fact]
+        public void GetHashCode_WhenInvoked_ShouldReturnNameHashCode()
+        {
+            var instanceOne = CommonNamedKey.Create(KeyName);
+            
+            var nameHasCode = instanceOne.Name.GetHashCode();
+
+            Assert.Equal(nameHasCode, instanceOne.GetHashCode(instanceOne));
+        }
+
+        #endregion
     }
 }

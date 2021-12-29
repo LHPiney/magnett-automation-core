@@ -11,7 +11,7 @@ namespace Magnett.Automation.Core.StateMachines.Exceptions
         {
         }
         
-        public InvalidMachineDefinitionException(SerializationInfo info, StreamingContext context) :
+        protected InvalidMachineDefinitionException(SerializationInfo info, StreamingContext context) :
             base(info, context)
         {
             

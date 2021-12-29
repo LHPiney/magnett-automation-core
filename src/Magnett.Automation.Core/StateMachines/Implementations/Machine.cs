@@ -1,9 +1,8 @@
 ﻿using System;
-
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines.Exceptions;
 
-namespace Magnett.Automation.Core.StateMachines
+namespace Magnett.Automation.Core.StateMachines.Implementations
 {
     public class Machine : IMachine
     {
@@ -33,6 +32,12 @@ namespace Magnett.Automation.Core.StateMachines
         }
 
         # region IMachine
+        
+        public IMachine Dispatch(Enumeration action)
+        {
+            return Dispatch(action.Name);
+        }
+        
         public IMachine Dispatch(string actionName)
         {
             Transit(State

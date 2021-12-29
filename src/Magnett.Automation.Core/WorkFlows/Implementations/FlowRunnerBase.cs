@@ -35,6 +35,6 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
             };
         }
 
-        public abstract Task Start();
+        public abstract Task<NodeExit> Start();
     }
 }
