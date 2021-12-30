@@ -1,5 +1,6 @@
 # magnett automation
 [![Build](https://github.com/LHPiney/magnett-automation-core/actions/workflows/build.yml/badge.svg)](https://github.com/LHPiney/magnett-automation-core/actions/workflows/build.yml)
+[![Release](https://github.com/LHPiney/magnett-automation-core/actions/workflows/release.yml/badge.svg)](https://github.com/LHPiney/magnett-automation-core/actions/workflows/release.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=alert_status)](https://sonarcloud.io/dashboard?id=magnett_automation) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=coverage)](https://sonarcloud.io/dashboard?id=magnett_automation)
 ![GitHub issues](https://img.shields.io/github/issues/lhpiney/magnett-automation-core)
 
