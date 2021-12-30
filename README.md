@@ -3,7 +3,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=alert_status)](https://sonarcloud.io/dashboard?id=magnett_automation) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=coverage)](https://sonarcloud.io/dashboard?id=magnett_automation)
 ![GitHub issues](https://img.shields.io/github/issues/lhpiney/magnett-automation-core)
 
-Library for create custom workflow, orquestation between components, microservices and other automation utilities
+Library  for create custom workflow, orquestation between components, microservices and other automation utilities, created on dotnet version 6
 
 ## Introduction
 
@@ -137,27 +137,133 @@ Under this namespace, we will have the necessary classes to define a workflow an
 
 ### Structure
 
-This separation will be done using the *IWorkflowDefinition* and IWorkflowRunner interfaces.
+This separation will be done using the *IWorkflowDefinition* and *IWorkflowRunner* interfaces.
+
+To encapsulate the definition and execution we have the *IFlow* interface, this interface also will allow us in the future to build subflows, create flows that are encapsulated as a service within more complex applications... etc.
+
+If we think in a basic flow,just and initial node to reset field values, next node just to caculate to random numbers, and a final node to sum both values the definition should be somthin like that.
 
 Example workflow definition code.
 
 ```csharp
+  var contextDefinition = ContextDefinition.Create();
 
+  var definition = FlowDefinitionBuilder.Create()
+      .WithInitialNode(ResetValue.Create(Node.Reset, contextDefinition))
+          .OnExitCode(ResetValue.ExitCode.Ok).GoTo(Node.SetValue)
+      .Build()
+
+      .WithNode(SetValue.Create(Node.SetValue, contextDefinition))
+          .OnExitCode(SetValue.ExitCode.Assigned).GoTo(Node.SumValue)
+      .Build()
+
+      .WithNode(SumValue.Create(Node.SumValue, contextDefinition)).Build()
+
+      .BuildDefinition();
  ```
 
-A runner, to instantiate itself, will need to receive the workflow definition and a context instance that will be used to share information between nodes. Once the workflow has been executed we can retrieve return values if there are any.
-
-To encapsulate the definition and execution we have the *IFlow* interface, this interface will allow us in the future to build subflows, create flows that are encapsulated as a service within more complex applications... etc.
-
-Example Flow runner
+Previously you have defined some helper classes like *ContextDefinition* it's just a class to contains Context field and to avoid duplication with name definitions.
 
 ```csharp
+internal class ContextDefinition
+{
+    public ContextField<int> FirstDigit  { get; }
+    public ContextField<int> SecondDigit { get; }      
+    public ContextField<int> Result      { get; }
 
+    private ContextDefinition()
+    {
+        FirstDigit  =  ContextField<int>.Create("FieldOne");           
+        SecondDigit =  ContextField<int>.Create("FieldTwo");           
+        Result      =  ContextField<int>.Create("FieldResult");
+    }
+
+    public static ContextDefinition Create()
+    {
+        return new ContextDefinition();
+    }
+}
  ```
-We have to node types sync and async, under the *INode* and *INodeAsync* interfaces, so we can use nodes as a wrapper of both type of process.
+ We have created also the abstract class *Common* that we will use as base class for all of our node classes, we will use as a way to ensure that all nodes have avaliable ConxtextDefinition
+ 
+```csharp
+internal abstract class Common : Core.WorkFlows.Implementations.Node
+{
+    protected ContextDefinition ContextDefinition { get; }
+
+    protected Common(CommonNamedKey key, ContextDefinition contextDefinition) : base(key)
+    {
+        ContextDefinition = contextDefinition
+                            ?? throw new ArgumentNullException(nameof(contextDefinition));
+    }
+}
+ ```
+ We have two node types sync and async, under the *INode* and *INodeAsync* interfaces, so we can use nodes as a wrapper of both type of process. In this example we have only the sync implementation.
+
+ In our example we will use only sync nodes.
 
 Example Node
 
 ```csharp
+internal class ResetValue : Common
+{
+    #region ExitCodes
 
+    public class ExitCode : Enumeration
+    {
+        public static readonly ExitCode Ok  = new ExitCode(1, "Ok"); 
+
+        private ExitCode(int id, string name) : base(id, name)
+        {
+        }
+    }
+    
+    #endregion
+
+    private ResetValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
+        base(key, contextDefinition)
+    {
+        
+    }
+
+    public override NodeExit Execute()
+    {
+        GlobalContext.Store(ContextDefinition.FirstDigit, 0);
+        GlobalContext.Store(ContextDefinition.SecondDigit, 0);
+        GlobalContext.Store(ContextDefinition.Result, 0);
+        
+        return NodeExit.Create(ExitCode.Ok.Name);
+    }
+
+    public static ResetValue Create(CommonNamedKey name, ContextDefinition contextDefinition)
+    {
+        return new ResetValue(name, contextDefinition);
+    }
+}
+ ```
+
+The inner class *ExitCodes* is just another helper class, build over Enumeration class with the definition of avaliable exit codes for this node, we use also somthin similira
+
+A runner, to instantiate itself, will need to receive the workflow definition and a context instance that will be used to share information between nodes. Once the runner has been executed we can retrieve return values from context if there are any.
+
+We have the abstract class *FlowRunnerBase* so we can implement our custom runners, step to step, distributed, etc..
+
+
+Example Flow runner
+
+```csharp
+var flowRunner = FlowRunner.Create(definition, Context.Create());
+
+var exit = await flowRunner.Start();
+ ```
+
+ The class flow as we said before, it's a wrapper for all this process, now have basic functionalities but in future versions will be used as main class for workflow management. 
+
+```csharp
+var definition = SimpleFlowDefinition.GetDefinition();
+var context    = Context.Create();
+
+var flow = Flow.Create(FlowRunner.Create(definition, context));
+
+var exit = await flow.Run();
  ```
