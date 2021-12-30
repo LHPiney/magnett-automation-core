@@ -14,6 +14,10 @@ jobs:
         fetch-depth: 0
     - name: Verify commit exists in origin/main
       run: git branch --remote --contains | grep origin/main
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x  
     - name: Extract release notes
       run: |
         git log --pretty=format:'%d %s' ${GITHUB_REF} | perl -pe 's| \(.*tag: v(\d+.\d+.\d+(-preview\d{3})?)(, .*?)*\)|\n## \1\n|g' > RELEASE-NOTES
