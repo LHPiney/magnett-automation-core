@@ -10,7 +10,7 @@
         <PackageVersion>0.5.0</PackageVersion>
         <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
         <PackageTags>worlfow automation statemachine</PackageTags>
-        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <AssemblyVersion>0.50</AssemblyVersion>
         <LangVersion>10</LangVersion>
         <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
