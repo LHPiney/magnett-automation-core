@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <PackageId>Magnett.Automation.Core</PackageId>
         <RootNamespace>Magnett.Automation.Core</RootNamespace>
         <Title>Magnett Automation</Title>
         <Authors>Magnett</Authors>
