@@ -31,6 +31,6 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
     - name: Push
-      run: dotnet nuget push NuGet.Workflow.${VERSION}.nupkg --source github.com/features/packages/LHPiney/index.json --api-key ${NUGET_TOKEN}
+      run: dotnet nuget push NuGet.Workflow.${VERSION}.nupkg --source github.com/features/packages/LHPiney/index.json --api-key ${GITHUB_TOKEN}
       env:
-        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
