@@ -4,17 +4,17 @@
         <PackageId>Magnett.Automation.Core</PackageId>
         <RootNamespace>Magnett.Automation.Core</RootNamespace>
         <Title>Magnett Automation</Title>
-        <Authors>Magnett</Authors>
+        <Authors>Magnett @LHPiney</Authors>
         <Description>Magnett automation is build to facilitate de creation of automatic process and workflows using code.</Description>
-        <AssemblyName>Magnett</AssemblyName>
         <Product>Magnett.Automation.Core</Product>
-        <PackageVersion>0.5.0</PackageVersion>
+        <PackageVersion>0.5.1</PackageVersion>
         <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
         <PackageTags>worlfow automation statemachine</PackageTags>
-        <AssemblyVersion>0.50</AssemblyVersion>
+        <AssemblyVersion>0.5.1</AssemblyVersion>
         <LangVersion>10</LangVersion>
         <TargetFramework>net6.0</TargetFramework>
         <PackageId>Magnett.Automation.Core</PackageId>
+        <PackageProjectUrl>https://github.com/LHPiney/magnett-automation-core</PackageProjectUrl>
     </PropertyGroup>
 
     <ItemGroup>
