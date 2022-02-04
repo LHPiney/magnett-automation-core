@@ -75,10 +75,10 @@ Example of machine definition code
 //Helper class with states enumeration
 public class State : Enumeration
 {
-    public static readonly State Init     = new State(1, "Init");
-    public static readonly State Working  = new State(2, "Working");
-    public static readonly State Paused   = new State(3, "Paused");
-    public static readonly State Finished = new State(4, "Finished");
+    public static readonly State Init     = new State(1, nameof(Init));
+    public static readonly State Working  = new State(2, nameof(Working));
+    public static readonly State Paused   = new State(3, nameof(Paused));
+    public static readonly State Finished = new State(4, nameof(Finished));
 
     private State(int id, string name) : base(id, name)
     {
@@ -89,10 +89,10 @@ public class State : Enumeration
 //Helper class with action enumerations
 public class Action : Enumeration
 {
-    public static readonly Action Start    = new Action(1, "Start");
-    public static readonly Action Pause    = new Action(2, "Pause");
-    public static readonly Action Continue = new Action(3, "Continue");
-    public static readonly Action Finish   = new Action(4, "Finish");
+    public static readonly Action Start    = new Action(1, nameof(Start));
+    public static readonly Action Pause    = new Action(2, nameof(Pause));
+    public static readonly Action Continue = new Action(3, nameof(Continue));
+    public static readonly Action Finish   = new Action(4, nameof(Finish));
 
     private Action(int id, string name) : base(id, name)
     {
@@ -228,11 +228,11 @@ internal class ResetValue : Common
         
     }
 
-    public override NodeExit Execute()
+    public override NodeExit Execute(Context context)
     {
-        GlobalContext.Store(ContextDefinition.FirstDigit, 0);
-        GlobalContext.Store(ContextDefinition.SecondDigit, 0);
-        GlobalContext.Store(ContextDefinition.Result, 0);
+        context.Store(ContextDefinition.FirstDigit, 0);
+        context.Store(ContextDefinition.SecondDigit, 0);
+        context.Store(ContextDefinition.Result, 0);
         
         return NodeExit.Create(ExitCode.Ok.Name);
     }
