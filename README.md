@@ -5,7 +5,9 @@
 ![Nuget](https://img.shields.io/nuget/v/Magnett.Automation.Core)
 ![Nuget](https://img.shields.io/nuget/dt/Magnett.Automation.Core)
 
-Library  for create custom workflow, orquestation between components, microservices and other automation utilities, created on dotnet version 6
+![Logo](./assets/logo.svg)
+
+Library designed for create custom workflow, orquestation between components, microservices and other automation utilities, created on dotnet version 6
 
 ## Introduction
 
