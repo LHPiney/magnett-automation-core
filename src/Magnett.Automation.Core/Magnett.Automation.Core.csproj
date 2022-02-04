@@ -14,7 +14,7 @@
         <AssemblyVersion>0.50</AssemblyVersion>
         <LangVersion>10</LangVersion>
         <TargetFramework>net6.0</TargetFramework>
-        <PackageId>Magnett.Automation</PackageId>
+        <PackageId>Magnett.Automation.Core</PackageId>
     </PropertyGroup>
 
     <ItemGroup>

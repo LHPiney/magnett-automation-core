@@ -41,4 +41,4 @@ public class SagaPatternTest
         Assert.True(result.Order.State.Equals(OrderStateDefinition.State.Cancelled));
         Assert.True(result.Payment.State.Equals(PaymentStateDefinition.State.Cancelled));
     }
-}
+}   
