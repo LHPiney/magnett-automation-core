@@ -7,7 +7,7 @@ using Magnett.Automation.Core.StateMachines.Exceptions;
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.StateMachines.Implementations
 {
-    internal  class State : IState
+    internal class State : IState
     {
         private readonly TransitionList _transitionList;
         
@@ -41,7 +41,12 @@ namespace Magnett.Automation.Core.StateMachines.Implementations
         }
 
         #endregion
-        
+
+        public override string ToString()
+        {
+            return Key.Name;
+        }
+
         public static State Create(string name, TransitionList transitionList)
         {
             return new(name, transitionList);

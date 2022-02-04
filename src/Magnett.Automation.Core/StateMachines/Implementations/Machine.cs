@@ -6,9 +6,9 @@ namespace Magnett.Automation.Core.StateMachines.Implementations
 {
     public class Machine : IMachine
     {
-        private readonly IMachineDefinition _definition;
+        protected readonly IMachineDefinition _definition;
 
-        private Machine(IMachineDefinition definition)
+        protected Machine(IMachineDefinition definition)
         {
             _definition = definition
                           ?? throw new ArgumentNullException(nameof(definition));
@@ -47,9 +47,20 @@ namespace Magnett.Automation.Core.StateMachines.Implementations
         }
 
         public IState State { get; private set; }
+        
+        public bool Equals(CommonNamedKey obj)
+        {
+            return State.Key.Equals(obj);
+        }
+        
+        public bool Equals(Enumeration obj)
+        {
+            return State.Key.Equals(obj);
+        }
 
         #endregion
-
+        
+        
         public static IMachine Create(IMachineDefinition definition)
         {
             return new Machine(definition);

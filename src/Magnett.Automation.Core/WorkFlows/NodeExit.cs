@@ -29,5 +29,13 @@ namespace Magnett.Automation.Core.WorkFlows
         {
             return new NodeExit(code, isError, data);
         }
+        
+        public static NodeExit Create(
+            Enumeration code, 
+            bool isError = false,
+            string data = null)
+        {
+            return new NodeExit(code?.Name, isError, data);
+        }
     }
 }

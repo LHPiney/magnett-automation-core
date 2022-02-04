@@ -24,12 +24,10 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
 
         protected async Task<NodeExit> ExecuteNode(INodeBase node)
         {
-            if (!node.IsInit) node.Init(FlowContext);
-            
             return node switch
             {
-                INodeAsync nodeAsync => await nodeAsync.Execute(),
-                INode      nodeSync  => await Task.Run(() => nodeSync.Execute()),
+                INodeAsync nodeAsync => await nodeAsync.Execute(FlowContext),
+                INode      nodeSync  => await Task.Run(() => nodeSync.Execute(FlowContext)),
                 { }                  => throw new ArgumentException("Not a valid node"),
                 null                 => throw new ArgumentNullException(nameof(node))
             };
