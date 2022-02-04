@@ -1,4 +1,5 @@
 ﻿using System;
+using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.WorkFlows;
 using Xunit;
 
@@ -10,12 +11,23 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows
         private const string Data = "Data Info";
             
         [Fact]
-        public void Create_WhenCodeIsNull_ThrowException()
+        public void Create_WhenEnumerationCodeIsNull_ThrowException()
         {
+            Enumeration parameter = null;
+            
             Assert.Throws<ArgumentNullException>(() =>
-                _ = NodeExit.Create(null));
+                _ = NodeExit.Create(parameter));
         }
 
+        [Fact]
+        public void Create_WhenStringCodeIsNull_ThrowException()
+        {
+            string parameter = null;
+            
+            Assert.Throws<ArgumentNullException>(() =>
+                _ = NodeExit.Create(parameter));
+        }
+        
         [Fact]
         public void Create_WhenCodeNotIsNull_ReturnValidInstance()
         {

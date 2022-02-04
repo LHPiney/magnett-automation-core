@@ -1,4 +1,5 @@
 ﻿using Magnett.Automation.Core.Commons;
+using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.WorkFlows;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes
@@ -24,11 +25,11 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitio
             
         }
 
-        public override NodeExit Execute()
+        public override NodeExit Execute(Context context)
         {
-            GlobalContext.Store(ContextDefinition.FirstDigit, 0);
-            GlobalContext.Store(ContextDefinition.SecondDigit, 0);
-            GlobalContext.Store(ContextDefinition.Result, 0);
+            context.Store(ContextDefinition.FirstDigit, 0);
+            context.Store(ContextDefinition.SecondDigit, 0);
+            context.Store(ContextDefinition.Result, 0);
             
             return NodeExit.Create(ExitCode.Ok.Name);
         }

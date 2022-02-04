@@ -1,6 +1,6 @@
-﻿using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
-using Magnett.Automation.Core.WorkFlows;
+﻿using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Builders;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions
 {
@@ -19,15 +19,15 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitio
             _contextDefinition = ContextDefinition.Create();
             
             _definition = FlowDefinitionBuilder.Create()
-                .WithInitialNode(ResetValue.Create(Node.Reset, _contextDefinition))
-                    .OnExitCode(ResetValue.ExitCode.Ok).GoTo(Node.SetValue)
+                .WithInitialNode(ResetValue.Create(NodeName.Reset, _contextDefinition))
+                    .OnExitCode(ResetValue.ExitCode.Ok).GoTo(NodeName.SetValue)
                 .Build()
                 
-                .WithNode(SetValue.Create(Node.SetValue, _contextDefinition))
-                    .OnExitCode(SetValue.ExitCode.Assigned).GoTo(Node.SumValue)
+                .WithNode(SetValue.Create(NodeName.SetValue, _contextDefinition))
+                    .OnExitCode(SetValue.ExitCode.Assigned).GoTo(NodeName.SumValue)
                 .Build()
                 
-                .WithNode(SumValue.Create(Node.SumValue, _contextDefinition)).Build()
+                .WithNode(SumValue.Create(NodeName.SumValue, _contextDefinition)).Build()
                 
                 .BuildDefinition();
         }
