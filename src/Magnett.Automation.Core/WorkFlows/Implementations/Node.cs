@@ -1,4 +1,5 @@
 ﻿using Magnett.Automation.Core.Commons;
+using Magnett.Automation.Core.Contexts;
 
 namespace Magnett.Automation.Core.WorkFlows.Implementations
 {
@@ -14,6 +15,6 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
             
         }
         
-        public abstract NodeExit Execute();
+        public abstract NodeExit Execute(Context context);
     }
 }

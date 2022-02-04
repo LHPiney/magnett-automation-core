@@ -6,8 +6,6 @@ namespace Magnett.Automation.Core.WorkFlows
     public interface INodeBase  
     {
         public CommonNamedKey Key { get; }
-        public bool IsInit { get; }
         public string Name => Key?.Name;
-        void Init(Context flowContext);
     }
 }

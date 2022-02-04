@@ -8,5 +8,7 @@ namespace Magnett.Automation.Core.StateMachines
 
         IMachine Dispatch(Enumeration action);
         IMachine Dispatch(string actionName);
+        public bool Equals(CommonNamedKey obj);
+        public bool Equals(Enumeration obj);
     }
 }

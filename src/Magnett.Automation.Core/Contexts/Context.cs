@@ -13,9 +13,11 @@ namespace Magnett.Automation.Core.Contexts
                             ?? throw new ArgumentNullException(nameof(contextVault));
         }
         
-        public void Store<TValue>(ContextField<TValue> field, TValue value)
+        public Context Store<TValue>(ContextField<TValue> field, TValue value)
         {
             _contextVault.Set(field, value);
+
+            return this;
         }
 
         public TValue Value<TValue>(ContextField<TValue> field)

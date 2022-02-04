@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Magnett.Automation.Core.Contexts;
 
 namespace Magnett.Automation.Core.WorkFlows.Implementations
 {
@@ -8,6 +9,6 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
         {
         }
 
-        public abstract Task<NodeExit> Execute();
+        public abstract Task<NodeExit> Execute(Context context);
     }
 }
