@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 681.53998 236.16571"
+   version="1.1"
+   sodipodi:docname="logo.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:export-filename="C:\Work\Personal\magnett-automation-core\assets\Logo.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   width="681.53998"
+   height="236.16571"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview884"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.8462963"
+     inkscape:cx="-218.00875"
+     inkscape:cy="505.73304"
+     inkscape:window-width="3840"
+     inkscape:window-height="2066"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <defs
+     id="defs857">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient31321">
+      <stop
+         style="stop-color:#00ff00;stop-opacity:1;"
+         offset="0"
+         id="stop31317" />
+      <stop
+         style="stop-color:#00ff00;stop-opacity:0;"
+         offset="1"
+         id="stop31319" />
+    </linearGradient>
+    <rect
+       x="359.80307"
+       y="616.21442"
+       width="530.54706"
+       height="130.56892"
+       id="rect4686" />
+    <style
+       id="style855">.cls-1{fill:none;}.cls-2{fill:#cf0915;}.cls-3{fill:#aa0717;}</style>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient31321"
+       id="radialGradient31323"
+       cx="460.74249"
+       cy="637.34314"
+       fx="460.74249"
+       fy="637.34314"
+       r="99.379753"
+       gradientTransform="matrix(1,0,0,0.13785504,0,549.48217)"
+       gradientUnits="userSpaceOnUse" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath22">
+      <path
+         d="M 36,848.469 C 2008.8,-268.43 2748.14,1679 3840,495.68 v 629.11 C 2469.6,1658.4 1694.4,196.801 36,848.469 Z"
+         clip-rule="evenodd"
+         id="path20" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath542">
+      <path
+         d="M 0,980.359 C 1687.65,1914.35 2867.08,0.832031 3840,840.43 V 630.219 C 2841.94,28.3086 1553.67,1749.37 0,978.582 Z"
+         clip-rule="evenodd"
+         id="path540" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1050">
+      <path
+         d="M 69.5977,776.672 C 1643.02,-328.949 2689.64,1345.07 3784.8,379.199 2897.59,1617.71 1737.75,-324.328 69.5977,776.672 Z"
+         clip-rule="evenodd"
+         id="path1048" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1570">
+      <path
+         d="M 2769.93,1218.41 C 1918.95,1313.79 1297.92,336.961 55.3711,976.02 1153.2,462.32 1893.46,1359.13 2769.93,1218.41 Z"
+         clip-rule="evenodd"
+         id="path1568" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2090">
+      <path
+         d="M 1978.89,1150.59 C 1375.89,1218.17 935.828,526 55.3711,978.832 833.285,614.832 1357.83,1250.3 1978.89,1150.59 Z"
+         clip-rule="evenodd"
+         id="path2088" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2610">
+      <path
+         d="M 3804.68,611.82 C 1725.78,-269.059 1209.13,1729.65 0,707.68 V 983.109 C 997.352,1603.99 1787.12,-34.8984 3804.68,611.82 Z"
+         clip-rule="evenodd"
+         id="path2608" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3126">
+      <path
+         d="m 1898.27,2635.72 c -250.82,28.11 -520.11,-325.2 -800.09,-71.45 323.57,-151.4 466.74,201.8 800.09,71.45 z"
+         clip-rule="evenodd"
+         id="path3124" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3646">
+      <path
+         d="M 2938,2562.83 C 2362.14,2627.38 1743.9,1816.22 1101.08,2398.8 1843.97,2051.19 2172.65,2862.11 2938,2562.83 Z"
+         clip-rule="evenodd"
+         id="path3644" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4166">
+      <path
+         d="m 2309.36,2597.73 c -378.79,42.45 -785.45,-491.11 -1208.28,-107.9 488.65,-228.64 704.85,304.76 1208.28,107.9 z"
+         clip-rule="evenodd"
+         id="path4164" />
+    </clipPath>
+  </defs>
+  <title
+     id="title859">Magnett logo negro</title>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer 2"
+     transform="translate(-42.01464,-17.274116)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="Layer 1"
+     style="display:inline"
+     transform="translate(-42.01464,-17.274116)">
+    <path
+       d="m 56.35464,17.274116 h 27.66 l 28.06,106.110004 27.24,-106.110004 h 42.41 V 156.57412 h -26.88 V 44.164116 l -28.43,112.410004 h -29.09 L 68.84464,44.164116 V 156.57412 h -26.83 V 32.224116 c 0,-7.98 6.35,-14.95 14.34,-14.95 z"
+       id="path861"
+       style="fill:#000000"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="m 223.92464,76.474116 h -27.25 c 3.28,-20.07 17.42,-29.91 42.41,-29.91 29.9,0 45.06,9.84 45.68,29.91 v 36.870004 c 0,29.91 -18,43.23 -47.32,45.28 -26,2 -44,-10 -44,-34 0.61,-26.000004 19.46,-33.000004 46.91,-35.640004 11.67,-1.44 17.61,-4.92 17.61,-10.86 -0.61,-6.14 -6.35,-9.22 -17.61,-9.22 -9.67,-0.01 -15,2.45 -16.43,7.57 z m 34.41,35.690004 v -10 a 118.26,118.26 0 0 1 -21.71,6.55 c -10.86,2 -16.39,7.17 -16.39,15.16 0.61,8.61 5.12,12.7 13.73,12.7 15.15,-0.08 24.37,-9.09 24.37,-24.41 z"
+       id="path863"
+       style="fill:#000000"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="m 296.23464,102.49412 c 0,-36.060004 16.79,-54.080004 50.39,-54.700004 33.8,-0.2 50.8,15.78 50.8,48.35 v 64.120004 c 0,27.24 -17.2,41 -51.82,41.58 -24.59,0 -40.15,-11.47 -46.51,-34.41 h 30.12 c 1.84,7.78 8.19,11.47 19.46,11.47 14.34,0 21.71,-8.4 21.71,-25.2 v -11.06 c -7,10.65 -17.41,16 -30.93,16 -28.88,-0.02 -43.22,-18.87 -43.22,-56.15 z m 74.15,0.82 c 0.21,-21.920004 -7.37,-32.780004 -22.94,-32.780004 -15.57,0 -23.15,10.86 -23.15,32.780004 0.62,20.89 8,31.34 22.74,31.34 14.74,0 22.53,-10.49 23.35,-31.34 z"
+       id="path865"
+       style="fill:#000000"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="m 563.14464,159.03412 c -32.77,-1 -49.16,-20.08 -49.16,-57 0,-36.920004 16.59,-55.310004 49.57,-55.520004 34.42,0 50.6,21.1 48.55,63.510004 h -70.06 c 1,16.59 8.2,25 21.51,25 6.35,0 12.29,-2.66 17.62,-7.78 a 11.92,11.92 0 0 1 9.22,-3.9 h 20.07 c -5.94,22.99 -20.69,35.69 -47.32,35.69 z m -20.69,-68.420004 h 40.77 c -1.64,-14.34 -8.4,-21.72 -20.08,-21.72 -11.68,0 -18.64,7.38 -20.69,21.72 z"
+       id="path867"
+       style="fill:#000000"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="m 654.91464,67.664116 h -2.86 v 60.000004 c 0,4.51 2.66,7 8,7 h 8.4 v 20.69 a 149.09,149.09 0 0 1 -28.67,-0.21 c -10.25,-1 -15.16,-7.37 -15,-19.46 V 17.274116 h 14.16 c 7.16,0 13.11,6.56 13.11,13.73 v 17.16 h 16.38 v 6 a 13.25,13.25 0 0 1 -13.52,13.5 z"
+       id="path869"
+       style="fill:#000000"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="m 710.02464,67.664116 h -2.87 v 60.000004 c 0,4.51 2.66,7 8,7 h 8.4 v 20.69 a 149.19,149.19 0 0 1 -28.71,-0.19 c -10.24,-1 -15.16,-7.37 -14.95,-19.46 V 17.274116 h 14.15 c 7.17,0 13.11,6.56 13.11,13.73 v 17.16 h 16.39 v 6 a 13.25,13.25 0 0 1 -13.52,13.5 z"
+       id="path871"
+       style="fill:#000000"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       class="cls-1"
+       d="m 218.47464,123.35412 c 0.62,8.66 5.16,12.79 13.83,12.79 15.26,0 24.54,-9.08 24.54,-24.55 v -10.11 a 118.87,118.87 0 0 1 -21.86,6.6 c -10.94,2.08 -16.51,7.22 -16.51,15.27 z"
+       id="path873"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       d="m 475.10464,142.74412 c 0,8.66 4.54,13 13.62,13.62 h 14 v -16.2 h -27.62 z"
+       id="path875"
+       style="fill:#162d50"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       x="409.71463"
+       y="140.16412"
+       width="27.85"
+       height="16.200001"
+       id="rect877"
+       style="fill:#c83737"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       class="cls-2"
+       d="m 455.84464,69.724116 v -24.13 c -30.68,0.23 -46.13,15.69 -46.13,46.61 v 39.000004 h 27.84 V 86.634116 c 0.21,-11.26 6.29,-16.82 18.29,-16.91 z"
+       id="path879"
+       style="fill:#c83737"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       class="cls-3"
+       d="m 456.53464,45.584116 h -0.69 v 24.13 h 0.28 c 12.17,0 18.36,5.57 19,16.92 v 44.530004 h 27.62 V 92.164116 c 0.21,-31.11 -15.06,-46.58 -46.21,-46.58 z"
+       id="path881"
+       style="fill:#162d50"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <text
+       xml:space="preserve"
+       id="text4684"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Segoe Print';-inkscape-font-specification:'Segoe Print Bold';white-space:pre;shape-inside:url(#rect4686);fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(2.0878727,0,0,2.1019878,-579.37402,-1115.0449)"
+       inkscape:export-filename="C:\Work\logo.jpg"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         x="359.80273"
+         y="650.48314"
+         id="tspan13201"><tspan
+           style="font-weight:500;font-family:'Baloo 2';-inkscape-font-specification:'Baloo 2 Medium'"
+           id="tspan13199">automation</tspan></tspan></text>
+  </g>
+  <metadata
+     id="metadata13103">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Magnett logo negro</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>
