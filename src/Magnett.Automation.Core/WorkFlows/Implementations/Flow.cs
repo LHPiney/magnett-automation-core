@@ -17,14 +17,15 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
         #region IFlow
 
         public Guid Id { get; } = Guid.NewGuid();
-        public Context Context => _flowRunner.FlowContext;
+        
+        public Context  Context => _flowRunner.FlowContext;
 
         public async Task<NodeExit> Run()
         {
             return await _flowRunner.Start();
         }
 
-        #endregion
+        #endregion  
         
         public static IFlow Create(IFlowRunner flowRunner)
         {

@@ -28,8 +28,8 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
             {
                 INodeAsync nodeAsync => await nodeAsync.Execute(FlowContext),
                 INode      nodeSync  => await Task.Run(() => nodeSync.Execute(FlowContext)),
-                { }                  => throw new ArgumentException("Not a valid node"),
-                null                 => throw new ArgumentNullException(nameof(node))
+                null                 => throw new ArgumentNullException(nameof(node)),
+                _                    => throw new ArgumentOutOfRangeException(nameof(node), node, null)
             };
         }
 

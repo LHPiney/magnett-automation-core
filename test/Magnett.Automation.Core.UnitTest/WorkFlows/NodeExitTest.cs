@@ -1,5 +1,6 @@
 ﻿using System;
 using Magnett.Automation.Core.Commons;
+using Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 using Magnett.Automation.Core.WorkFlows;
 using Xunit;
 
@@ -9,18 +10,50 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows
     {
         private const string GoodCode = "Ok";
         private const string Data = "Data Info";
-            
+
+        private static readonly Enumeration GoodEnumerationCode =  EnumerationFake.Create(1, GoodCode);
+
+        #region Create with Enumeration
         [Fact]
-        public void Create_WhenEnumerationCodeIsNull_ThrowException()
+        public void CreateAsEnumeration_WhenCodeIsNull_ThrowException()
         {
             Enumeration parameter = null;
             
             Assert.Throws<ArgumentNullException>(() =>
                 _ = NodeExit.Create(parameter));
         }
-
+        
         [Fact]
-        public void Create_WhenStringCodeIsNull_ThrowException()
+        public void CreateAsEnumeration_WhenCodeNotIsNull_ReturnValidInstance()
+        {
+            var instance = NodeExit.Create(GoodEnumerationCode);
+            
+            Assert.NotNull(instance);
+            Assert.Equal(GoodCode, instance.Code);
+        }
+        
+        [Fact]
+        public void CreateAsEnumeration_WhenIsErrorIsInformed_ValueIsCorrectlyStored()
+        {
+            var instance = NodeExit.Create(GoodEnumerationCode, true);
+            
+            Assert.NotNull(instance);
+            Assert.True(instance.IsError);
+        }
+        
+        [Fact]
+        public void CreateAsEnumeration_WhenDataIsInformed_ValueIsCorrectlyStored()
+        {
+            var instance = NodeExit.Create(GoodEnumerationCode, false, Data);
+            
+            Assert.NotNull(instance);
+            Assert.Equal(Data, instance.Data);
+        }
+        #endregion
+
+        #region Create with String
+        [Fact]
+        public void CreateAsString_WhenCodeIsNull_ThrowException()
         {
             string parameter = null;
             
@@ -29,7 +62,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows
         }
         
         [Fact]
-        public void Create_WhenCodeNotIsNull_ReturnValidInstance()
+        public void CreateAsString_WhenCodeNotIsNull_ReturnValidInstance()
         {
             var instance = NodeExit.Create(GoodCode);
             
@@ -38,7 +71,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows
         }
         
         [Fact]
-        public void Create_WhenIsErrorIsInformed_ValueIsCorrectlyStored()
+        public void CreateAsString_WhenIsErrorIsInformed_ValueIsCorrectlyStored()
         {
             var instance = NodeExit.Create(GoodCode, true);
             
@@ -47,12 +80,13 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows
         }
         
         [Fact]
-        public void Create_WhenDataIsInformed_ValueIsCorrectlyStored()
+        public void CreateAsString_WhenDataIsInformed_ValueIsCorrectlyStored()
         {
-            var instance = NodeExit.Create(GoodCode, false,   Data);
+            var instance = NodeExit.Create(GoodCode, false, Data);
             
             Assert.NotNull(instance);
             Assert.Equal(Data, instance.Data);
         }
+        #endregion
     }
 }

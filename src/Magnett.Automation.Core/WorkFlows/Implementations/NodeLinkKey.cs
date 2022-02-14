@@ -12,15 +12,15 @@ namespace Magnett.Automation.Core.WorkFlows.Implementations
             
         }
 
-        private NodeLinkKey(CommonNamedKey node, string code) : this($"{node?.Name}.{code}")
+        private NodeLinkKey(CommonNamedKey nodeKey, string code) : this($"{nodeKey?.Name}.{code}")
         {
-            if (node == null) throw new ArgumentNullException(nameof(node));
+            if (nodeKey == null) throw new ArgumentNullException(nameof(nodeKey));
             if (string.IsNullOrEmpty(code)) throw new ArgumentNullException(nameof(code));
         }
 
-        public static NodeLinkKey Create(CommonNamedKey node, string code)
+        public static NodeLinkKey Create(CommonNamedKey nodeKey, string code)
         {
-            return new NodeLinkKey(node, code);
+            return new NodeLinkKey(nodeKey, code);
         }
     }
 }

@@ -8,18 +8,14 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations.MockUps
 {
     public class FlowRunnerBaseMock : FlowRunnerBase
     {
-        private FlowRunnerBaseMock(IFlowDefinition definition, Context context) : base(definition, context)
+        public FlowRunnerBaseMock(IFlowDefinition definition, Context context) : 
+            base(definition, context)
         {
         }
 
-        public override Task<NodeExit> Start()
+        public override async Task<NodeExit> Start()
         {
-            throw new System.NotImplementedException();
-        }
-        
-        public static IFlowRunner  Create(IFlowDefinition definition, Context context)
-        {
-            return new FlowRunnerBaseMock(definition, context);
+            return await ExecuteNode(NodeToRun);
         }
     }
 }
