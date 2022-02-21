@@ -2,14 +2,21 @@
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.WorkFlows;
+using Magnett.Automation.Core.WorkFlows.Implementations;
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 
-public class NodeAsyncFake : INodeAsync
+public class NodeAsyncFake : NodeAsync
 {
-    public CommonNamedKey Key { get; } = CommonNamedKey.Create("Fake_Node");
+    public NodeAsyncFake(string name) : base(name)
+    {
+    }
+
+    public NodeAsyncFake(CommonNamedKey key) : base(key)
+    {
+    }
     
-    public async Task<NodeExit> Execute(Context context)
+    public override async Task<NodeExit> Execute(Context context)
     {
         await Task.Delay(100);
 

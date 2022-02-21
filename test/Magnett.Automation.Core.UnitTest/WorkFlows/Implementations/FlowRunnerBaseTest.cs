@@ -6,7 +6,6 @@ using Xunit;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 using Magnett.Automation.Core.WorkFlows;
-using Magnett.Automation.Core.UnitTest.WorkFlows.Implementations.MockUps;
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
 {
@@ -18,7 +17,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
         public void Ctor_WhenDefinitionIsNull_ThrowException()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new FlowRunnerBaseMock(null, Context.Create()));
+                new FlowRunnerBaseFake(null, Context.Create()));
         }
         
         [Fact]
@@ -27,7 +26,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
             var definition = new Mock<IFlowDefinition>();
             
             Assert.Throws<ArgumentNullException>(() =>
-                new FlowRunnerBaseMock(definition.Object, null));
+                new FlowRunnerBaseFake(definition.Object, null));
         }
         
         [Fact]
@@ -35,7 +34,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
         {
             var definition = new Mock<IFlowDefinition>();
 
-            var instance = new FlowRunnerBaseMock(definition.Object, Context.Create());
+            var instance = new FlowRunnerBaseFake(definition.Object, Context.Create());
             
             Assert.NotNull(instance);
             Assert.IsAssignableFrom<IFlowRunner>(instance);
@@ -47,7 +46,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
             var definition = new Mock<IFlowDefinition>();
             var context = Context.Create();
             
-            var instance = new FlowRunnerBaseMock(definition.Object, context);
+            var instance = new FlowRunnerBaseFake(definition.Object, context);
             
             Assert.NotNull(instance.FlowContext);
             Assert.Equal(context, instance.FlowContext);
@@ -62,15 +61,14 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
             var context = Context.Create();
 
             node
-                .Setup(def => 
-                    def.Execute(It.IsNotNull<Context>()))
+                .Setup(def => def.Execute(It.IsNotNull<Context>()))
                 .ReturnsAsync(NodeExit.Create("node"));
             
             definition
                 .SetupGet(def => def.InitialNode)
                 .Returns(node.Object);
 
-            var instance = new FlowRunnerBaseMock(
+            var instance = new FlowRunnerBaseFake(
                 definition.Object, 
                 context);
 
@@ -97,7 +95,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
                 .SetupGet(def => def.InitialNode)
                 .Returns(node.Object);
 
-            var instance = new FlowRunnerBaseMock(
+            var instance = new FlowRunnerBaseFake(
                 definition.Object, 
                 context);
 
@@ -119,7 +117,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
                 .SetupGet(def => def.InitialNode)
                 .Returns(node.Object);
 
-            var instance = new FlowRunnerBaseMock(
+            var instance = new FlowRunnerBaseFake(
                 definition.Object, 
                 context);
 
@@ -137,7 +135,7 @@ namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations
                 .SetupGet(def => def.InitialNode)
                 .Returns((INodeBase)null);
 
-            var instance = new FlowRunnerBaseMock(
+            var instance = new FlowRunnerBaseFake(
                 definition.Object, 
                 context);
 
