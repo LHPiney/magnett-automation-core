@@ -3,6 +3,7 @@ using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines;
 using Magnett.Automation.Core.StateMachines.Exceptions;
 using Magnett.Automation.Core.StateMachines.Implementations;
+using Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 using Moq;
 using Xunit;
 
@@ -53,7 +54,7 @@ namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations
         }
         
         [Fact]
-        public void Dispatch_When_Transition_Has_Unknown_State_Throw_Exception()
+        public void DispatchByString_When_Transition_Has_Unknown_State_Throw_Exception()
         {
             var definition   = new Mock<IMachineDefinition>();
             var transition   = new Mock<ITransition>();
@@ -82,7 +83,8 @@ namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations
                 machine.Dispatch("AnyAction"));
         }
 
-        [Fact] public void Dispatch_When_Transition_Is_Valid_Change_State()
+        [Fact] 
+        public void DispatchByString_When_Transition_Is_Valid_Change_State()
         {
             var definition   = new Mock<IMachineDefinition>();
             var transition   = new Mock<ITransition>();
@@ -128,6 +130,126 @@ namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations
             Assert.NotNull(machine.State);
             Assert.NotEqual(firstStateName, secondStateName);
             Assert.Equal(FinalStateKey, secondStateName);
+        }
+        
+        [Fact] 
+        public void DispatchByEnumeration_When_Transition_Has_Unknown_State_Throw_Exception()
+        {
+            var definition   = new Mock<IMachineDefinition>();
+            var transition   = new Mock<ITransition>();
+            var initialState = new Mock<IState>();
+
+            transition
+                .Setup(tra => tra.ToStateKey)
+                .Returns(NotFoundStateKey);
+
+            initialState
+                .Setup(sta => sta.ManageAction(It.IsAny<CommonNamedKey>()))
+                .Returns(transition.Object);
+            
+            definition
+                .Setup(def => def.InitialState)
+                .Returns(initialState.Object);
+
+            definition
+                .Setup(def => 
+                    def.HasState(It.Is<CommonNamedKey>(val => val.Equals(NotFoundStateKey))))
+                .Returns(false);
+
+            var machine = Machine.Create(definition.Object);
+            
+            Assert.Throws<StateNotFoundException>(() =>
+                machine.Dispatch(EnumerationFake.Create(1, "AnyAction")));
+        }
+
+        [Fact] public void DispatchByEnumeration_When_Transition_Is_Valid_Change_State()
+        {
+            var definition   = new Mock<IMachineDefinition>();
+            var transition   = new Mock<ITransition>();
+            var initialState = new Mock<IState>();
+            var finalState   = new Mock<IState>();
+            
+            transition
+                .Setup(tra => tra.ToStateKey)
+                .Returns(FinalStateKey);
+
+            initialState
+                .Setup(sta => sta.ManageAction(It.IsAny<CommonNamedKey>()))
+                .Returns(transition.Object);
+            
+            initialState
+                .Setup(sta => sta.Key)
+                .Returns(InitialStateKey);
+            
+            finalState
+                .Setup(sta => sta.Key)
+                .Returns(FinalStateKey);
+            
+            definition
+                .Setup(def => def.InitialState)
+                .Returns(initialState.Object);
+
+            definition
+                .Setup(def => 
+                    def.HasState(It.Is<CommonNamedKey>(val => val.Equals(FinalStateKey))))
+                .Returns(true);
+            
+            definition
+                .Setup(def => 
+                    def.GetState(It.Is<CommonNamedKey>(val => val.Equals(FinalStateKey))))
+                .Returns(finalState.Object);
+            
+            var machine = Machine.Create(definition.Object);
+                
+            var firstStateName = machine.State.Key;
+            machine.Dispatch(EnumerationFake.Create(1, "AnyAction")) ;
+            var secondStateName = machine.State.Key;
+            
+            Assert.NotNull(machine.State);
+            Assert.NotEqual(firstStateName, secondStateName);
+            Assert.Equal(FinalStateKey, secondStateName);
+        }
+
+        [Fact]
+        public void EqualEnumeration_WhenEnumerationIsEqualToStateKey_ThenReturnTrue()
+        {
+            var definition   = new Mock<IMachineDefinition>();
+            var initialState = new Mock<IState>();
+            
+            initialState
+                .Setup(sta => sta.Key)
+                .Returns(InitialStateKey);
+
+            definition
+                .Setup(def => def.InitialState)
+                .Returns(initialState.Object);
+
+            var machine = Machine.Create(definition.Object);
+            var isEqualToKey   = machine.Equals(EnumerationFake.Create(1, InitialStateKey.Name));
+        
+            Assert.NotNull(machine.State);
+            Assert.True(isEqualToKey);
+        }
+        
+        [Fact]
+        public void EqualCommonKey_WhenEnumerationIsEqualToStateKey_ThenReturnTrue()
+        {
+            var definition   = new Mock<IMachineDefinition>();
+            var initialState = new Mock<IState>();
+            
+            initialState
+                .Setup(sta => sta.Key)
+                .Returns(InitialStateKey);
+
+            definition
+                .Setup(def => def.InitialState)
+                .Returns(initialState.Object);
+
+            var machine = Machine.Create(definition.Object);
+            var isEqualToKey = machine.Equals(CommonNamedKey.Create(InitialStateKey.Name));
+        
+            Assert.NotNull(machine.State);
+            Assert.True(isEqualToKey);
         }
     }
 }
