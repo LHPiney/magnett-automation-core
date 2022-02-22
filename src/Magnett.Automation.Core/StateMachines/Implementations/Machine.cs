@@ -59,8 +59,7 @@ namespace Magnett.Automation.Core.StateMachines.Implementations
         }
 
         #endregion
-        
-        
+
         public static IMachine Create(IMachineDefinition definition)
         {
             return new Machine(definition);

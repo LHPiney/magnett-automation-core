@@ -12,8 +12,8 @@ public class FlowRunnerBaseFake : FlowRunnerBase
         
     }
 
-    public override Task<NodeExit> Start()
+    public override async Task<NodeExit> Start()
     {
-        throw new System.NotImplementedException();
+        return await ExecuteNode(NodeToRun);
     }
 }
