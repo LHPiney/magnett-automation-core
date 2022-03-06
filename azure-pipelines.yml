@@ -16,15 +16,15 @@ variables:
   workingDirectory: '$(Build.SourcesDirectory)/src'
 
 steps:
-- script: dotnet restore ./Magnett.Automation.Core.sln
+- script: dotnet restore ./magnett-automation-core.sln
   displayName: Restore
   workingDirectory: $(workingDirectory)
 
-- script: dotnet build ./Magnett.Automation.Core.sln --configuration $(buildConfiguration)
+- script: dotnet build ./magnett-automation-core.sln --configuration $(buildConfiguration)
   displayName: Build
   workingDirectory: $(workingDirectory)
 
-- script: dotnet test ./Magnett.Automation.Core.sln --configuration $(buildConfiguration) --logger trx
+- script: dotnet test ./magnett-automation-core.sln --configuration $(buildConfiguration) --logger trx
   displayName: Test
   workingDirectory: $(workingDirectory)
 
