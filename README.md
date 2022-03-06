@@ -1,5 +1,6 @@
 # magnett automation
 [![Build](https://github.com/LHPiney/magnett-automation-core/actions/workflows/build.yml/badge.svg)](https://github.com/LHPiney/magnett-automation-core/actions/workflows/build.yml)
+[![Build Status](https://dev.azure.com/Magnett/Magnett.Automation/_apis/build/status/magnett-automation-core?branchName=azure-pipelines)](https://dev.azure.com/Magnett/Magnett.Automation/_build/latest?definitionId=1&branchName=azure-pipelines)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=alert_status)](https://sonarcloud.io/dashboard?id=magnett_automation) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=coverage)](https://sonarcloud.io/dashboard?id=magnett_automation)
 ![GitHub issues](https://img.shields.io/github/issues/lhpiney/magnett-automation-core)
 ![Nuget](https://img.shields.io/nuget/v/Magnett.Automation.Core)
