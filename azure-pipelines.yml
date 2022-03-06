@@ -3,32 +3,42 @@
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
-trigger:
-- main
-
 pool:
-  vmImage: 'linux-latest'
+  vmImage: 'ubuntu-latest'
 
+trigger:
+  batch: true
+  branches:
+    include: ['master']
+  
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  workingDirectory: '$(Build.SourcesDirectory)'
+  solutionFile: './magnett-automation-core.sln'
+  pojectFile: '$(Build.SourcesDirectory)/src/Magnett.Automation.Core/Magnett.Automation.Core.csproj'
 
 steps:
-- task: NuGetToolInstaller@1
+- script: dotnet restore $(solutionFile)
+  displayName: Restore
+  workingDirectory: $(workingDirectory)
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+- script: dotnet build $(solutionFile) --configuration $(buildConfiguration)
+  displayName: Build
+  workingDirectory: $(workingDirectory)
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+- script: dotnet test $(solutionFile) --configuration $(buildConfiguration) --logger trx
+  displayName: Test
+  workingDirectory: $(workingDirectory)
 
-- task: VSTest@2
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  condition: succeededOrFailed()
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+- script: dotnet publish $(pojectFile) --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: Publish
+  workingDirectory: $(workingDirectory)
+  
+- task: PublishBuildArtifacts@1
