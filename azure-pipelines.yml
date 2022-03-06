@@ -14,17 +14,19 @@ trigger:
 variables:
   buildConfiguration: 'Release'
   workingDirectory: '$(Build.SourcesDirectory)'
+  solutionFile: './magnett-automation-core.sln'
+  pojectFile: '$(Build.SourcesDirectory)/src/magnett.automation.core/magnett.automation.core.csproj'
 
 steps:
-- script: dotnet restore ./magnett-automation-core.sln
+- script: dotnet restore $(solutionFile)
   displayName: Restore
   workingDirectory: $(workingDirectory)
 
-- script: dotnet build ./magnett-automation-core.sln --configuration $(buildConfiguration)
+- script: dotnet build $(solutionFile) --configuration $(buildConfiguration)
   displayName: Build
   workingDirectory: $(workingDirectory)
 
-- script: dotnet test ./magnett-automation-core.sln --configuration $(buildConfiguration) --logger trx
+- script: dotnet test $(solutionFile) --configuration $(buildConfiguration) --logger trx
   displayName: Test
   workingDirectory: $(workingDirectory)
 
@@ -35,7 +37,7 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- script: dotnet publish ./Magnett.Automation.Core --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+- script: dotnet publish $(pojectFile) --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
   displayName: Publish
   workingDirectory: $(workingDirectory)
   
