@@ -15,7 +15,7 @@ variables:
   buildConfiguration: 'Release'
   workingDirectory: '$(Build.SourcesDirectory)'
   solutionFile: './magnett-automation-core.sln'
-  pojectFile: '$(Build.SourcesDirectory)/src/magnett.automation.core/magnett.automation.core.csproj'
+  pojectFile: '$(Build.SourcesDirectory)/src/Magnett.Automation.Core/Magnett.Automation.Core.csproj'
 
 steps:
 - script: dotnet restore $(solutionFile)
