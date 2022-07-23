@@ -4,84 +4,83 @@ using Xunit;
 
 using Magnett.Automation.Core.Contexts;
 
-namespace Magnett.Automation.Core.UnitTest.Contexts
+namespace Magnett.Automation.Core.UnitTest.Contexts;
+
+public class ContextManagerTest
 {
-    public class ContextManagerTest
+    private const string FieldValue = "Value";
+        
+    private static readonly ContextField<string> CtxField
+        = ContextField<string>.Create("OkFieldName");
+        
+    private static readonly ContextField<string> NofCtxField
+        = ContextField<string>.Create("NofFieldName");
+
+    [Fact]
+    public void Create_When_Invoke_Return_Valid_Instance()
     {
-        private const string FieldValue = "Value";
+        var ctxVault = new Mock<IContextVault>();
+        var instance = Context.Create(ctxVault.Object);
+            
+        Assert.NotNull(instance);
+        Assert.IsType<Context>(instance);
+    }
         
-        private static readonly ContextField<string> CtxField
-            = ContextField<string>.Create("OkFieldName");
+    [Fact]
+    public void Create_When_Invoke_With_Null_Throw_Exception()
+    {
+        Assert.Throws<ArgumentNullException>(()=> 
+            Context.Create(null));
+    }    
         
-        private static readonly ContextField<string> NofCtxField
-            = ContextField<string>.Create("NofFieldName");
+    [Fact]
+    public void Store_When_Invoke_Call_Vault_Set()
+    {
+        var ctxVault = new Mock<IContextVault>();
+        var ctxManager = Context.Create(ctxVault.Object);
 
-        [Fact]
-        public void Create_When_Invoke_Return_Valid_Instance()
-        {
-            var ctxVault = new Mock<IContextVault>();
-            var instance = Context.Create(ctxVault.Object);
+        ctxManager.Store(CtxField, FieldValue);
             
-            Assert.NotNull(instance);
-            Assert.IsType<Context>(instance);
-        }
+        ctxVault.Verify(
+            dic =>  dic.Set(CtxField, FieldValue), 
+            Times.Once);
+    }
         
-        [Fact]
-        public void Create_When_Invoke_With_Null_Throw_Exception()
-        {
-            Assert.Throws<ArgumentNullException>(()=> 
-                Context.Create(null));
-        }    
-        
-        [Fact]
-        public void Store_When_Invoke_Call_Vault_Set()
-        {
-            var ctxVault = new Mock<IContextVault>();
-            var ctxManager = Context.Create(ctxVault.Object);
+    [Fact]
+    public void Value_When_Field_Is_Found_Call_Vault_Get()
+    {
+        var ctxVault = new Mock<IContextVault>();
+        var ctxManager = Context.Create(ctxVault.Object);
 
-            ctxManager.Store(CtxField, FieldValue);
+        ctxVault
+            .Setup(vault => vault.HasItem(CtxField))
+            .Returns(true);
             
-            ctxVault.Verify(
-                dic =>  dic.Set(CtxField, FieldValue), 
-                Times.Once);
-        }
-        
-        [Fact]
-        public void Value_When_Field_Is_Found_Call_Vault_Get()
-        {
-            var ctxVault = new Mock<IContextVault>();
-            var ctxManager = Context.Create(ctxVault.Object);
+        ctxVault
+            .Setup(vault => vault.Get(CtxField))
+            .Returns(FieldValue);
 
-            ctxVault
-                .Setup(vault => vault.HasItem(CtxField))
-                .Returns(true);
+        var result = ctxManager.Value(CtxField);
             
-            ctxVault
-                .Setup(vault => vault.Get(CtxField))
-                .Returns(FieldValue);
-
-            var result = ctxManager.Value(CtxField);
+        ctxVault.Verify(
+            dic =>  dic.Get(CtxField), 
+            Times.Once);
             
-            ctxVault.Verify(
-                dic =>  dic.Get(CtxField), 
-                Times.Once);
+        Assert.Equal(FieldValue, result);
+    }
+
+    [Fact]
+    public void Value_When_Field_Is_Not_Found_Return_Default()
+    {
+        var ctxVault = new Mock<IContextVault>();
+        var ctxManager = Context.Create(ctxVault.Object);
+
+        ctxVault
+            .Setup(vault => vault.HasItem(NofCtxField))
+            .Returns(false);
+
+        var result = ctxManager.Value(NofCtxField);
             
-            Assert.Equal(FieldValue, result);
-        }
-
-        [Fact]
-        public void Value_When_Field_Is_Not_Found_Return_Default()
-        {
-            var ctxVault = new Mock<IContextVault>();
-            var ctxManager = Context.Create(ctxVault.Object);
-
-            ctxVault
-                .Setup(vault => vault.HasItem(NofCtxField))
-                .Returns(false);
-
-            var result = ctxManager.Value(NofCtxField);
-            
-            Assert.Equal(default(string), result);
-        }
+        Assert.Equal(default(string), result);
     }
 }

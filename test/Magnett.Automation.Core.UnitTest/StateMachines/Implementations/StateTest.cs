@@ -7,112 +7,111 @@ using Magnett.Automation.Core.StateMachines.Implementations;
 using Moq;
 using Xunit;
 
-namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations
+namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations;
+
+public class StateTest
 {
-    public class StateTest
+    private static readonly CommonNamedKey InitialStateKey =
+        CommonNamedKey.Create("Initial");
+
+    private static readonly CommonNamedKey NotFoundAction =
+        CommonNamedKey.Create("NotFoundAction");
+
+    private static readonly CommonNamedKey AnyAction =
+        CommonNamedKey.Create("AnyAction");
+
+    [Fact]
+    public void Create_When_Invoke_Return_Instance()
     {
-        private static readonly CommonNamedKey InitialStateKey =
-            CommonNamedKey.Create("Initial");
+        var instance = State.Create(
+            InitialStateKey.Name,
+            TransitionList.Create());
 
-        private static readonly CommonNamedKey NotFoundAction =
-            CommonNamedKey.Create("NotFoundAction");
+        Assert.NotNull(instance);
+    }
 
-        private static readonly CommonNamedKey AnyAction =
-            CommonNamedKey.Create("AnyAction");
-
-        [Fact]
-        public void Create_When_Invoke_Return_Instance()
-        {
-            var instance = State.Create(
+    [Fact]
+    public void Create_When_Invoke_With_Null_TransitionList_Throw_Exception()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            State.Create(
                 InitialStateKey.Name,
-                TransitionList.Create());
+                null));
+    }
 
-            Assert.NotNull(instance);
-        }
+    [Fact]
+    public void Create_When_Name_Is_Good_Is_Proper_Stored()
+    {
+        var instance = State.Create(
+            InitialStateKey.Name,
+            TransitionList.Create());
 
-        [Fact]
-        public void Create_When_Invoke_With_Null_TransitionList_Throw_Exception()
-        {
-            Assert.Throws<ArgumentNullException>(() =>
-                State.Create(
-                    InitialStateKey.Name,
-                    null));
-        }
+        Assert.Equal(InitialStateKey.Name, instance.Key.Name);
+    }
 
-        [Fact]
-        public void Create_When_Name_Is_Good_Is_Proper_Stored()
-        {
-            var instance = State.Create(
-                InitialStateKey.Name,
-                TransitionList.Create());
+    [Fact]
+    public void ManageAction_When_Action_NotFound_Throws_Exception()
+    {
+        var transitions = new Mock<TransitionList>();
 
-            Assert.Equal(InitialStateKey.Name, instance.Key.Name);
-        }
+        transitions
+            .Setup(list => list.HasItem(NotFoundAction))
+            .Returns(false);
 
-        [Fact]
-        public void ManageAction_When_Action_NotFound_Throws_Exception()
-        {
-            var transitions = new Mock<TransitionList>();
+        var state = State.Create(InitialStateKey.Name,
+            transitions.Object);
 
-            transitions
-                .Setup(list => list.HasItem(NotFoundAction))
-                .Returns(false);
+        Assert.Throws<ActionNotFoundException>(() =>
+            state.ManageAction(NotFoundAction));
+    }
 
-            var state = State.Create(InitialStateKey.Name,
-                transitions.Object);
+    [Fact]
+    public void ManageAction_When_Action_Is_Found_Call_Transactions_Get()
+    {
+        var transition = new Mock<ITransition>();
+        var transitions = new Mock<TransitionList>();
 
-            Assert.Throws<ActionNotFoundException>(() =>
-                state.ManageAction(NotFoundAction));
-        }
+        transitions
+            .Setup(list => list.HasItem(AnyAction))
+            .Returns(true);
 
-        [Fact]
-        public void ManageAction_When_Action_Is_Found_Call_Transactions_Get()
-        {
-            var transition = new Mock<ITransition>();
-            var transitions = new Mock<TransitionList>();
+        transitions
+            .Setup(list => list.Get(AnyAction))
+            .Returns(transition.Object);
 
-            transitions
-                .Setup(list => list.HasItem(AnyAction))
-                .Returns(true);
+        var state = State.Create(
+            InitialStateKey.Name,
+            transitions.Object);
 
-            transitions
-                .Setup(list => list.Get(AnyAction))
-                .Returns(transition.Object);
+        _ = state.ManageAction(AnyAction);
 
-            var state = State.Create(
-                InitialStateKey.Name,
-                transitions.Object);
+        transitions.Verify(
+            dic => dic.Get(AnyAction),
+            Times.Once);
+    }
 
-            _ = state.ManageAction(AnyAction);
+    [Fact]
+    public void IsFinalState_When_Invoke_Call_Transactions_IsEmpty()
+    {
+        var transitions = new Mock<TransitionList>();
 
-            transitions.Verify(
-                dic => dic.Get(AnyAction),
-                Times.Once);
-        }
+        var state = State.Create(
+            InitialStateKey.Name,
+            transitions.Object);
 
-        [Fact]
-        public void IsFinalState_When_Invoke_Call_Transactions_IsEmpty()
-        {
-            var transitions = new Mock<TransitionList>();
+        _ = state.IsFinalState();
 
-            var state = State.Create(
-                InitialStateKey.Name,
-                transitions.Object);
+        transitions.Verify(
+            dic => dic.IsEmpty(),
+            Times.Once);
+    }
 
-            _ = state.IsFinalState();
-
-            transitions.Verify(
-                dic => dic.IsEmpty(),
-                Times.Once);
-        }
-
-        [Fact]
-        public void ToString_When_Invoke_Return_KeyName()
-        {
-            var state = State.Create(InitialStateKey.Name, TransitionList.Create());
-            var toString = state.ToString();
+    [Fact]
+    public void ToString_When_Invoke_Return_KeyName()
+    {
+        var state = State.Create(InitialStateKey.Name, TransitionList.Create());
+        var toString = state.ToString();
             
-            Assert.Equal(InitialStateKey.Name, toString);
-        }
+        Assert.Equal(InitialStateKey.Name, toString);
     }
 }

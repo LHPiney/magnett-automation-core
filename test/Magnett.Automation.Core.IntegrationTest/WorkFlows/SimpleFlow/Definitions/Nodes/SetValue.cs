@@ -3,42 +3,41 @@ using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.WorkFlows;
 
-namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes
+namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
+
+internal class   SetValue : Common
 {
-    internal class   SetValue : Common
+    #region ExitCodes
+
+    public class ExitCode : Enumeration
     {
-        #region ExitCodes
+        public static readonly ExitCode Assigned  = new ExitCode(1, "Assigned"); 
 
-        public class ExitCode : Enumeration
-        {
-            public static readonly ExitCode Assigned  = new ExitCode(1, "Assigned"); 
-
-            private ExitCode(int id, string name) : base(id, name)
-            {
-            }
-        }
-        
-        #endregion
-        
-        private SetValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
-            base(key, contextDefinition)
+        private ExitCode(int id, string name) : base(id, name)
         {
         }
+    }
+        
+    #endregion
+        
+    private SetValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
+        base(key, contextDefinition)
+    {
+    }
         
 
-        public override NodeExit Execute(Context context)
-        {
-            var random = new Random();
+    public override NodeExit Execute(Context context)
+    {
+        var random = new Random();
             
-            context.Store(ContextDefinition.FirstDigit, random.Next(1000));
-            context.Store(ContextDefinition.SecondDigit, random.Next(1000));
+        context.Store(ContextDefinition.FirstDigit, random.Next(1000));
+        context.Store(ContextDefinition.SecondDigit, random.Next(1000));
 
-            return NodeExit.Create(ExitCode.Assigned.Name);
-        }
+        return NodeExit.Create(ExitCode.Assigned.Name);
+    }
         
-        public static SetValue Create(CommonNamedKey key, ContextDefinition contextDefinition)
-        {
-            return new SetValue(key, contextDefinition);
-        }
+    public static SetValue Create(CommonNamedKey key, ContextDefinition contextDefinition)
+    {
+        return new SetValue(key, contextDefinition);
     }
 }

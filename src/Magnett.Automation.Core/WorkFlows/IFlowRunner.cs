@@ -1,11 +1,7 @@
-﻿using System.Threading.Tasks;
-using Magnett.Automation.Core.Contexts;
+﻿namespace Magnett.Automation.Core.WorkFlows;
 
-namespace Magnett.Automation.Core.WorkFlows
+public interface IFlowRunner
 {
-    public interface IFlowRunner
-    {
-        public Context FlowContext { get; }
-        public  Task<NodeExit> Start();
-    }
+    public Context FlowContext { get; }
+    public  Task<NodeExit> Start();
 }

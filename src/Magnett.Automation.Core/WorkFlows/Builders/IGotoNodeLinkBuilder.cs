@@ -1,9 +1,6 @@
-﻿using Magnett.Automation.Core.Commons;
+﻿namespace Magnett.Automation.Core.WorkFlows.Builders;
 
-namespace Magnett.Automation.Core.WorkFlows.Builders
+public interface IGotoNodeLinkBuilder
 {
-    public interface IGotoNodeLinkBuilder
-    {
-        INodeLinkBuilder GoTo(CommonNamedKey toNodeKey);
-    }
+    INodeLinkBuilder GoTo(CommonNamedKey toNodeKey);
 }

@@ -1,45 +1,40 @@
-﻿using System;
-using Magnett.Automation.Core.Commons;
-using Magnett.Automation.Core.StateMachines.Collections;
+﻿namespace Magnett.Automation.Core.StateMachines.Implementations;
 
-namespace Magnett.Automation.Core.StateMachines.Implementations
+internal class MachineDefinition : IMachineDefinition
 {
-    internal class MachineDefinition : IMachineDefinition
+    private readonly StateList _stateList; 
+        
+    private MachineDefinition(
+        IState initialState, 
+        StateList stateList)
     {
-        private readonly StateList _stateList; 
-        
-        private MachineDefinition(
-            IState initialState, 
-            StateList stateList)
-        {
-            InitialState = initialState ??
-                           throw new ArgumentNullException(nameof(initialState));
+        InitialState = initialState ??
+                       throw new ArgumentNullException(nameof(initialState));
                            
-            _stateList = stateList ??
-                      throw new ArgumentNullException(nameof(stateList));
-        }
+        _stateList = stateList ??
+                     throw new ArgumentNullException(nameof(stateList));
+    }
         
-        #region IMachineDefinition
+    #region IMachineDefinition
 
-        public IState InitialState { get; }
+    public IState InitialState { get; }
         
-        public bool HasState(CommonNamedKey stateKey)
-        {
-            return _stateList.HasItem(stateKey);
-        }
+    public bool HasState(CommonNamedKey stateKey)
+    {
+        return _stateList.HasItem(stateKey);
+    }
 
-        public IState GetState(CommonNamedKey stateKey)
-        {
-            return _stateList.Get(stateKey);
-        }
+    public IState GetState(CommonNamedKey stateKey)
+    {
+        return _stateList.Get(stateKey);
+    }
 
-        #endregion
+    #endregion
         
-        public static IMachineDefinition Create(
-            IState initialState,
-            StateList stateList)
-        {
-            return new MachineDefinition(initialState, stateList);
-        }
+    public static IMachineDefinition Create(
+        IState initialState,
+        StateList stateList)
+    {
+        return new MachineDefinition(initialState, stateList);
     }
 }

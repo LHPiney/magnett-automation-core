@@ -4,78 +4,77 @@ using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.WorkFlows.Collections;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
-namespace Magnett.Automation.Core.WorkFlows.Implementations
+namespace Magnett.Automation.Core.WorkFlows.Implementations;
+
+internal class  FlowDefinition : IFlowDefinition
 {
-    internal class  FlowDefinition : IFlowDefinition
-    {
-        private readonly NodeList     _nodes;
-        private readonly NodeLinkList _links;
+    private readonly NodeList     _nodes;
+    private readonly NodeLinkList _links;
         
-       private FlowDefinition(
-            INodeBase    initialNode,
-            NodeList     nodes,
-            NodeLinkList links)
+    private FlowDefinition(
+        INodeBase    initialNode,
+        NodeList     nodes,
+        NodeLinkList links)
+    {
+        InitialNode = initialNode
+                      ?? throw new ArgumentNullException(nameof(initialNode));
+        _nodes = nodes 
+                 ?? throw new ArgumentNullException(nameof(nodes));
+        _links = links
+                 ?? throw new ArgumentNullException(nameof(links));
+    }
+
+    #region IFlowDefinition
+
+    public INodeBase InitialNode { get; }
+
+    public bool HasNode(CommonNamedKey nodeKey)
+    {
+        return _nodes.HasItem(nodeKey);
+    }
+       
+    public INodeBase GetNode(CommonNamedKey nodeKey)
+    {
+        return _nodes.Get(nodeKey);
+    }
+
+    public INodeBase GetNode(INodeBase sourceNode, string code)
+    {
+        INodeBase result = null;
+
+        var link = HasLink(sourceNode, code)
+            ? GetLink(sourceNode, code)
+            : null;
+
+        if (link != null)
         {
-            InitialNode = initialNode
-                          ?? throw new ArgumentNullException(nameof(initialNode));
-            _nodes = nodes 
-                     ?? throw new ArgumentNullException(nameof(nodes));
-            _links = links
-                     ?? throw new ArgumentNullException(nameof(links));
+            result = GetNode(link.ToNodeKey);
         }
 
-       #region IFlowDefinition
+        return result;
+    }
 
-       public INodeBase InitialNode { get; }
+    public bool HasLink(INodeBase sourceNode, string code)
+    {
+        var linkKey = NodeLinkKey.Create(sourceNode?.Key, code);
 
-       public bool HasNode(CommonNamedKey nodeKey)
-       {
-           return _nodes.HasItem(nodeKey);
-       }
+        return _links.HasItem(linkKey);
+    }
        
-       public INodeBase GetNode(CommonNamedKey nodeKey)
-       {
-           return _nodes.Get(nodeKey);
-       }
+    public INodeLink GetLink(INodeBase sourceNode, string code)
+    {
+        var linkKey = NodeLinkKey.Create(sourceNode?.Key, code);
 
-       public INodeBase GetNode(INodeBase sourceNode, string code)
-       {
-           INodeBase result = null;
-
-           var link = HasLink(sourceNode, code)
-               ? GetLink(sourceNode, code)
-               : null;
-
-           if (link != null)
-           {
-               result = GetNode(link.ToNodeKey);
-           }
-
-           return result;
-       }
-
-       public bool HasLink(INodeBase sourceNode, string code)
-       {
-           var linkKey = NodeLinkKey.Create(sourceNode?.Key, code);
-
-           return _links.HasItem(linkKey);
-       }
+        return  _links.Get(linkKey);
+    }
+    #endregion
        
-       public INodeLink GetLink(INodeBase sourceNode, string code)
-       {
-           var linkKey = NodeLinkKey.Create(sourceNode?.Key, code);
+    public static FlowDefinition Create(            
+        INodeBase    initialNode,
+        NodeList     nodes,
+        NodeLinkList links)
 
-           return  _links.Get(linkKey);
-       }
-       #endregion
-       
-        public static FlowDefinition Create(            
-            INodeBase    initialNode,
-            NodeList     nodes,
-            NodeLinkList links)
-
-        {
-            return new FlowDefinition(initialNode, nodes, links);
-        }
+    {
+        return new FlowDefinition(initialNode, nodes, links);
     }
 }

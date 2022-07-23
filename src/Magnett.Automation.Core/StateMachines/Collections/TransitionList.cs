@@ -1,12 +1,9 @@
-﻿using Magnett.Automation.Core.Commons;
+﻿namespace Magnett.Automation.Core.StateMachines.Collections;
 
-namespace Magnett.Automation.Core.StateMachines.Collections
+public class TransitionList : DictionaryWrapper<ITransition>
 {
-    public class TransitionList : DictionaryWrapper<ITransition>
+    public static TransitionList Create()
     {
-        public static TransitionList Create()
-        {
-            return new();
-        }
+        return new();
     }
 }

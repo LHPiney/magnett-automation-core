@@ -2,42 +2,41 @@
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.WorkFlows;
 
-namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes
+namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
+
+internal class SumValue : Common
 {
-    internal class SumValue : Common
+    #region ExitCodes
+
+    public class ExitCode : Enumeration
     {
-        #region ExitCodes
+        public static readonly ExitCode Done  = new ExitCode(1, "Done"); 
 
-        public class ExitCode : Enumeration
-        {
-            public static readonly ExitCode Done  = new ExitCode(1, "Done"); 
-
-            private ExitCode(int id, string name) : base(id, name)
-            {
-            }
-        }
-        
-        #endregion
-        
-        private SumValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
-            base(key, contextDefinition)
+        private ExitCode(int id, string name) : base(id, name)
         {
         }
+    }
+        
+    #endregion
+        
+    private SumValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
+        base(key, contextDefinition)
+    {
+    }
 
 
-        public override NodeExit Execute(Context context)
-        {
-            var firstDigit  = context.Value(ContextDefinition.FirstDigit);
-            var secondDigit = context.Value(ContextDefinition.SecondDigit);
+    public override NodeExit Execute(Context context)
+    {
+        var firstDigit  = context.Value(ContextDefinition.FirstDigit);
+        var secondDigit = context.Value(ContextDefinition.SecondDigit);
             
-            context.Store(ContextDefinition.Result, firstDigit + secondDigit);
+        context.Store(ContextDefinition.Result, firstDigit + secondDigit);
 
-            return NodeExit.Create(ExitCode.Done.Name);
-        }
+        return NodeExit.Create(ExitCode.Done.Name);
+    }
         
-        public static SumValue Create(CommonNamedKey key, ContextDefinition contextDefinition)
-        {
-            return new SumValue(key, contextDefinition);
-        }
+    public static SumValue Create(CommonNamedKey key, ContextDefinition contextDefinition)
+    {
+        return new SumValue(key, contextDefinition);
     }
 }
