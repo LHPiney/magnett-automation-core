@@ -1,12 +1,9 @@
-﻿using Magnett.Automation.Core.Commons;
+﻿namespace Magnett.Automation.Core.Contexts.Implementations;
 
-namespace Magnett.Automation.Core.Contexts.Implementations
+internal class ContextVault : DictionaryWrapper<object>, IContextVault
 {
-    internal class ContextVault : DictionaryWrapper<object>, IContextVault
+    public static ContextVault Create()
     {
-        public static ContextVault Create()
-        {
-            return new();
-        }
+        return new();
     }
 }

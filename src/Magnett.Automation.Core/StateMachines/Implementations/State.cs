@@ -1,55 +1,48 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Magnett.Automation.Core.Commons;
-using Magnett.Automation.Core.StateMachines.Collections;
-using Magnett.Automation.Core.StateMachines.Exceptions;
+﻿[assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
+namespace Magnett.Automation.Core.StateMachines.Implementations;
 
-[assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
-namespace Magnett.Automation.Core.StateMachines.Implementations
+internal class State : IState
 {
-    internal class State : IState
+    private readonly TransitionList _transitionList;
+        
+    public CommonNamedKey Key { get; }
+
+    private State(string name, TransitionList transitionList)
     {
-        private readonly TransitionList _transitionList;
+        Key = CommonNamedKey.Create(name);
+
+        _transitionList = transitionList
+                          ?? throw new ArgumentNullException(nameof(transitionList));
+    }
         
-        public CommonNamedKey Key { get; }
+    private bool CanManageAction(CommonNamedKey actionName)
+    {
+        return _transitionList
+            .HasItem(actionName);
+    }
 
-        private State(string name, TransitionList transitionList)
-        {
-            Key = CommonNamedKey.Create(name);
+    #region IState
+    public ITransition ManageAction(CommonNamedKey actionName)
+    {
+        return CanManageAction(actionName)
+            ? _transitionList.Get(actionName)
+            : throw new ActionNotFoundException(Key.Name, actionName.Name);
+    }
 
-            _transitionList = transitionList
-                              ?? throw new ArgumentNullException(nameof(transitionList));
-        }
-        
-        private bool CanManageAction(CommonNamedKey actionName)
-        {
-            return _transitionList
-                .HasItem(actionName);
-        }
+    public bool IsFinalState()
+    {
+        return _transitionList.IsEmpty();
+    }
 
-        #region IState
-        public ITransition ManageAction(CommonNamedKey actionName)
-        {
-            return CanManageAction(actionName)
-                ? _transitionList.Get(actionName)
-                : throw new ActionNotFoundException(Key.Name, actionName.Name);
-        }
+    #endregion
 
-        public bool IsFinalState()
-        {
-            return _transitionList.IsEmpty();
-        }
+    public override string ToString()
+    {
+        return Key.Name;
+    }
 
-        #endregion
-
-        public override string ToString()
-        {
-            return Key.Name;
-        }
-
-        public static State Create(string name, TransitionList transitionList)
-        {
-            return new(name, transitionList);
-        }
+    public static State Create(string name, TransitionList transitionList)
+    {
+        return new(name, transitionList);
     }
 }

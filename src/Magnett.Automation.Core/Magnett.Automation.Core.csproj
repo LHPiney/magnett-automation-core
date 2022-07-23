@@ -4,21 +4,42 @@
         <PackageId>Magnett.Automation.Core</PackageId>
         <RootNamespace>Magnett.Automation.Core</RootNamespace>
         <Title>Magnett Automation</Title>
-        <Authors>Magnett @LHPiney</Authors>
-        <Description>Magnett automation is build to facilitate de creation of automatic process and workflows using code.</Description>
+        <authors>Magnett</authors>
+        <owners>@LHPiney</owners>
+        <Description>Magnett automation is build to facilitate orchestation workflows for process, services, integrations using code.</Description>
         <Product>Magnett.Automation.Core</Product>
+        <Icon>PackageIcon.png</Icon>
         <PackageVersion>0.5.1</PackageVersion>
         <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
-        <PackageTags>worlfow automation statemachine</PackageTags>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageTags>worlfow orchestation automation statemachine</PackageTags>
         <AssemblyVersion>0.5.1</AssemblyVersion>
         <LangVersion>10</LangVersion>
         <TargetFramework>net6.0</TargetFramework>
         <PackageId>Magnett.Automation.Core</PackageId>
         <PackageProjectUrl>https://github.com/LHPiney/magnett-automation-core</PackageProjectUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
     </PropertyGroup>
-
+    <PropertyGroup Label="Package">
+      <PackageIcon>PackageIcon.png</PackageIcon>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+      <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
     <ItemGroup>
-      <Folder Include="WorkFlows\Implementations\Nodes" />
+      <None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
+      <None Include="..\..\RELEASE-NOTES.md" Pack="true" PackagePath="\" />
+      <None Include="PackageIcon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
-
+    <ItemGroup>
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
 </Project>

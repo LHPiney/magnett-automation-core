@@ -1,10 +1,6 @@
-﻿using System.Threading.Tasks;
-using Magnett.Automation.Core.Contexts;
+﻿namespace Magnett.Automation.Core.WorkFlows;
 
-namespace Magnett.Automation.Core.WorkFlows
+public interface INodeAsync : INodeBase
 {
-    public interface INodeAsync : INodeBase
-    {
-        Task<NodeExit> Execute(Context context);
-    }
+    Task<NodeExit> Execute(Context context);
 }

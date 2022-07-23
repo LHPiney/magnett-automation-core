@@ -1,12 +1,9 @@
-﻿using Magnett.Automation.Core.Commons;
+﻿namespace Magnett.Automation.Core.WorkFlows;
 
-namespace Magnett.Automation.Core.WorkFlows
+public interface INodeLink
 {
-    public interface INodeLink
-    {
-        CommonNamedKey Key { get; }
-        CommonNamedKey FromNodeKey { get; }
-        CommonNamedKey ToNodeKey { get; }
-        string Code { get; }
-    }
+    CommonNamedKey Key { get; }
+    CommonNamedKey FromNodeKey { get; }
+    CommonNamedKey ToNodeKey { get; }
+    string Code { get; }
 }

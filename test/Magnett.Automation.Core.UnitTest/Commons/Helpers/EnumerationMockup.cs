@@ -1,16 +1,15 @@
 ﻿using Magnett.Automation.Core.Commons;
 
-namespace Magnett.Automation.Core.UnitTest.Commons.Helpers
+namespace Magnett.Automation.Core.UnitTest.Commons.Helpers;
+
+public class EnumerationMockup : Enumeration
 {
-    public class EnumerationMockup : Enumeration
+    public int GetId()
     {
-        public int GetId()
-        {
-            return Id;
-        }
-        public EnumerationMockup(int id, string name) :
-            base(id, name)
-        {
-        }
+        return Id;
+    }
+    public EnumerationMockup(int id, string name) :
+        base(id, name)
+    {
     }
 }

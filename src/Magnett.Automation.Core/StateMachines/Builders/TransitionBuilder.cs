@@ -1,43 +1,38 @@
-﻿using System;
-using Magnett.Automation.Core.Commons;
-using Magnett.Automation.Core.StateMachines.Implementations;
+﻿namespace Magnett.Automation.Core.StateMachines.Builders;
 
-namespace Magnett.Automation.Core.StateMachines.Builders
-{
-    public class 
+public class 
     TransitionBuilder
+{
+    private readonly string _actionName;
+    private readonly Func<ITransition, StateBuilder> _storeAction;
+        
+    private TransitionBuilder(
+        string actionName, 
+        Func<ITransition, StateBuilder> storeAction)
     {
-        private readonly string _actionName;
-        private readonly Func<ITransition, StateBuilder> _storeAction;
-        
-        private TransitionBuilder(
-            string actionName, 
-            Func<ITransition, StateBuilder> storeAction)
-        {
-            if (string.IsNullOrEmpty(actionName))
-                throw new ArgumentNullException(nameof(actionName));
+        if (string.IsNullOrEmpty(actionName))
+            throw new ArgumentNullException(nameof(actionName));
 
-            _actionName = actionName;
-            _storeAction = storeAction ??
-                           throw new ArgumentNullException(nameof(storeAction));
-        }
+        _actionName = actionName;
+        _storeAction = storeAction ??
+                       throw new ArgumentNullException(nameof(storeAction));
+    }
 
-        public StateBuilder ToState(Enumeration state)
-        {
-            return ToState(state.Name);
-        }
+    public StateBuilder ToState(Enumeration state)
+    {
+        return ToState(state.Name);
+    }
         
-        public StateBuilder ToState(string stateName)
-        {
-            return _storeAction.Invoke(
-                Transition.Create(_actionName, stateName));
-        }
+    public StateBuilder ToState(string stateName)
+    {
+        return _storeAction.Invoke(
+            Transition.Create(_actionName, stateName));
+    }
         
-        public static TransitionBuilder Create(
-            string actionName,
-            Func<ITransition, StateBuilder> storeAction)
-        {
-            return new(actionName, storeAction);
-        }
+    public static TransitionBuilder Create(
+        string actionName,
+        Func<ITransition, StateBuilder> storeAction)
+    {
+        return new(actionName, storeAction);
     }
 }
