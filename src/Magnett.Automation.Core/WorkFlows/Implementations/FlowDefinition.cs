@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.WorkFlows.Collections;
+using Magnett.Automation.Core.WorkFlows.Definitions.Collections;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.WorkFlows.Implementations;

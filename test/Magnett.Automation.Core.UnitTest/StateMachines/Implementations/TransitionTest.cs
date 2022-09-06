@@ -1,8 +1,7 @@
-﻿using Magnett.Automation.Core.StateMachines;
-using Magnett.Automation.Core.StateMachines.Implementations;
+﻿using Magnett.Automation.Core.StateMachines.Implementations;
 using Xunit;
 
-namespace Magnett.Automation.Core.UnitTest.StateMachines;
+namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations;
 
 public class TransitionTest
 {

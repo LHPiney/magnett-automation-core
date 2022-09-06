@@ -5,6 +5,7 @@ using Xunit;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Collections;
+using Magnett.Automation.Core.WorkFlows.Definitions.Collections;
 using Magnett.Automation.Core.WorkFlows.Implementations;
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations;

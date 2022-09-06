@@ -1,4 +1,4 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Builders; 
+﻿namespace Magnett.Automation.Core.WorkFlows.Definitions.Builders; 
 
 public class NodeLinkBuilder : INodeLinkBuilder, IGotoNodeLinkBuilder
 {

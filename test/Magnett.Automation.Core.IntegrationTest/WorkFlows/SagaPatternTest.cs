@@ -2,7 +2,9 @@
 using Xunit;
 
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
+using Newtonsoft.Json;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows;
 
@@ -40,5 +42,18 @@ public class SagaPatternTest
         Assert.NotNull(result);
         Assert.True(result.Order.State.Equals(OrderStateDefinition.State.Cancelled));
         Assert.True(result.Payment.State.Equals(PaymentStateDefinition.State.Cancelled));
+    }
+    
+    [Fact]
+    public async Task SagaPattern_Serialization()
+    {
+        var saga = Saga.Create(
+            new SagaRequest(
+                50.0, 
+                "Operation without credit", 
+                20.0, 
+                true));
+                        
+        var definition =JsonConvert.SerializeObject(SagaPatternDefinition.Definition );   
     }
 }   

@@ -1,15 +1,17 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Builders;
+﻿using Magnett.Automation.Core.WorkFlows.Definitions.Collections;
+
+namespace Magnett.Automation.Core.WorkFlows.Definitions.Builders;
 
 public class FlowDefinitionBuilder
 {
-    private readonly NodeList     _nodes;
+    private readonly NodeDefinitionList _nodes;
     private readonly NodeLinkList _links;
         
     private INodeBase _initialNode;
 
     private FlowDefinitionBuilder()
     {
-        _nodes = NodeList.Create();
+        _nodes = NodeDefinitionList.Create();
         _links = NodeLinkList.Create();
     }
 
@@ -29,7 +31,7 @@ public class FlowDefinitionBuilder
     {
         _initialNode = node;
 
-        return WithNode(node);
+        return WithNode(node);  
     }
 
     public INodeLinkBuilder WithNode(INodeBase node)
