@@ -2,8 +2,8 @@
 using Xunit;
 
 using Magnett.Automation.Core.Contexts;
-using Magnett.Automation.Core.WorkFlows.Implementations;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows;
 

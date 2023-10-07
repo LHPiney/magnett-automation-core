@@ -1,4 +1,4 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Implementations;
+﻿namespace Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 public abstract class Node : NodeBase, INode
 {

@@ -1,4 +1,6 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Implementations;
+﻿using Magnett.Automation.Core.WorkFlows.Definitions;
+
+namespace Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 public abstract class FlowRunnerBase : IFlowRunner
 {

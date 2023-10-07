@@ -6,6 +6,8 @@ using Xunit;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 using Magnett.Automation.Core.WorkFlows;
+using Magnett.Automation.Core.WorkFlows.Definitions;
+using Magnett.Automation.Core.WorkFlows.Runtimes;
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations;
 

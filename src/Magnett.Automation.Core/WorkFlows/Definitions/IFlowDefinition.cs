@@ -1,4 +1,6 @@
-﻿namespace Magnett.Automation.Core.WorkFlows;
+﻿using Magnett.Automation.Core.WorkFlows.Runtimes;
+
+namespace Magnett.Automation.Core.WorkFlows.Definitions;
 
 public interface IFlowDefinition
 {

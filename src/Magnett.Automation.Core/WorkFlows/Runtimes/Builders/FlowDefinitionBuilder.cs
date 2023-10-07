@@ -1,4 +1,9 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Builders;
+﻿using Magnett.Automation.Core.WorkFlows.Definitions;
+using Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Collections;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
+
+namespace Magnett.Automation.Core.WorkFlows.Runtimes.Builders;
 
 public class FlowDefinitionBuilder
 {

@@ -1,6 +1,7 @@
 ﻿using Magnett.Automation.Core.WorkFlows;
-using Magnett.Automation.Core.WorkFlows.Builders;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes;
+using Magnett.Automation.Core.WorkFlows.Definitions;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Builders;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions;
 

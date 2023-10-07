@@ -1,4 +1,4 @@
-﻿namespace Magnett.Automation.Core.WorkFlows;
+﻿namespace Magnett.Automation.Core.WorkFlows.Runtimes;
 
 public interface INodeAsync : INodeBase
 {

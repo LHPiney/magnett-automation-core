@@ -1,4 +1,4 @@
-﻿using Magnett.Automation.Core.WorkFlows.Collections;
+﻿using Magnett.Automation.Core.WorkFlows.Runtimes.Collections;
 using Xunit;
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows.Collections;

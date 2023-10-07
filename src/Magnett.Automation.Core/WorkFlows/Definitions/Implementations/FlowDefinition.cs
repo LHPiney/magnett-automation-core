@@ -1,11 +1,9 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Magnett.Automation.Core.Commons;
-using Magnett.Automation.Core.WorkFlows.Collections;
+﻿using Magnett.Automation.Core.WorkFlows.Runtimes;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Collections;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
-namespace Magnett.Automation.Core.WorkFlows.Implementations;
-
+namespace Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
 internal class  FlowDefinition : IFlowDefinition
 {
     private readonly NodeList     _nodes;

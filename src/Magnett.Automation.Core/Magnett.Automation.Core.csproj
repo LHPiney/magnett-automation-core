@@ -42,4 +42,8 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="WorkFlows\Definitions\Builders\" />
+      <Folder Include="WorkFlows\Definitions\Colletions\" />
+    </ItemGroup>
 </Project>
