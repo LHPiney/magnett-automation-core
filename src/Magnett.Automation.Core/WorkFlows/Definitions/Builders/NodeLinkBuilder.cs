@@ -1,18 +1,18 @@
-﻿using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
+﻿using Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
 
-namespace Magnett.Automation.Core.WorkFlows.Runtimes.Builders; 
+namespace Magnett.Automation.Core.WorkFlows.Definitions.Builders; 
 
 public class NodeLinkBuilder : INodeLinkBuilder, IGotoNodeLinkBuilder
 {
-    private readonly INodeBase _fromNode;
-    private readonly Func<INodeBase, INodeLink, INodeLinkBuilder> _storeAction;
+    private readonly CommonNamedKey _fromNode;
+    private readonly Func<CommonNamedKey, INodeLink, INodeLinkBuilder> _storeAction;
     private readonly Func<FlowDefinitionBuilder> _returnAction;
         
     private string _code;
         
     private NodeLinkBuilder(
-        INodeBase fromNode, 
-        Func<INodeBase, INodeLink, INodeLinkBuilder> storeAction,
+        CommonNamedKey fromNode, 
+        Func<CommonNamedKey, INodeLink, INodeLinkBuilder> storeAction,
         Func<FlowDefinitionBuilder> returnAction)
     {
         _fromNode = fromNode
@@ -47,13 +47,13 @@ public class NodeLinkBuilder : INodeLinkBuilder, IGotoNodeLinkBuilder
     {
         return _storeAction.Invoke(
             _fromNode,
-            NodeLink.Create(_fromNode.Key, toNodeKey, _code));
+            NodeLink.Create(_fromNode, toNodeKey, _code));
     }
     #endregion
 
     public static INodeLinkBuilder Create(
-        INodeBase fromNode,  
-        Func<INodeBase, INodeLink, INodeLinkBuilder> storeAction, 
+        CommonNamedKey fromNode,  
+        Func<CommonNamedKey, INodeLink, INodeLinkBuilder> storeAction, 
         Func<FlowDefinitionBuilder> returnAction)
     {
         return new NodeLinkBuilder(fromNode, storeAction, returnAction);

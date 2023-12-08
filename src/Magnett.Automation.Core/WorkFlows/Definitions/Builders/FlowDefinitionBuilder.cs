@@ -1,25 +1,24 @@
-﻿using Magnett.Automation.Core.WorkFlows.Definitions;
+﻿using Magnett.Automation.Core.WorkFlows.Definitions.Collections;
 using Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
-using Magnett.Automation.Core.WorkFlows.Runtimes.Collections;
-using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
+using Magnett.Automation.Core.WorkFlows.Runtimes;
 
-namespace Magnett.Automation.Core.WorkFlows.Runtimes.Builders;
+namespace Magnett.Automation.Core.WorkFlows.Definitions.Builders;
 
 public class FlowDefinitionBuilder
 {
-    private readonly NodeList     _nodes;
-    private readonly NodeLinkList _links;
+    private readonly NodeLinkList       _links;
+    private readonly NodeDefinitionList _nodes;
         
-    private INodeBase _initialNode;
+    private CommonNamedKey _initialNode;
 
     private FlowDefinitionBuilder()
     {
-        _nodes = NodeList.Create();
         _links = NodeLinkList.Create();
+        _nodes = NodeDefinitionList.Create();
     }
 
     private INodeLinkBuilder StoreNodeLink(
-        INodeBase sourceNode,
+        CommonNamedKey sourceNode,
         INodeLink nodeLink)
     {
         _links.Add(nodeLink.Key, nodeLink);
@@ -30,19 +29,21 @@ public class FlowDefinitionBuilder
             () => this);
     }
 
-    public INodeLinkBuilder WithInitialNode(INodeBase node)
+    public INodeLinkBuilder WithInitialNode<TNodeType>(CommonNamedKey nodeName)
     {
-        _initialNode = node;
+        _initialNode = nodeName;
 
-        return WithNode(node);
+        return WithNode<TNodeType>(nodeName);
     }
 
-    public INodeLinkBuilder WithNode(INodeBase node)
+    public INodeLinkBuilder WithNode<TNodeType>(CommonNamedKey nodeName)
     {
-        _nodes.Add(node.Key, node);
+        _nodes.Add(
+            nodeName,
+            NodeDefinition.Create<TNodeType>(nodeName));
 
         return NodeLinkBuilder.Create(
-            node, 
+            nodeName, 
             StoreNodeLink, 
             () => this);
     }

@@ -1,4 +1,6 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
+﻿using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
+
+namespace Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
 
 public class NodeLink : INodeLink
 {

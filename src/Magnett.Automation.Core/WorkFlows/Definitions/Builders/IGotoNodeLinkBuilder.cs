@@ -1,4 +1,4 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Runtimes.Builders;
+﻿namespace Magnett.Automation.Core.WorkFlows.Definitions.Builders;
 
 public interface IGotoNodeLinkBuilder
 {

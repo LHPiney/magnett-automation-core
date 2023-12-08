@@ -14,7 +14,7 @@ public class Flow : IFlow
 
     public Guid Id { get; } = Guid.NewGuid();
         
-    public Context  Context => _flowRunner.FlowContext;
+    public Context  Context => _flowRunner.Context;
 
     public async Task<NodeExit> Run()
     {

@@ -1,4 +1,4 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Runtimes.Collections;
+﻿namespace Magnett.Automation.Core.WorkFlows.Definitions.Collections;
 
 public class NodeLinkList : DictionaryWrapper<INodeLink>
 {

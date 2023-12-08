@@ -2,6 +2,6 @@
 
 public interface IFlowRunner
 {
-    public Context FlowContext { get; }
+    public Context Context { get; }
     public  Task<NodeExit> Start();
 }
