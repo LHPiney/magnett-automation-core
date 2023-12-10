@@ -10,13 +10,12 @@ jobs:
     name: Build
     runs-on: windows-latest
     steps:
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
-          overwrite-settings: false
-      - uses: actions/checkout@v2
+          java-version: 17
+          distribution: 'zulu' # Alternative distribution options are available.
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Setup .NET 6
@@ -32,14 +31,14 @@ jobs:
         with:
           dotnet-version: 8.x.x
       - name: Cache SonarCloud packages
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~\sonar\cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
@@ -56,8 +55,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
-            
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"magnett_automation" /o:"lhpiney-1" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+
           dotnet restore
           dotnet build -c Release --no-restore
           dotnet test  -c Release --no-build --verbosity normal ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
