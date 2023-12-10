@@ -3,7 +3,6 @@ using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
-using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
@@ -14,7 +13,7 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definiti
 /// </summary>
 public class CancelPayment : NodeAsync    
 {
-    private CancelPayment(string name) : base(name)
+    public CancelPayment(CommonNamedKey name) : base(name)
     {
     }
     
@@ -45,10 +44,5 @@ public class CancelPayment : NodeAsync
             ExitCode.Done, 
             true, 
             $"Payment cancelled id [{payment.Id}] [{payment.State}]");
-    }
-    
-    public static CancelPayment Create(CommonNamedKey nodeName)
-    {
-        return new CancelPayment(nodeName?.Name);
     }
 }

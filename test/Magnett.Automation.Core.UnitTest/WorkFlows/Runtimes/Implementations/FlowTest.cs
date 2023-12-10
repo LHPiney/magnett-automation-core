@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.WorkFlows.Runtimes;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 using Moq;
 using Xunit;
 
-using Magnett.Automation.Core.WorkFlows;
-using Magnett.Automation.Core.WorkFlows.Runtimes;
-using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
-
-namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations;
+namespace Magnett.Automation.Core.UnitTest.WorkFlows.Runtimes.Implementations;
 
 public class FlowTest
 {
@@ -48,12 +46,12 @@ public class FlowTest
         var context = Context.Create();
         var flowRunner = new Mock<IFlowRunner>();
 
-        flowRunner.SetupGet(mock => mock.FlowContext)
+        flowRunner.SetupGet(mock => mock.Context)
             .Returns(context);
 
         _ = Flow.Create(flowRunner.Object).Context;
             
-        flowRunner.VerifyGet(mock => mock.FlowContext, Times.Once);
+        flowRunner.VerifyGet(mock => mock.Context, Times.Once);
     }
         
     [Fact]

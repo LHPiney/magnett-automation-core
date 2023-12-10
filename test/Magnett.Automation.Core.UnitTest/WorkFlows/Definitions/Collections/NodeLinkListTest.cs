@@ -1,7 +1,7 @@
-﻿using Magnett.Automation.Core.WorkFlows.Runtimes.Collections;
+﻿using Magnett.Automation.Core.WorkFlows.Definitions.Collections;
 using Xunit;
 
-namespace Magnett.Automation.Core.UnitTest.WorkFlows.Collections;
+namespace Magnett.Automation.Core.UnitTest.WorkFlows.Definitions.Collections;
 
 public class NodeLinkListTest
 {

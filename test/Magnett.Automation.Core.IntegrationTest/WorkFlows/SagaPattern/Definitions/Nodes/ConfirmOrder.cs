@@ -3,7 +3,6 @@ using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
-using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
@@ -14,7 +13,7 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definiti
 /// </summary>
 public class ConfirmOrder : NodeAsync    
 {
-    private ConfirmOrder(string name) : base(name)
+    public ConfirmOrder(CommonNamedKey name) : base(name)
     {
     }
     
@@ -45,10 +44,5 @@ public class ConfirmOrder : NodeAsync
             ExitCode.Done, 
             false, 
             $"Order confirmed id [{order.Id}] [{order.State}]");
-    }
-    
-    public static ConfirmOrder Create(CommonNamedKey nodeName)
-    {
-        return new ConfirmOrder(nodeName?.Name);
     }
 }

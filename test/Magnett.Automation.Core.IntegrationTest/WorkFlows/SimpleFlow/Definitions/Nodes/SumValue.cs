@@ -1,11 +1,11 @@
 ﻿using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
-using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 
-internal class SumValue : Common
+internal class SumValue : Node
 {
     #region ExitCodes
 
@@ -20,12 +20,10 @@ internal class SumValue : Common
         
     #endregion
         
-    private SumValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
-        base(key, contextDefinition)
+    public SumValue(CommonNamedKey key) : base(key)
     {
     }
-
-
+    
     public override NodeExit Execute(Context context)
     {
         var firstDigit  = context.Value(ContextDefinition.FirstDigit);
@@ -34,10 +32,5 @@ internal class SumValue : Common
         context.Store(ContextDefinition.Result, firstDigit + secondDigit);
 
         return NodeExit.Create(ExitCode.Done.Name);
-    }
-        
-    public static SumValue Create(CommonNamedKey key, ContextDefinition contextDefinition)
-    {
-        return new SumValue(key, contextDefinition);
     }
 }

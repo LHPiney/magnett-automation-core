@@ -1,14 +1,12 @@
-﻿using Magnett.Automation.Core.WorkFlows;
-using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
+﻿using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 using Magnett.Automation.Core.WorkFlows.Definitions;
-using Magnett.Automation.Core.WorkFlows.Runtimes.Builders;
+using Magnett.Automation.Core.WorkFlows.Definitions.Builders;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions;
 
 public static class SimpleFlowDefinition
 {
     private static IFlowDefinition   _definition;
-    private static ContextDefinition _contextDefinition;
         
     static SimpleFlowDefinition()
     {
@@ -17,18 +15,17 @@ public static class SimpleFlowDefinition
         
     private static void CreateDefinition()
     {
-        _contextDefinition = ContextDefinition.Create();
-            
         _definition = FlowDefinitionBuilder.Create()
-            .WithInitialNode(ResetValue.Create(NodeName.Reset, _contextDefinition))
+            .WithInitialNode<ResetValue>(NodeName.Reset)
             .OnExitCode(ResetValue.ExitCode.Ok).GoTo(NodeName.SetValue)
             .Build()
                 
-            .WithNode(SetValue.Create(NodeName.SetValue, _contextDefinition))
+            .WithNode<SetValue>(NodeName.SetValue)
             .OnExitCode(SetValue.ExitCode.Assigned).GoTo(NodeName.SumValue)
             .Build()
                 
-            .WithNode(SumValue.Create(NodeName.SumValue, _contextDefinition)).Build()
+            .WithNode<SumValue>(NodeName.SumValue)
+            .Build()
                 
             .BuildDefinition();
     }

@@ -3,7 +3,7 @@ using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 using Xunit;
 
-namespace Magnett.Automation.Core.UnitTest.WorkFlows;
+namespace Magnett.Automation.Core.UnitTest.WorkFlows.Definitions;
 
 public class NodeLinkKeyTest
 {

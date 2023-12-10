@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
-using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
@@ -19,7 +17,7 @@ public class ConfirmPayment : NodeAsync
     private readonly ContextField<bool> _canMakePayment = ContextField<bool>.Create("CanMakePayment");
     private readonly ContextField<Payment> _paymentField = ContextField<Payment>.Create("Payment");
 
-    private ConfirmPayment(string name) : base(name)
+    public ConfirmPayment(CommonNamedKey name) : base(name)
     {
     }
     
@@ -67,10 +65,5 @@ public class ConfirmPayment : NodeAsync
         return context.Value(_canMakePayment)
             ? Confirm(payment)
             : Fail(payment);
-    }
-    
-    public static ConfirmPayment Create(CommonNamedKey nodeName)
-    {
-        return new ConfirmPayment(nodeName?.Name);
     }
 }

@@ -2,21 +2,9 @@
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions;
 
-internal class ContextDefinition
+internal static class ContextDefinition
 {
-    public ContextField<int> FirstDigit  { get; }
-    public ContextField<int> SecondDigit { get; }      
-    public ContextField<int> Result      { get; }
-
-    private ContextDefinition()
-    {
-        FirstDigit  =  ContextField<int>.Create("FieldOne");           
-        SecondDigit =  ContextField<int>.Create("FieldTwo");           
-        Result      =  ContextField<int>.Create("FieldResult");
-    }
-
-    public static ContextDefinition Create()
-    {
-        return new ContextDefinition();
-    }
+    public static ContextField<int> FirstDigit  => ContextField<int>.Create("FieldOne");
+    public static ContextField<int> SecondDigit => ContextField<int>.Create("FieldTwo");     
+    public static ContextField<int> Result => ContextField<int>.Create("FieldResult");
 }

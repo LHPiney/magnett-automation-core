@@ -2,16 +2,16 @@
 using Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 using Xunit;
 
-namespace Magnett.Automation.Core.UnitTest.WorkFlows.Implementations;
+namespace Magnett.Automation.Core.UnitTest.WorkFlows.Runtimes.Implementations;
 
-public class NodeTest
+public class NodeAsyncTest
 {
     private const string Name = "name";
         
     [Fact]
     public void Ctor_WhenNameIsInformedAsString_ShouldReturnKeyProperInformed()
     {
-        var instance = new NodeFake(Name);
+        var instance = new NodeAsyncFake(Name);
         
         Assert.NotNull(instance.Key);
         Assert.Equal(Name, instance.Key.Name);
@@ -22,7 +22,7 @@ public class NodeTest
     {
         var key = CommonNamedKey.Create(Name);
         
-        var instance = new NodeFake(key);
+        var instance = new NodeAsyncFake(key);
         
         Assert.NotNull(instance.Key);
         Assert.Equal(key.Name, instance.Key.Name);

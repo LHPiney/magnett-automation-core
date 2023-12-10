@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
-using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
@@ -24,7 +22,7 @@ public class PreAuthorizePayment : NodeAsync
     private  Order _order;
     private  Payment _payment;
 
-    private PreAuthorizePayment(string name) : base(name)
+    public PreAuthorizePayment(CommonNamedKey name) : base(name)
     {
 
     }
@@ -77,10 +75,5 @@ public class PreAuthorizePayment : NodeAsync
         return _credit >= _order.Amount
             ? PreAuthorize()
             : Deny();
-    }
-    
-    public static PreAuthorizePayment Create(CommonNamedKey nodeName)
-    {
-        return new PreAuthorizePayment(nodeName?.Name);
     }
 }

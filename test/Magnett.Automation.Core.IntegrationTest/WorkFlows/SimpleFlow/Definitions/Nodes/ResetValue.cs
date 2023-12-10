@@ -1,11 +1,11 @@
 ﻿using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
-using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 
-internal class ResetValue : Common
+internal class ResetValue : Node
 {
     #region ExitCodes
 
@@ -20,8 +20,7 @@ internal class ResetValue : Common
         
     #endregion
 
-    private ResetValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
-        base(key, contextDefinition)
+    public ResetValue(CommonNamedKey key) : base(key)
     {
             
     }
@@ -33,10 +32,5 @@ internal class ResetValue : Common
         context.Store(ContextDefinition.Result, 0);
             
         return NodeExit.Create(ExitCode.Ok.Name);
-    }
-
-    public static ResetValue Create(CommonNamedKey name, ContextDefinition contextDefinition)
-    {
-        return new ResetValue(name, contextDefinition);
     }
 }

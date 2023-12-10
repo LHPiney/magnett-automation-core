@@ -2,7 +2,6 @@
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
-using Magnett.Automation.Core.WorkFlows;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 

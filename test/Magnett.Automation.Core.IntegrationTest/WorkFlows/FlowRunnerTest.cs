@@ -21,9 +21,11 @@ public class FlowRunnerTest
             
         await flowRunner.Start();
 
-        var result = flowRunner.FlowContext.Value(fieldOne) +
-                     flowRunner.FlowContext.Value(fieldTwo);
+        var expected = flowRunner.Context.Value(fieldOne) +
+                     flowRunner.Context.Value(fieldTwo);
+        
+        var calculated = flowRunner.Context.Value(fieldResult);
             
-        Assert.Equal(result, flowRunner.FlowContext.Value(fieldResult));
+        Assert.Equal(expected, calculated);
     }
 }
