@@ -48,7 +48,6 @@ public abstract class FlowRunnerBase : IFlowRunner
         {
             INodeAsync nodeAsync => await nodeAsync.Execute(Context),
             INode      nodeSync  => await Task.Run(() => nodeSync.Execute(Context)),
-            null                 => throw new ArgumentNullException(nameof(node)),
             _                    => throw new ArgumentOutOfRangeException(nameof(node), node, null)
         };
     }
