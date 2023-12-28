@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
-using Magnett.Automation.Core.WorkFlows;
-using Magnett.Automation.Core.WorkFlows.Implementations;
+using Magnett.Automation.Core.WorkFlows.Runtimes;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes;
 
@@ -31,7 +30,7 @@ public class CreateOrder : NodeAsync
         
     #endregion
     
-    private CreateOrder(string name) : base(name)
+    public CreateOrder(CommonNamedKey name) : base(name)
     {
     }
 
@@ -51,10 +50,5 @@ public class CreateOrder : NodeAsync
             ExitCode.Created, 
             false, 
             $"Order id [{order.Id}] [{order.State.State.Key}]");
-    }
-
-    public static CreateOrder Create(CommonNamedKey nodeName)
-    {
-        return new CreateOrder(nodeName?.Name);
     }
 }

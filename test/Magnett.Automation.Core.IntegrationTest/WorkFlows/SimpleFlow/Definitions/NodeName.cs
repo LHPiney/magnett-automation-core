@@ -4,9 +4,9 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitio
 
 internal class NodeName : CommonNamedKey 
 {
-    public static readonly NodeName Reset     = new NodeName("Reset");
-    public static readonly NodeName SetValue  = new NodeName("SetValue");
-    public static readonly NodeName SumValue  = new NodeName("SumValue");
+    public static readonly NodeName Reset     = new("Reset");
+    public static readonly NodeName SetValue  = new("SetValue");
+    public static readonly NodeName SumValue  = new("SumValue");
         
     private NodeName(string name) : base(name)
     {

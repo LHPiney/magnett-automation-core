@@ -1,5 +1,4 @@
 ﻿using Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
-using Magnett.Automation.Core.WorkFlows;
 using Xunit;
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows;

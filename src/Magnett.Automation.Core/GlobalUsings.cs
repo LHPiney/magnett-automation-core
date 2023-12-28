@@ -10,5 +10,3 @@ global using Magnett.Automation.Core.Contexts.Implementations;
 global using Magnett.Automation.Core.StateMachines.Collections;
 global using Magnett.Automation.Core.StateMachines.Exceptions;
 global using Magnett.Automation.Core.StateMachines.Implementations;
-global using Magnett.Automation.Core.WorkFlows.Collections;
-global using Magnett.Automation.Core.WorkFlows.Implementations;

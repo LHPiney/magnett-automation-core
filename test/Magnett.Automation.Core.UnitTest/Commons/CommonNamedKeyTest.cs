@@ -167,15 +167,26 @@ public class CommonNamedKeyTest
 
         Assert.False(areEquals);
     }          
-        
+    
     [Fact]
     public void GetHashCode_WhenInvoked_ShouldReturnNameHashCode()
     {
-        var instanceOne = CommonNamedKey.Create(KeyName);
+        var instance = CommonNamedKey.Create(KeyName);
             
-        var nameHasCode = instanceOne.Name.GetHashCode();
+        var nameHasCode = instance.Name.GetHashCode();
 
-        Assert.Equal(nameHasCode, instanceOne.GetHashCode(instanceOne));
+        Assert.Equal(nameHasCode, instance.GetHashCode());
+    }
+    
+    [Fact]
+    public void GetHashCode_WhenInvokedWithAName_ShouldReturnNameHashCode()
+    {
+        var instance = CommonNamedKey.Create(KeyName);
+        var key = CommonNamedKey.Create(AlternativeKeyName);
+            
+        var keyHasCode = instance.GetHashCode(key);
+
+        Assert.Equal(keyHasCode, key.GetHashCode());
     }
 
     #endregion

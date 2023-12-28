@@ -1,5 +1,4 @@
-﻿using Magnett.Automation.Core.Commons;
-using Magnett.Automation.Core.StateMachines;
+﻿using Magnett.Automation.Core.StateMachines;
 using Magnett.Automation.Core.StateMachines.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;

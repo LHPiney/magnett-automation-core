@@ -1,5 +1,5 @@
 ﻿using Magnett.Automation.Core.Commons;
-using Magnett.Automation.Core.WorkFlows;
+using Magnett.Automation.Core.WorkFlows.Runtimes;
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 

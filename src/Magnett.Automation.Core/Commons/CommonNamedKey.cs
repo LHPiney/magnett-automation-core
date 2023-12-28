@@ -29,7 +29,9 @@ public class CommonNamedKey : IEqualityComparer<CommonNamedKey>
         
     public override int GetHashCode()
     {
-        return (Name != null ? Name.GetHashCode() : 0);
+        return Name != null 
+            ? Name.GetHashCode() 
+            : 0;
     }
 
     public bool Equals(CommonNamedKey x, CommonNamedKey y)

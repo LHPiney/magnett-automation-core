@@ -14,6 +14,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnett.Automation.Core.Int
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magnett.Automation.Core.UnitTest", "test\Magnett.Automation.Core.UnitTest\Magnett.Automation.Core.UnitTest.csproj", "{7927DDB3-21BE-4D5C-B09E-C62546DD7A09}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Devops", "Devops", "{6EE73F9D-425B-4287-A9C5-23AD9E498CE8}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+		.github\workflows\release-to-nuget.yml = .github\workflows\release-to-nuget.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

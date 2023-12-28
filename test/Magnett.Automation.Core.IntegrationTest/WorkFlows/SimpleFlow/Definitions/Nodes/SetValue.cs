@@ -1,11 +1,12 @@
 ﻿using System;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
-using Magnett.Automation.Core.WorkFlows;
+using Magnett.Automation.Core.WorkFlows.Runtimes;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 
-internal class   SetValue : Common
+internal class   SetValue : Node
 {
     #region ExitCodes
 
@@ -20,12 +21,10 @@ internal class   SetValue : Common
         
     #endregion
         
-    private SetValue(CommonNamedKey key, ContextDefinition contextDefinition) : 
-        base(key, contextDefinition)
+    public SetValue(CommonNamedKey key) : base(key)
     {
     }
-        
-
+    
     public override NodeExit Execute(Context context)
     {
         var random = new Random();
@@ -34,10 +33,5 @@ internal class   SetValue : Common
         context.Store(ContextDefinition.SecondDigit, random.Next(1000));
 
         return NodeExit.Create(ExitCode.Assigned.Name);
-    }
-        
-    public static SetValue Create(CommonNamedKey key, ContextDefinition contextDefinition)
-    {
-        return new SetValue(key, contextDefinition);
     }
 }
