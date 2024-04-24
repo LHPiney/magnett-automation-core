@@ -55,7 +55,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
+          dotnet tool install --global dotnet-sonarscanner
+          
           dotnet sonarscanner begin 
+            /k:"magnett_automation"
             /o:"lhpiney-1" 
             /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
             /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
