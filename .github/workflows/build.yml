@@ -55,18 +55,19 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          dotnet tool install --global dotnet-sonarscanner
-          
-          dotnet sonarscanner begin 
-            /k:"magnett_automation"
+          .\.sonar\scanner\dotnet-sonarscanner begin 
+            /k:"magnett_automation" 
             /o:"lhpiney-1" 
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-            /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" 
+            /d:sonar.host.url="https://sonarcloud.io"
 
           dotnet restore
           dotnet build -c Release --no-incremental
           dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           dotnet test  -c Release --no-build --verbosity normal --collect:"XPlat Code Coverage" ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --collect:"XPlat Code Coverage";
     
-          dotnet sonarscanner end 
-            /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin 
+            /k:"magnett_automation" 
+            /o:"lhpiney-1" 
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" 
+            /d:sonar.host.url="https://sonarcloud.io"
