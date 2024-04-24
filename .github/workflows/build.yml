@@ -59,7 +59,6 @@ jobs:
 
           dotnet restore
           dotnet build -c Release --no-incremental
-          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
           dotnet test  -c Release --no-build --verbosity normal --collect:"XPlat Code Coverage" ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --collect:"XPlat Code Coverage";
     
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"magnett_automation" /o:"lhpiney-1" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
