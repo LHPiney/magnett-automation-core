@@ -55,5 +55,5 @@ jobs:
         run: |
           dotnet sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/tests/*.opencover.xml"
           dotnet build -c Release --no-incremental
-          dotnet test '-c Release --no-build -l trx -r "$(Build.StagingDirectory)\tests" --collect "Code coverage"'
+          dotnet test -c Release --no-build -l  trx -r"$(Build.StagingDirectory)\tests" --collect "Code coverage"'
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
