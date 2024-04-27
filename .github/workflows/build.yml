@@ -55,5 +55,5 @@ jobs:
         run: |
           dotnet sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/tests/*.opencover.xml"
           dotnet build magnett.automation.core.sln -c Release --no-incremental
-          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj -c Release --no-build -l  trx -r ".\tests" --collect "Code coverage"
+          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj -c Release -r ".\tests" --collect "Code coverage"
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
