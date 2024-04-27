@@ -56,7 +56,7 @@ jobs:
         shell: powershell
         run: |
           dotnet tool install --global dotnet-sonarscanner
-          dotnet sonarscanner begin /k:"magnett_automation" /o:"lhpiney-1>" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          dotnet sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           dotnet build -c Release --no-incremental
           dotnet test  -c Release --no-build --verbosity normal ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --collect:"XPlat Code Coverage";
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
