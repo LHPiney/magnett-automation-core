@@ -13,7 +13,7 @@
         <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <PackageTags>workflow orchestation automation statemachine</PackageTags>
+        <PackageTags>workflow orchestation automation statemachine net netcore</PackageTags>
         <AssemblyVersion>0.6.0</AssemblyVersion>
         <LangVersion>10</LangVersion>
         <PackageId>Magnett.Automation.Core</PackageId>
