@@ -1,4 +1,4 @@
-name: Build
+name: "Build and analyze"
 on:
   push:
     branches:
@@ -51,5 +51,5 @@ jobs:
         run: |
           dotnet sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
           dotnet build -c Release --no-incremental
-          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
