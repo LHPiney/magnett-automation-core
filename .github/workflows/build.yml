@@ -1,4 +1,4 @@
-name: Build
+name: "Build and analyze"
 on:
   push:
     branches:
@@ -14,22 +14,17 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Setup .NET 6
-        uses: actions/setup-dotnet@v1
+          fetch-depth: 0 
+      - name: Setup .netcore (6x, 7x, 8x)
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.x.x
-      - name: Setup .NET 7
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 7.x.x
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 8.x.x
+          dotnet-version: |
+            6.x.x
+            7.x.x
+            8.x.x
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -56,5 +51,5 @@ jobs:
         run: |
           dotnet sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"
           dotnet build -c Release --no-incremental
-          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj --no-build --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj --no-build --configuration Release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
