@@ -2,8 +2,8 @@
 using Xunit;
 
 using Magnett.Automation.Core.Contexts;
-using Magnett.Automation.Core.WorkFlows.Implementations;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions;
+using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows;
 
@@ -21,9 +21,11 @@ public class FlowRunnerTest
             
         await flowRunner.Start();
 
-        var result = flowRunner.FlowContext.Value(fieldOne) +
-                     flowRunner.FlowContext.Value(fieldTwo);
+        var expected = flowRunner.Context.Value(fieldOne) +
+                     flowRunner.Context.Value(fieldTwo);
+        
+        var calculated = flowRunner.Context.Value(fieldResult);
             
-        Assert.Equal(result, flowRunner.FlowContext.Value(fieldResult));
+        Assert.Equal(expected, calculated);
     }
 }
