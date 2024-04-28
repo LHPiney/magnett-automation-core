@@ -28,7 +28,7 @@ jobs:
       run: dotnet test --configuration Release --no-build
     - name: Pack
       run: dotnet pack --configuration Release --no-build --output .
-    ##- na##me: Publish the package to nuget.org
-    ##  run: dotnet nuget push /home/runner/work/magnett-automation-core/magnett-automation-core/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
+    - name: Publish the package to nuget.org
+      run: dotnet nuget push /home/runner/work/magnett-automation-core/magnett-automation-core/*.nupkg -k $NUGET_AUTH_TOKEN -s https://api.nuget.org/v3/index.json
     env:
       NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
