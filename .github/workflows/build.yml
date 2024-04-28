@@ -47,6 +47,7 @@ jobs:
         shell: powershell
         run: |
           dotnet tool install --global dotnet-sonarscanner
+          dotnet tool update dotnet-reportgenerator-globaltool -g --version 4.8.7
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -54,6 +55,6 @@ jobs:
         shell: powershell
         run: |
           dotnet sonarscanner begin /k:"magnett_automation" /o:"lhpiney" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.cobertura.xml"
-          dotnet build magnett.automation.core.sln -c Release --no-incremental
-          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj -c Release --collect "XPlat Code Coverage"
+          dotnet build -c Release --no-incremental
+          dotnet test ./test/Magnett.Automation.Core.UnitTest/Magnett.Automation.Core.UnitTest.csproj -c Release --collect "XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
