@@ -1,0 +1,80 @@
+name: Release and Package
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write   
+  packages: write   
+
+env:
+  SOLUTION_NAME: 'nuget-boiler-plate.sln'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup .NET 6.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Setup .NET 7.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Setup .NET 8.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup .NET 9.0
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.SOLUTION_NAME }}
+
+      - name: Build
+        run: dotnet build ${{ env.SOLUTION_NAME }} --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test ${{ env.SOLUTION_NAME }} --configuration Release --no-build
+  
+      - name: Validate version format
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          if ! [[ $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
+            echo "Invalid version format: $VERSION"
+            echo "Version must follow semver format: X.Y.Z or X.Y.Z-PRERELEASE"
+            exit 1
+          fi
+          echo "Version format is valid: $VERSION"
+
+      - name: Pack
+        run: dotnet pack src/nuget-boiler-plate/nuget-boiler-plate.csproj --configuration Release --no-build --output nupkgs /p:Version=${GITHUB_REF#refs/tags/v}
+
+      - name: Upload NuGet package to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: nupkgs/*.nupkg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to GitHub Packages
+        run: |
+          dotnet nuget add source --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          dotnet nuget push nupkgs/*.nupkg --source github --api-key ${{ secrets.GITHUB_TOKEN }}
+
+      # Opcional: Publicar en NuGet.org
+      #- name: Push to NuGet
+      #  run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json 
+
+      - name: Display version
+        run: echo "Building version ${GITHUB_REF#refs/tags/v}" 
