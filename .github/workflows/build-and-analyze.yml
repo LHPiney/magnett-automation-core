@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  SOLUTION_NAME: 'nuget-boiler-plate.sln'
+  SOLUTION_NAME: 'magnett-automation-core.sln'
 
 jobs:
   build-and-analyze:
