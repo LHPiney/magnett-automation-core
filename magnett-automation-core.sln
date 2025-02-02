@@ -20,6 +20,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Devops", "Devops", "{6EE73F
 		.github\workflows\release-and-publish.yml = .github\workflows\release-and-publish.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{C189BA09-52A0-4793-90BA-5DAC3E025FBD}"
+	ProjectSection(SolutionItems) = preProject
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+		RELEASE-NOTES.MD = RELEASE-NOTES.MD
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{ED0998DF-5124-40B3-A1D4-F6656EBD6851}"
+	ProjectSection(SolutionItems) = preProject
+		assets\Logo.png = assets\Logo.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
