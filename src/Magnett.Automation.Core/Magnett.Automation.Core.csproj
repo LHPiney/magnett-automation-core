@@ -6,15 +6,15 @@
         <Title>Magnett Automation</Title>
         <authors>Magnett</authors>
         <owners>@LHPiney</owners>
-        <Description>Magnett automation is build to facilitate orchestation workflows for process, services, integrations using code.</Description>
+        <Description>Magnett automation is build to facilitate orchestration workflows for process, services, integrations using code.</Description>
         <Product>Magnett.Automation.Core</Product>
         <Icon>PackageIcon.png</Icon>
-        <PackageVersion>0.6.0</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <PackageTags>workflow orchestation automation statemachine net netcore</PackageTags>
-        <AssemblyVersion>0.6.0</AssemblyVersion>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
         <LangVersion>10</LangVersion>
         <PackageId>Magnett.Automation.Core</PackageId>
         <PackageProjectUrl>https://github.com/LHPiney/magnett-automation-core</PackageProjectUrl>
@@ -23,15 +23,21 @@
         <IncludeSource>true</IncludeSource>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseUrl>https://github.com/LHPiney/magnett-automation-core/blob/main/LICENSE.md</PackageLicenseUrl>
         <PackageReleaseNotes>v.0.5.1
-- Initial serious release 
+- Initial serious release
 
-v.6.0
+v.0.6.0
 - Split Runtime from Definition in Workflow declaration
-- Add support for net Core 8.0</PackageReleaseNotes>
+- Add support for net Core 8.
+
+v.1.0.0
+- Definition of Workflow does not require an instance, just using generic type
+- Total separation between Definition and Runtime
+- Minor changes in runtime to increase performance
+- Add support for net Core 9.0</PackageReleaseNotes>
     </PropertyGroup>
     <PropertyGroup Label="Package">
       <PackageIcon>PackageIcon.png</PackageIcon>
