@@ -9,7 +9,7 @@ permissions:
   packages: write   
 
 env:
-  SOLUTION_NAME: 'nuget-boiler-plate.sln'
+  SOLUTION_NAME: 'magnett-automation-core.sln'
 
 jobs:
   build-and-release:
@@ -59,7 +59,7 @@ jobs:
           echo "Version format is valid: $VERSION"
 
       - name: Pack
-        run: dotnet pack src/nuget-boiler-plate/nuget-boiler-plate.csproj --configuration Release --no-build --output nupkgs /p:Version=${GITHUB_REF#refs/tags/v}
+        run: dotnet pack src/Magnett.Automation.Core/Magnett.Automation.Core.csproj --configuration Release --no-build --output nupkgs /p:Version=${GITHUB_REF#refs/tags/v}
 
       - name: Upload NuGet package to GitHub Release
         uses: softprops/action-gh-release@v1
