@@ -8,7 +8,9 @@
 ![Nuget](https://img.shields.io/nuget/v/Magnett.Automation.Core)
 ![Nuget](https://img.shields.io/nuget/dt/Magnett.Automation.Core)
 
-![Logo](./assets/Logo.png)
+<p align="center" width="100%">
+ ![Logo](./assets/Logo.png)
+</p>
 
 ## Overview
 
