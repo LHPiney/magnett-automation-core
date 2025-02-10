@@ -9,7 +9,7 @@
 ![Nuget](https://img.shields.io/nuget/dt/Magnett.Automation.Core)
 
 <p align="center" width="100%">
- ![Logo](./assets/Logo.png)
+ <img width="33%" src="./assets/Logo.png"> 
 </p>
 
 ## Overview
