@@ -11,6 +11,7 @@
 <p align="center" width="100%">
  <img style="margin-top: 40px" width="80%" src="./assets/Logo.png"> 
 </p>
+
 ## Overview
 
 Magnett Automation Core is a powerful .NET library designed to simplify process automation and workflow orchestration. With a flexible and declarative structure, it offers advanced tools for building-customizable state machines and workflows with ease and scalability.
