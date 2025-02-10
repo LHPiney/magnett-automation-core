@@ -1,4 +1,6 @@
-# magnett automation
+# Magnett Automation Core
+
+![License](https://img.shields.io/github/license/lhpiney/magnett-automation-core)
 [![Build](https://github.com/LHPiney/magnett-automation-core/actions/workflows/build-and-analyze.yml/badge.svg)](https://github.com/LHPiney/magnett-automation-core/actions/workflows/build-and-analyze.yml)
 [![Build Status](https://dev.azure.com/Magnett/Magnett.Automation/_apis/build/status/magnett-automation-core?branchName=azure-pipelines)](https://dev.azure.com/Magnett/Magnett.Automation/_build/latest?definitionId=1&branchName=azure-pipelines)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=alert_status)](https://sonarcloud.io/dashboard?id=magnett_automation) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=coverage)](https://sonarcloud.io/dashboard?id=magnett_automation)
@@ -6,46 +8,33 @@
 ![Nuget](https://img.shields.io/nuget/v/Magnett.Automation.Core)
 ![Nuget](https://img.shields.io/nuget/dt/Magnett.Automation.Core)
 
-![Logo](./assets/Logo.png)
+<p align="center" width="100%">
+ <img style="margin-top: 40px" width="80%" src="./assets/Logo.png"> 
+</p>
+## Overview
 
-Library designed for create custom workflow, orchestration between components, microservices and other automation utilities, created on dotnet version 6
+Magnett Automation Core is a powerful .NET library designed to simplify process automation and workflow orchestration. With a flexible and declarative structure, it offers advanced tools for building-customizable state machines and workflows with ease and scalability.
 
-## Introduction
+## Why Choose Magnett Automation Core?
 
-This library has been designed to have an ecosystem of entities oriented to the orchestration of any type of process. From the simplest processes such as calls between several of our classes to more complex processes such as calls to microservices, etc. Always, however, declaratively and looking to save code in terms of tedious and complex nesting of “If” “else”... etc.
-Structure 
+- **Ease of Use** – Provides a simple and intuitive way to define state machines and workflows.
+- **Scalability** – Supports complex workflows and business processes efficiently.
+- **Modularity** – Designed with decoupled components, enabling reuse and extensibility.
+- **Efficiency** – Reduces code complexity while improving readability and maintainability.
 
-In this repository, there will be the core classes of this ecosystem, grouped under the namespace magnett.automation.core. Some of these classes can be used outside the scope of creating a workflow, as they are generic enough to be useful independently.
+## Installation
 
-- Common
-- Context.
-- StateMachine.
-- Workflows.
+To install the library via NuGet, use the following command:
 
-## Common
+```sh
+ dotnet add package Magnett.Automation.Core
+```
 
-In this namespace we found utilities' class used inside the library classes
+## Core Components
 
-  - Enumeration
-  - CommonNamedKey
-  - DictionaryWrapper
+### 1. Context Management
 
-## Context
-
-The concept context is very generic and is used in several fields.
-For us, a context will be a common space where values are stored to be shared between several components, being that they are values of the heterogeneous type. 
-
-We are, therefore, in front of a key/value system, where the values will be of any type.
-
-### Structure
-
-The structure of the context is straightforward, it is formed only by the *Context* class, which will be our input and retrieval of values class, and the *IContextVault* interface which will be the definition of the vault where the values are stored.
-
-By default, we will have an implementation of the *IContextVault*, where it will store the values in memory, but will be open for any other implementation that stores these values in any other way.
-
-We will use the class *ContextField* to Get and Set values in a context, with this class we can define the type and the name of the class.
-
-Example of how to Get / Set value in a context
+The context system allows you to store and retrieve data in a structured, key-value manner.
 
 ```csharp
 var context = Context.Create();
@@ -55,28 +44,17 @@ var field   = ContextField<int>.Create("FieldName");
 context.Store(field, random.Next(1000));
 
 //Get Value
-var value  = context.Value(field);
- ```
+var value  = context.Value(field); 
+```
 
-## StateMachine
+### 2. State Machine
 
-We have at our disposal several interfaces for the definition of a state machine as well as its execution. The definition of the machine will be separated from the execution of the machine itself, to avoid couplings and clear separation of responsibilities.
+State machines help manage process behavior by defining states and transitions between them.
 
-### Structure
-           
-The main interface is *IMachine*. With this interface, we will have access to the current state, *IState* interface, and the possibility of transitioning to another state using action codes that generate a transition, *ITransaction* entity, to another state.
-
-It is not possible to go from one state to another directly, only through a transition, so that we have a model to which states we can go from one in particular.
-
-A state without defined transitions can be given, and this means that the state is terminal. In this way, we can define finite or non-finite machines.
-
-Regarding the runtime part, the definition of a machine will be done from the *IMachineDefinition* interface, which will be generated from the *MachineDefinitionBuilder* class.
-
-Example of machine definition code
-
+#### Defining a State Machine
 
 ```csharp
-//Helper class with states enumeration
+//Helper class with states
 public class State : Enumeration
 {
     public static readonly State Init     = new State(1, nameof(Init));
@@ -84,13 +62,10 @@ public class State : Enumeration
     public static readonly State Paused   = new State(3, nameof(Paused));
     public static readonly State Finished = new State(4, nameof(Finished));
 
-    private State(int id, string name) : base(id, name)
-    {
-
-    }
+    private State(int id, string name) : base(id, name) { }
 }
 
-//Helper class with action enumerations
+//Helper class with actions
 public class Action : Enumeration
 {
     public static readonly Action Start    = new Action(1, nameof(Start));
@@ -98,153 +73,69 @@ public class Action : Enumeration
     public static readonly Action Continue = new Action(3, nameof(Continue));
     public static readonly Action Finish   = new Action(4, nameof(Finish));
 
-    private Action(int id, string name) : base(id, name)
-    {
-
-    }
+    private Action(int id, string name) : base(id, name) {}
 }
 
-//Now we can create a definition
-_definition = MachineDefinitionBuilder.Create()
-
+//Definition of the machine
+var machineDefinition = MachineDefinitionBuilder.Create()
     .InitialState(State.Init)
         .OnAction(Action.Start).ToState(State.Working)
         .Build()
-
     .AddState(State.Working)
         .OnAction(Action.Pause).ToState(State.Paused)
         .OnAction(Action.Finish).ToState(State.Finished)
         .Build()
-
     .AddState(State.Paused)
         .OnAction(Action.Continue).ToState(State.Working)
         .Build()
-
     .AddState(State.Finished)
         .Build()
 
     .BuildDefinition();
- ```
 
-Example of machine creation and usage code.
-
-```csharp
-var machine = Machine
-    .Create(SimpleMachineDefinition.GetDefinition());
-
+//Create and use the machine
+var machine = Machine.Create(machineDefinition);
 machine.Dispatch(Action.Start);
 
-var currentState = machine.State;
+var currentState = machine.State  //Working
 ```
+See full example [SimpleMachine](https://github.com/LHPiney/magnett-automation-core/tree/main/test/Magnett.Automation.Core.IntegrationTest/StateMachines/SimpleMachine)
 
-## Workflows    
+### 3. Workflow Automation
 
-Under this namespace, we will have the necessary classes to define a workflow and execute it. As in the previous section, we will keep the workflow definition separate from the runtime. 
+Workflows enable the automation of sequential or parallel tasks, ensuring processes are executed in the correct order.
 
-### Structure
-
-This separation will be done using the *IWorkflowDefinition* and *IWorkflowRunner* interfaces.
-
-To encapsulate the definition and execution we have the *IFlow* interface, this interface also will allow us in the future to build sub-flows, create flows that are encapsulated as a service within more complex applications... etc.
-
-If we think of a basic flow,just and initial node to reset field values, the next node just to calculate to random numbers, and a final node to sum both values, the definition should be something like that.
-
-Example workflow definition code.
+#### Defining a Workflow
 
 ```csharp
-  var contextDefinition = ContextDefinition.Create();
-
+//Create the flow definition
   var definition = FlowDefinitionBuilder.Create()
      .WithInitialNode<ResetValue>(NodeName.Reset)
-     .OnExitCode(ResetValue.ExitCode.Ok).GoTo(NodeName.SetValue)
-     .Build()
-         
+        .OnExitCode(ResetValue.ExitCode.Ok).GoTo(NodeName.SetValue)
+        .Build() 
      .WithNode<SetValue>(NodeName.SetValue)
-     .OnExitCode(SetValue.ExitCode.Assigned).GoTo(NodeName.SumValue)
-     .Build()
-         
+        .OnExitCode(SetValue.ExitCode.Assigned).GoTo(NodeName.SumValue)
+        .Build() 
      .WithNode<SumValue>(NodeName.SumValue)
-     .Build()
-         
-     .BuildDefinition();
- ```
+        .Build()
+     .BuildDefinition()
 
-Previously,
-you have defined some helper classes like *ContextDefinition* it's just a static class
-to contain Context field and to avoid duplication and mistakes with name definitions.
-
-```csharp
-internal static class ContextDefinition
-{
-    public static ContextField<int> FirstDigit  => ContextField<int>.Create("FieldOne");
-    public static ContextField<int> SecondDigit => ContextField<int>.Create("FieldTwo");     
-    public static ContextField<int> Result => ContextField<int>.Create("FieldResult");
-}
- ```
-
- We have two node types sync and async, under the *INode* and *INodeAsync* interfaces, so we can use nodes as a wrapper of both types of process.
-
- The library provides a base class for each type of node, *Node* and *NodeAsync* respectively, so we can implement our custom nodes.
-
- In this example, we have only the sync implementation.
-
-Example Node
-
-```csharp
-internal class ResetValue : Node
-{
-    #region ExitCodes
-
-    public class ExitCode : Enumeration
-    {
-        public static readonly ExitCode Ok  = new ExitCode(1, "Ok"); 
-
-        private ExitCode(int id, string name) : base(id, name)
-        {
-        }
-    }
-        
-    #endregion
-
-    public ResetValue(CommonNamedKey key) : base(key)
-    {
-            
-    }
-
-    public override NodeExit Execute(Context context)
-    {
-        context.Store(ContextDefinition.FirstDigit, 0);
-        context.Store(ContextDefinition.SecondDigit, 0);
-        context.Store(ContextDefinition.Result, 0);
-            
-        return NodeExit.Create(ExitCode.Ok.Name);
-    }
-}
- ```
-
-The inner class *ExitCodes* is just another helper class, build over Enumeration class with the definition of available exit codes for this node, we use something similar
-
-A runner, to instantiate itself, will need to receive the workflow definition and a context instance that will be used to share information between nodes. Once the runner has been executed, we can retrieve return values from context if there are any.
-
-We have the abstract class *FlowRunnerBase* so we can implement our custom runners, step to step, distributed, etc.
-
-Example Flow runner
-
-```csharp
-var flowRunner = FlowRunner.Create(definition, Context.Create());
-
-var exit = await flowRunner.Start();
- ```
-
- The class flow, as we said before, it's a wrapper for all this process, now has basic functionalities but in future versions will be used as the main class for workflow management. 
-
-```csharp
-var definition = SimpleFlowDefinition.GetDefinition();
+//Create the flow and Run
 var context    = Context.Create();
+var flowRunner = FlowRunner.Create(definition, context);
+var flow       = Flow.Create();
+var exit       = await flow.Run();
+```
 
-var flow = Flow.Create(FlowRunner.Create(definition, context));
+See full example [SimpleFlow](https://github.com/LHPiney/magnett-automation-core/tree/main/test/Magnett.Automation.Core.IntegrationTest/WorkFlows/SimpleFlow/Definitions)
 
-var exit = await flow.Run();
- ```
+## Acknowledgments & Feedback
 
-Thanks for reading, and I hope you find this library useful. Feedback is always welcome.
+We sincerely appreciate your interest in Magnett Automation Core! Your feedback is invaluable in helping us improve and refine the library. If you have suggestions, encounter issues, or would like to contribute, please open an issue or submit a pull request in our [GitHub repository](https://github.com/LHPiney/magnett-automation-core/issues).
+
+Thank you for your support and for being part of this project!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```
