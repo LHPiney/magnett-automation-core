@@ -9,7 +9,7 @@
 ![Nuget](https://img.shields.io/nuget/dt/Magnett.Automation.Core)
 
 <p align="center" width="100%">
- <img style="margin-top: 40px" width="80%" src="./assets/Logo.png"> 
+ <img style="margin-top: 80px" width="80%" src="./assets/Logo.png"> 
 </p>
 
 ## Overview
@@ -124,7 +124,7 @@ Workflows enable the automation of sequential or parallel tasks, ensuring proces
 //Create the flow and Run
 var context    = Context.Create();
 var flowRunner = FlowRunner.Create(definition, context);
-var flow       = Flow.Create();
+var flow       = Flow.Create(flowRunner);
 var exit       = await flow.Run();
 ```
 
