@@ -9,12 +9,12 @@
         <Description>Magnett automation is build to facilitate orchestration workflows for process, services, integrations using code.</Description>
         <Product>Magnett.Automation.Core</Product>
         <Icon>PackageIcon.png</Icon>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
         <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <EmbedUntrackedSources>true</EmbedUntrackedSources>
         <PackageTags>workflow orchestation automation statemachine net netcore</PackageTags>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <AssemblyVersion>1.1.0</AssemblyVersion>
         <LangVersion>13</LangVersion>
         <PackageId>Magnett.Automation.Core</PackageId>
         <PackageProjectUrl>https://github.com/LHPiney/magnett-automation-core</PackageProjectUrl>
@@ -36,7 +36,16 @@ v.1.0.0
 - Definition of Workflow does not require an instance, just using generic type
 - Total separation between Definition and Runtime
 - Minor changes in runtime to increase performance
-- Add support for net Core 9.0</PackageReleaseNotes>
+- Add support for net Core 9.0
+
+v.1.1.0 (2025-09-14)
+- New: Introduce event subsystem under Magnett.Automation.Core.Events (Event, EventBus, EventStream, registries, consumers, options).
+- New: Add node lifecycle events under WorkFlows.Runtimes.Events (OnNodeInit/Execute/Completed/Failed/Cancelled/Paused) and supporting types (NodeAction, NodeState, ExitState).
+- Change: Workflows runtime now emits lifecycle events from NodeBase/Node/NodeAsync and FlowRunner; update IFlow/IFlowRunner/INode*; adjust NodeFactory; refine NodeExit/NodeLinkKey.
+- Change: StateMachines add OnMachineInit and OnMachineChangeState events; updates to builders/collections/interfaces/exceptions; minor tweaks to Machine/State/Transition.
+- Change: Contexts add OnChangeFieldValueEvent; refactor Context/ContextField/ContextVault; adjust IContextVault.
+- Change: Workflow Definitions update FlowDefinition, IFlowDefinition and INodeDefinition; minor builder changes.
+- Change: Commons refine CommonNamedKey, DictionaryWrapper, Enumeration.</PackageReleaseNotes>
         <TargetFrameworks>net9.0;net6.0;net7.0;net8.0</TargetFrameworks>
     </PropertyGroup>
     <PropertyGroup Label="Package">
