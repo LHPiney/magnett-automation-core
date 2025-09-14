@@ -26,7 +26,7 @@ public sealed class EventStream(ILogger logger, EventStreamOptions? options = nu
     {
         if (options.MaxBufferSize is <= 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(options.MaxBufferSize), "MaxBufferSize debe ser mayor que cero.");
+            throw new ArgumentOutOfRangeException(nameof(options.MaxBufferSize), "MaxBufferSize must be greater than zero.");
         }
 
         if (options.MaxBufferSize.HasValue)
