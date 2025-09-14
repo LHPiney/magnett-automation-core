@@ -18,3 +18,15 @@ v.1.0.1 (2025-09-14)
 - Events: IEventBus.StopAsync now accepts optional CancellationToken for graceful shutdown (non-breaking).
 
 - WorkFlows: FlowRunnerBase.ExecuteNodeAsync now forwards CancellationToken to sync nodes (INode) via new INode.Execute(Context, CancellationToken) overload; existing Execute(Context) remains and delegates (non-breaking API addition).
+
+v.1.1.0 (2025-09-14)
+- New: Introduce event subsystem under Magnett.Automation.Core.Events (Event, EventBus, EventStream, registries, consumers, options).
+- New: Add node lifecycle events under WorkFlows.Runtimes.Events (OnNodeInit/Execute/Completed/Failed/Cancelled/Paused) and supporting types (NodeAction, NodeState, ExitState).
+- Change: Workflows runtime now emits lifecycle events from NodeBase/Node/NodeAsync and FlowRunner; update IFlow/IFlowRunner/INode*; adjust NodeFactory; refine NodeExit/NodeLinkKey.
+- Change: StateMachines add OnMachineInit and OnMachineChangeState events; updates to builders/collections/interfaces/exceptions; minor tweaks to Machine/State/Transition.
+- Change: Contexts add OnChangeFieldValueEvent; refactor Context/ContextField/ContextVault; adjust IContextVault.
+- Change: Workflow Definitions update FlowDefinition, IFlowDefinition and INodeDefinition; minor builder changes.
+- Change: Commons refine CommonNamedKey, DictionaryWrapper, Enumeration.
+- Tests: Update integration and unit tests; add event subsystem tests and fakes; rename OrderStateDefinition→OrderDefinition; add PaymentDefinition; remove PaymetStateDefinition; add Codes (ExitCode, PaymentStateCode); remove obsolete ContextManagerTest.
+- Docs & assets: Add CANCELLATION-AUDIT.md and IMPROVEMENT-PLAN.md; update RELEASE-NOTES.MD; update assets/Logo.png and add assets/Logo2.png.
+- Notes: API additions are backward compatible (no breaking changes).
