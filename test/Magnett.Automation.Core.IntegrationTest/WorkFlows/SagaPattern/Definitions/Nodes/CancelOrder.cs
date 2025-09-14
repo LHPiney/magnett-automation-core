@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Codes;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
@@ -9,40 +13,26 @@ using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes;
 
 /// <summary>
-///  Rollback Order operation and cancel process
+///  Rollback Order operation and cancel a process
 /// </summary>
-public class CancelOrder : NodeAsync    
+public class CancelOrder(CommonNamedKey name, IEventBus eventBus) : NodeAsync(name, eventBus)
 {
-    public CancelOrder(CommonNamedKey name) : base(name)
-    {
-    }
+    private readonly ContextField<Order> _orderField = ContextField<Order>.WithName("Order");
     
-    private readonly ContextField<Order> _orderField = ContextField<Order>.Create("Order");
-    
-    #region ExitCodes
-
-    public class ExitCode : Enumeration
+    protected override async Task<NodeExit> HandleAsync(Context context, CancellationToken cancellationToken = default)
     {
-        public static readonly ExitCode Done = new ExitCode(1, nameof(Done)); 
-
-        private ExitCode(int id, string name) : base(id, name)
+        if (cancellationToken.IsCancellationRequested)
         {
+            return NodeExit.Cancelled(
+                ExitCode.Done, 
+                $"Operation cancelled at {DateTime.UtcNow} ");
         }
-    }
         
-    #endregion
-
-    public override async Task<NodeExit> Execute(Context context)
-    {
-        var order = context.Value(_orderField);
-
-        order.State.Dispatch(OrderStateDefinition.Action.Cancel);
+        var order = await context.Value(_orderField)
+            .Cancel();
         
-        await Task.Delay(1000);
-        
-        return NodeExit.Create(
+        return NodeExit.Completed(
             ExitCode.Done, 
-            true, 
-            $"Order cancelled id [{order.Id}] [{order.State}]");
+            $"Order cancelled id [{order.Id}] [{order.State.Current}]");
     }
 }

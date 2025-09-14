@@ -4,6 +4,10 @@ using Magnett.Automation.Core.WorkFlows.Runtimes;
 
 namespace Magnett.Automation.Core.WorkFlows.Definitions.Builders;
 
+/// <summary>
+/// Builder class for creating and configuring workflow definitions.
+/// Provides fluent interface for defining nodes, links, and initial node.
+/// </summary>
 public class FlowDefinitionBuilder
 {
     private readonly NodeLinkList       _links;
@@ -31,6 +35,8 @@ public class FlowDefinitionBuilder
 
     public INodeLinkBuilder WithInitialNode<TNodeType>(CommonNamedKey nodeName)
     {
+        ArgumentNullException.ThrowIfNull(nodeName);
+
         _initialNode = nodeName;
 
         return WithNode<TNodeType>(nodeName);

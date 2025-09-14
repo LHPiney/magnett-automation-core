@@ -1,36 +1,28 @@
-﻿using Magnett.Automation.Core.Commons;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Codes;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 
-internal class SumValue : Node
+internal sealed class SumValue(CommonNamedKey key, IEventBus eventBus) : NodeAsync(key, eventBus)
 {
-    #region ExitCodes
-
-    public class ExitCode : Enumeration
+    protected override async Task<NodeExit> HandleAsync(Context context, CancellationToken cancellationToken = default)
     {
-        public static readonly ExitCode Done  = new ExitCode(1, "Done"); 
-
-        private ExitCode(int id, string name) : base(id, name)
+        if (cancellationToken.IsCancellationRequested)
         {
+            return NodeExit.Cancelled(ExitCode.Cancelled);
         }
-    }
         
-    #endregion
-        
-    public SumValue(CommonNamedKey key) : base(key)
-    {
-    }
-    
-    public override NodeExit Execute(Context context)
-    {
         var firstDigit  = context.Value(ContextDefinition.FirstDigit);
         var secondDigit = context.Value(ContextDefinition.SecondDigit);
             
-        context.Store(ContextDefinition.Result, firstDigit + secondDigit);
+        await context.StoreAsync(ContextDefinition.Result, firstDigit + secondDigit);
 
-        return NodeExit.Create(ExitCode.Done.Name);
+        return NodeExit.Completed(ExitCode.Done.Name);
     }
 }

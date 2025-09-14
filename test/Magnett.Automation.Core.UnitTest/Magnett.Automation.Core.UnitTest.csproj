@@ -8,9 +8,9 @@
 
         <AssemblyVersion>0.5.0</AssemblyVersion>
 
-        <LangVersion>10</LangVersion>
+        <LangVersion>13</LangVersion>
 
-        <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+        <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>

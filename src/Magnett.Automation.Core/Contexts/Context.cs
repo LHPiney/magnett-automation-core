@@ -1,41 +1,99 @@
-﻿namespace Magnett.Automation.Core.Contexts;
+﻿#nullable enable
 
-public class Context
+using System.Linq;
+using System.Threading;
+using Magnett.Automation.Core.Contexts.Events;
+using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.Events.Implementations;
+
+namespace Magnett.Automation.Core.Contexts;
+
+/// <summary>
+///  Represents a context that can store and retrieve values of heterogeneous types.
+///  The data is stored in an <seealso cref="IContextVault"/> IContextVault.
+///  If not provided, new <seealso cref="ContextVault"/> will be created as the default implementation.
+///  If no event bus is provided, the context will not be able to publish events.
+///  Otherwise, it will use the provided event bus.
+///
+/// <param name="contextVault">Implementation of data vault store</param>
+/// <param name="eventBus">Eventbus to publish context's events</param>
+/// </summary>
+public class Context : EventEmitterEntity
 {
-    private readonly IContextVault _contextVault;
+    public Guid Id { get; }
+    public DateTime CreatedAt { get; }
 
-    private Context(IContextVault contextVault)
+    private readonly IContextVault _contextVault;
+    private readonly object _syncRoot = new();
+
+    public IEventReader? EventStream => EventBus?.EventReader;
+
+    private Context(IContextVault contextVault, IEventBus? eventBus) 
+        : base(eventBus)
     {
-        _contextVault = contextVault
-                        ?? throw new ArgumentNullException(nameof(contextVault));
+        _contextVault = contextVault ?? throw new ArgumentNullException(nameof(contextVault));
+
+        Id = Guid.NewGuid();
+        CreatedAt = DateTime.UtcNow;
     }
-        
-    public Context Store<TValue>(ContextField<TValue> field, TValue value)
+    
+    public async Task<Context> StoreAsync<TValue>(
+        ContextField<TValue> field, 
+        TValue value, 
+        CancellationToken cancellationToken = default)
     {
-        _contextVault.Set(field, value);
+        TValue? previousValue;
+        bool shouldEmitEvent = false;
+
+        lock (_syncRoot)
+        {
+            previousValue = Value(field);
+            _contextVault.Set(field, value);
+
+            shouldEmitEvent = !(previousValue is null && value is null) &&
+                              !(previousValue is not null && previousValue.Equals(value));
+        }
+
+        if (shouldEmitEvent)
+        {
+            await EmitEventAsync(
+                OnChangeFieldValueEvent.Create(field.Name, typeof(TValue), value, previousValue),
+                cancellationToken);
+        }
 
         return this;
     }
 
-    public TValue Value<TValue>(ContextField<TValue> field)
+    public TValue? Value<TValue>(ContextField<TValue> field)
     {
-        var result = default(TValue);
+        if (!_contextVault.HasItem(field)) return default(TValue);;
 
-        if (_contextVault.HasItem(field))
-        {
-            result = (TValue) _contextVault.Get(field);
-        }
-
-        return result;
+        return (TValue) _contextVault.Get(field);
     }
 
-    public static Context Create(IContextVault contextVault)
+    public bool TryGetValue<TValue>(ContextField<TValue> field, out TValue value)
     {
-        return new Context(contextVault);
+        lock (_syncRoot)
+        {
+            if (_contextVault.HasItem(field))
+            {
+                value = (TValue)_contextVault.Get(field);
+                return true;
+            }
+
+            value = default!;
+            return false;
+        }
+    }
+
+    public static Context Create(IContextVault contextVault, IEventBus? eventBus = null)
+    {
+        return new Context(contextVault, eventBus);
     }
         
-    public static Context Create()
+    public static Context Create(IEventBus? eventBus = null)
     {
-        return new Context(ContextVault.Create());
+        return new Context(ContextVault.Create(), eventBus);
     }
+
 }

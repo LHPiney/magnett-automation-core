@@ -8,6 +8,7 @@ public class InvalidMachineDefinitionException : Exception
     {
     }
         
+    [Obsolete("Obsolete")]
     protected InvalidMachineDefinitionException(SerializationInfo info, StreamingContext context) :
         base(info, context)
     {

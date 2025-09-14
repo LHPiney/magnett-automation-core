@@ -1,7 +1,7 @@
 ﻿[assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
-internal class NodeLinkKey : CommonNamedKey 
+internal record NodeLinkKey : CommonNamedKey 
 {
     private NodeLinkKey(string name) : base(name)
     {

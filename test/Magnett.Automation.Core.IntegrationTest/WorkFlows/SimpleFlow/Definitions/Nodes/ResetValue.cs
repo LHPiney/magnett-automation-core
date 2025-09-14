@@ -1,36 +1,27 @@
-﻿using Magnett.Automation.Core.Commons;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Codes;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 
-internal class ResetValue : Node
+internal sealed class ResetValue(CommonNamedKey key, IEventBus eventBus) : NodeAsync(key, eventBus)
 {
-    #region ExitCodes
-
-    public class ExitCode : Enumeration
+    protected override async Task<NodeExit> HandleAsync(Context context, CancellationToken cancellationToken = default)
     {
-        public static readonly ExitCode Ok  = new ExitCode(1, "Ok"); 
-
-        private ExitCode(int id, string name) : base(id, name)
+        var tasks = new Task[]
         {
-        }
-    }
+            context.StoreAsync(ContextDefinition.FirstDigit, 0),
+            context.StoreAsync(ContextDefinition.SecondDigit, 0),
+            context.StoreAsync(ContextDefinition.Result, 0),
+        };
         
-    #endregion
-
-    public ResetValue(CommonNamedKey key) : base(key)
-    {
+        await Task.WhenAll(tasks);
             
-    }
-
-    public override NodeExit Execute(Context context)
-    {
-        context.Store(ContextDefinition.FirstDigit, 0);
-        context.Store(ContextDefinition.SecondDigit, 0);
-        context.Store(ContextDefinition.Result, 0);
-            
-        return NodeExit.Create(ExitCode.Ok.Name);
+        return NodeExit.Completed(ExitCode.Ok);
     }
 }

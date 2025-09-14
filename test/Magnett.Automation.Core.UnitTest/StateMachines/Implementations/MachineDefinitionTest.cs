@@ -12,7 +12,7 @@ public class MachineDefinitionTest
 {
     private static readonly CommonNamedKey InitialStateKey = CommonNamedKey.Create("InitialState");
 
-    #region Create
+    #region Completed
     [Fact]
     public void Create_When_Invoke_Without_InitialState_Throws_Exception()
     {

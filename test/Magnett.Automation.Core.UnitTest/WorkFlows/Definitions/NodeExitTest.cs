@@ -13,20 +13,18 @@ public class NodeExitTest
 
     private static readonly Enumeration GoodEnumerationCode =  EnumerationFake.Create(1, GoodCode);
 
-    #region Create with Enumeration
+    #region Completed with Enumeration
     [Fact]
     public void CreateAsEnumeration_WhenCodeIsNull_ThrowException()
     {
-        Enumeration parameter = null;
-            
         Assert.Throws<ArgumentNullException>(() =>
-            _ = NodeExit.Create(parameter));
+            _ = NodeExit.Completed((Enumeration) null));
     }
         
     [Fact]
     public void CreateAsEnumeration_WhenCodeNotIsNull_ReturnValidInstance()
     {
-        var instance = NodeExit.Create(GoodEnumerationCode);
+        var instance = NodeExit.Completed(GoodEnumerationCode);
             
         Assert.NotNull(instance);
         Assert.Equal(GoodCode, instance.Code);
@@ -35,36 +33,34 @@ public class NodeExitTest
     [Fact]
     public void CreateAsEnumeration_WhenIsErrorIsInformed_ValueIsCorrectlyStored()
     {
-        var instance = NodeExit.Create(GoodEnumerationCode, true);
+        var instance = NodeExit.Failed(GoodEnumerationCode);
             
         Assert.NotNull(instance);
-        Assert.True(instance.IsError);
+        Assert.True(instance.State == ExitState.Failed);
     }
         
     [Fact]
     public void CreateAsEnumeration_WhenDataIsInformed_ValueIsCorrectlyStored()
     {
-        var instance = NodeExit.Create(GoodEnumerationCode, false, Data);
+        var instance = NodeExit.Completed(GoodEnumerationCode, Data);
             
         Assert.NotNull(instance);
         Assert.Equal(Data, instance.Data);
     }
     #endregion
 
-    #region Create with String
+    #region Completed with String
     [Fact]
     public void CreateAsString_WhenCodeIsNull_ThrowException()
     {
-        string parameter = null;
-            
         Assert.Throws<ArgumentNullException>(() =>
-            _ = NodeExit.Create(parameter));
+            _ = NodeExit.Completed((string) null));
     }
         
     [Fact]
     public void CreateAsString_WhenCodeNotIsNull_ReturnValidInstance()
     {
-        var instance = NodeExit.Create(GoodCode);
+        var instance = NodeExit.Completed(GoodCode);
             
         Assert.NotNull(instance);
         Assert.Equal(GoodCode, instance.Code);
@@ -73,19 +69,77 @@ public class NodeExitTest
     [Fact]
     public void CreateAsString_WhenIsErrorIsInformed_ValueIsCorrectlyStored()
     {
-        var instance = NodeExit.Create(GoodCode, true);
+        var instance = NodeExit.Failed(GoodCode);
             
         Assert.NotNull(instance);
-        Assert.True(instance.IsError);
+        Assert.True(instance.State == ExitState.Failed);
     }
         
     [Fact]
     public void CreateAsString_WhenDataIsInformed_ValueIsCorrectlyStored()
     {
-        var instance = NodeExit.Create(GoodCode, false, Data);
+        var instance = NodeExit.Completed(GoodCode, Data);
             
         Assert.NotNull(instance);
         Assert.Equal(Data, instance.Data);
+    }
+    #endregion
+    
+    #region Completed paused with String
+    [Fact]
+    public void PausedAsString_WhenCodeIsNull_ThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            _ = NodeExit.Paused((string) null));
+    }
+        
+    [Fact]
+    public void PausedString_WhenCodeNotIsNull_ReturnValidInstance()
+    {
+        var instance = NodeExit.Paused(GoodEnumerationCode, Data);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(GoodCode, instance.Code);
+        Assert.True(instance.State == ExitState.Paused);
+    }
+        
+    [Fact]
+    public void PausedAsString_WhenDataIsInformed_ValueIsCorrectlyStored()
+    {
+        var instance = NodeExit.Paused(GoodCode, Data);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(Data, instance.Data);
+        Assert.True(instance.State == ExitState.Paused);
+    }
+    #endregion
+    
+    #region Completed paused with Enumeration
+    [Fact]
+    public void PausedAsEnumeration_WhenCodeIsNull_ThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            _ = NodeExit.Paused((Enumeration) null));
+    }
+        
+    [Fact]
+    public void PausedAsEnumeration_WhenCodeNotIsNull_ReturnValidInstance()
+    {
+        var instance = NodeExit.Paused(GoodEnumerationCode);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(GoodCode, instance.Code);
+        Assert.True(instance.State == ExitState.Paused);
+    }
+        
+    [Fact]
+    public void PausedAsEnumeration_WhenDataIsInformed_ValueIsCorrectlyStored()
+    {
+        var instance = NodeExit.Paused(GoodEnumerationCode, Data);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(Data, instance.Data);
+        Assert.True(instance.State == ExitState.Paused);
     }
     #endregion
 }

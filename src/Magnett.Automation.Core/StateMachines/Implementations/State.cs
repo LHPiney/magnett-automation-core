@@ -1,6 +1,14 @@
-﻿[assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
+﻿using System.Linq;
+
+[assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.StateMachines.Implementations;
 
+/// <summary>
+/// Represents a state in a state machine. A state encapsulates a
+/// collection of transitions and provides methods to manage these transitions
+/// based on actions associated with the state. It also provides information
+/// about itself, such as whether it is a final state and its unique identifier.
+/// </summary>
 internal class State : IState
 {
     private readonly TransitionList _transitionList;
@@ -29,6 +37,19 @@ internal class State : IState
             : throw new ActionNotFoundException(Key.Name, actionName.Name);
     }
 
+    public IEnumerable<CommonNamedKey> TargetStates()
+    {
+        return _transitionList.GetValues()
+            .Select(t => t.ToStateKey);
+
+    }
+
+    public IEnumerable<CommonNamedKey> AvaliableActions()
+    {
+        return _transitionList.GetValues()
+            .Select(t => t.ActionKey);
+    }
+    
     public bool IsFinalState()
     {
         return _transitionList.IsEmpty();
@@ -43,6 +64,6 @@ internal class State : IState
 
     public static State Create(string name, TransitionList transitionList)
     {
-        return new(name, transitionList);
+        return new State(name, transitionList);
     }
 }

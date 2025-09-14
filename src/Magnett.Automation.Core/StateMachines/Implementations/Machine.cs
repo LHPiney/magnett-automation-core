@@ -1,49 +1,103 @@
-﻿namespace Magnett.Automation.Core.StateMachines.Implementations;
+﻿using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.Events.Implementations;
+using Magnett.Automation.Core.StateMachines.Events;
 
-public class Machine : IMachine
+namespace Magnett.Automation.Core.StateMachines.Implementations;
+
+/// <summary>
+/// Represents a state machine IMachine <seealso cref="IMachine"/> default's implementation
+/// that handles transitions between states
+/// based on provided actions and maintains the current state.
+/// If IEventBus is provided, it will be used to publish events.
+/// </summary>
+public class Machine : EventEmitterEntity, IMachine
 {
-    protected readonly IMachineDefinition _definition;
+    private IState State { get; set; }
+    private IMachineDefinition Definition { get; }
+    public IState Current => State;
 
-    protected Machine(IMachineDefinition definition)
+    protected Machine(IMachineDefinition definition, IEventBus eventBus) : base(eventBus)
     {
-        _definition = definition
-                      ?? throw new ArgumentNullException(nameof(definition));
-            
-        Init();
+        Id = Guid.NewGuid();
+        Definition = definition ?? throw new ArgumentNullException(nameof(definition));
     }
 
-    private void Transit(ITransition transition)
+    protected async Task<IMachine> InitializeAsync()
     {
-        var newState = _definition.HasState(transition.ToStateKey)
-            ? _definition.GetState(transition.ToStateKey)
+        State = Definition.InitialState;
+
+        await EmitEventAsync(OnMachineInit.Create(Id));
+
+        return this;
+    }
+
+    private async Task Transit(ITransition transition)
+    {
+        var newState = Definition.HasState(transition.ToStateKey)
+            ? Definition.GetState(transition.ToStateKey)
             : throw new StateNotFoundException(transition.ToStateKey.Name);
 
         State = newState;
-    }
         
-    private void Init()
-    {
-        State = _definition.InitialState
-                ?? throw new InvalidMachineDefinitionException("No initial state found");
+        if (transition.OnTransitionAsync != null)
+            await transition.OnTransitionAsync.Invoke(transition);
     }
 
     # region IMachine
         
-    public IMachine Dispatch(Enumeration action)
+    public Guid Id { get; }
+
+    public IState GetState(CommonNamedKey stateName)
     {
-        return Dispatch(action.Name);
+        ArgumentNullException.ThrowIfNull(stateName);
+        
+        return Definition.GetState(stateName);
+    }
+    
+    public async Task<IMachine> DispatchAsync(Enumeration action)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        
+        return await DispatchAsync(action.Name);
     }
         
-    public IMachine Dispatch(string actionName)
+    public async Task<IMachine> DispatchAsync(string actionName)
     {
-        Transit(State
-            .ManageAction(CommonNamedKey.Create(actionName)));
+        ArgumentNullException.ThrowIfNull(actionName);
+        
+        if (State == null)
+        { 
+            throw new InvalidOperationException("Machine is not initialized");
+        }
+        
+        var sourceState = State.Key;
+
+        await Transit(State.ManageAction(CommonNamedKey.Create(actionName)));
+
+        var targetState = State.Key;
+        
+        await EmitEventAsync(OnMachineChangeState.Create(Id, sourceState, targetState, actionName));
             
         return this;
     }
-
-    public IState State { get; private set; }
+    
+    public async Task<IMachine> ReStartAsync()
+    {
+        if (State == null)
+        {
+            throw new InvalidOperationException("Machine is not initialized");
+        }
         
+        await InitializeAsync();
+
+        return this;
+    }
+
+    public IMachineDefinition GetDefinition()
+    {
+        return Definition;
+    }
+
     public bool Equals(CommonNamedKey obj)
     {
         return State.Key.Equals(obj);
@@ -56,8 +110,16 @@ public class Machine : IMachine
 
     #endregion
 
-    public static IMachine Create(IMachineDefinition definition)
+    public static async Task<IMachine> CreateAsync(IMachineDefinition definition, IEventBus eventBus = null)
     {
-        return new Machine(definition);
+        ArgumentNullException.ThrowIfNull(definition);
+        
+        if (definition.InitialState == null)
+        {
+            throw new InvalidMachineDefinitionException("Machine definition must have an initial state");
+        }
+        
+        return await new Machine(definition, eventBus)
+            .InitializeAsync();
     }
 }

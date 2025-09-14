@@ -1,7 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Codes;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
@@ -12,58 +16,44 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definiti
 /// <summary>
 /// Try to make payment 
 /// </summary>
-public class ConfirmPayment : NodeAsync    
+
+public class ConfirmPayment(CommonNamedKey name, IEventBus eventBus) : NodeAsync(name, eventBus)
 {
-    private readonly ContextField<bool> _canMakePayment = ContextField<bool>.Create("CanMakePayment");
-    private readonly ContextField<Payment> _paymentField = ContextField<Payment>.Create("Payment");
+    private readonly ContextField<bool> _canMakePayment = ContextField<bool>.WithName("CanMakePayment");
+    private readonly ContextField<Payment> _paymentField = ContextField<Payment>.WithName("Payment");
 
-    public ConfirmPayment(CommonNamedKey name) : base(name)
+    private static async Task<NodeExit> Confirm(Payment payment)
     {
-    }
-    
-    #region ExitCodes
+        await payment.State.DispatchAsync(PaymentDefinition.Action.Confirm);
 
-    public class ExitCode : Enumeration
-    {
-        public static readonly ExitCode Done = new ExitCode(1, nameof(Done)); 
-        public static readonly ExitCode Failed = new ExitCode(1, nameof(Failed)); 
-        
-        private ExitCode(int id, string name) : base(id, name)
-        {
-        }
-    }
-        
-    #endregion
-
-    private NodeExit Confirm(Payment payment)
-    {
-        payment.State.Dispatch(PaymentStateDefinition.Action.Confirm);
-
-        return NodeExit.Create(
+        return NodeExit.Completed(
             ExitCode.Done,
-            false,
             $"Payment is Done");
     }
     
-    private NodeExit Fail(Payment payment)
+    private static async Task<NodeExit> Fail(Payment payment)
     {
-        payment.State.Dispatch(PaymentStateDefinition.Action.Cancel);
+       await payment.State.DispatchAsync(PaymentDefinition.Action.Cancel);
 
-        return NodeExit.Create(
+        return NodeExit.Failed(
             ExitCode.Failed,
-            true,
             $"Payment Failed");
     }
 
 
-    public override async Task<NodeExit> Execute(Context context)
+    protected override async Task<NodeExit> HandleAsync(Context context, CancellationToken cancellationToken = default)
     {
+        if (cancellationToken.IsCancellationRequested)
+        {
+            return NodeExit.Cancelled(
+                ExitCode.Done, 
+                $"Operation cancelled at {DateTime.UtcNow} ");
+        }
+        
         var payment = context.Value(_paymentField);
 
-        await Task.Delay(1000);
-
         return context.Value(_canMakePayment)
-            ? Confirm(payment)
-            : Fail(payment);
+            ? await Confirm(payment)
+            : await Fail(payment);
     }
 }

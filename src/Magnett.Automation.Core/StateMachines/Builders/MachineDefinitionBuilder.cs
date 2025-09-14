@@ -51,6 +51,6 @@ public class MachineDefinitionBuilder
 
     public static MachineDefinitionBuilder Create()
     {
-        return new();
+        return new MachineDefinitionBuilder();
     }
 }

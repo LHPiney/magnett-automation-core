@@ -4,6 +4,6 @@ public class TransitionList : DictionaryWrapper<ITransition>
 {
     public static TransitionList Create()
     {
-        return new();
+        return new TransitionList();
     }
 }

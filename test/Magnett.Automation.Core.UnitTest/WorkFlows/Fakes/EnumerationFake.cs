@@ -2,7 +2,7 @@
 
 namespace Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 
-public class EnumerationFake : Enumeration
+public record EnumerationFake : Enumeration
 {
     public EnumerationFake(int id, string name) : base(id, name)
     {

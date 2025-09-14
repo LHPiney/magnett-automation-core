@@ -2,15 +2,13 @@
 
 public class StateBuilder
 {
-    private readonly string _stateName;
-    private readonly bool _isInitialState;
     private readonly TransitionList _transitions;
-        
     private readonly Func<IState, bool, MachineDefinitionBuilder> _storeAction;
         
-    public string StateName => _stateName;
-    public bool IsInitialState => _isInitialState;
-        
+    public string StateName { get; }
+
+    public bool IsInitialState { get; }
+
     private StateBuilder(
         string stateName,
         bool isInitialState,
@@ -19,10 +17,10 @@ public class StateBuilder
         if (string.IsNullOrEmpty(stateName))
             throw new ArgumentNullException(nameof(stateName));
                     
-        _stateName      = stateName;
-        _isInitialState = isInitialState;
-        _storeAction    = storeAction;
-        _transitions    = TransitionList.Create();
+        StateName = stateName;
+        IsInitialState = isInitialState;
+        _storeAction = storeAction;
+        _transitions = TransitionList.Create();
     }
 
     private StateBuilder StoreTransition(ITransition transition)
@@ -44,9 +42,9 @@ public class StateBuilder
 
     public MachineDefinitionBuilder Build()
     {
-        var state = State.Create(_stateName, _transitions);
+        var state = State.Create(StateName, _transitions);
 
-        return _storeAction.Invoke(state, _isInitialState);
+        return _storeAction.Invoke(state, IsInitialState);
     }
 
     public static StateBuilder Create(
@@ -54,6 +52,6 @@ public class StateBuilder
         bool isInitialState,
         Func<IState, bool, MachineDefinitionBuilder> storeAction)
     {
-        return new (stateName, isInitialState, storeAction);
+        return new StateBuilder(stateName, isInitialState, storeAction);
     }
 }

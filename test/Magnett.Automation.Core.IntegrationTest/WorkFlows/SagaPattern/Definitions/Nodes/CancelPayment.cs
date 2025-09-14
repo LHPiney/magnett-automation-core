@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Codes;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
@@ -9,40 +13,26 @@ using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes;
 
 /// <summary>
-/// Cancel payment. and rollback pre-authorization
+/// Cancel payment and rollback pre-authorization
 /// </summary>
-public class CancelPayment : NodeAsync    
+public class CancelPayment(CommonNamedKey name, IEventBus eventBus) : NodeAsync(name, eventBus)
 {
-    public CancelPayment(CommonNamedKey name) : base(name)
-    {
-    }
+    private readonly ContextField<Payment> _paymentField = ContextField<Payment>.WithName("Payment");
     
-    private readonly ContextField<Payment> _paymentField = ContextField<Payment>.Create("Payment");
-    
-    #region ExitCodes
-
-    public class ExitCode : Enumeration
+    protected override async Task<NodeExit> HandleAsync(Context context, CancellationToken cancellationToken = default)
     {
-        public static readonly ExitCode Done = new ExitCode(1, nameof(Done)); 
-
-        private ExitCode(int id, string name) : base(id, name)
+        if (cancellationToken.IsCancellationRequested)
         {
+            return NodeExit.Cancelled(
+                ExitCode.Done, 
+                $"Operation cancelled at {DateTime.UtcNow} ");
         }
-    }
         
-    #endregion
-
-    public override async Task<NodeExit> Execute(Context context)
-    {
-        var payment = context.Value(_paymentField);
-
-        payment.State.Dispatch(PaymentStateDefinition.Action.Cancel);
+        var payment = await context.Value(_paymentField)
+            .Cancel();
         
-        await Task.Delay(1000);
-        
-        return NodeExit.Create(
-            ExitCode.Done, 
-            true, 
+        return NodeExit.Completed(
+            ExitCode.Done,
             $"Payment cancelled id [{payment.Id}] [{payment.State}]");
     }
 }

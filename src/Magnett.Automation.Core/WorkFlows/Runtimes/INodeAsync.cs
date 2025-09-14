@@ -1,6 +1,8 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Runtimes;
+﻿using System.Threading;
+
+namespace Magnett.Automation.Core.WorkFlows.Runtimes;
 
 public interface INodeAsync : INodeBase
 {
-    Task<NodeExit> Execute(Context context);
+    public Task<NodeExit> ExecuteAsync(Context context, CancellationToken cancellationToken);
 }

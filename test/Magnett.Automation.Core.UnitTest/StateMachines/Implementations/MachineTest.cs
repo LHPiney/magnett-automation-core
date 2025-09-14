@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.StateMachines;
 using Magnett.Automation.Core.StateMachines.Exceptions;
@@ -19,7 +20,7 @@ public class MachineTest
         CommonNamedKey.Create("NotFound");
         
     [Fact]
-    public void Create_When_Invoke_Return_Instance()
+    public async Task Create_When_Invoke_Return_Instance()
     {
         var definition = new Mock<IMachineDefinition>();
         var state      = new Mock<IState>();
@@ -28,20 +29,20 @@ public class MachineTest
             .Setup(def => def.InitialState)
             .Returns(state.Object);
             
-        var instance = Machine.Create(definition.Object);
+        var instance = await Machine.CreateAsync(definition.Object);
             
         Assert.NotNull(instance);
     }
         
     [Fact]
-    public void Create_When_Invoke_With_Null_Definition_Throw_Exception()
+    public async Task Create_When_Invoke_With_Null_Definition_Throw_Exception()
     {
-        Assert.Throws<ArgumentNullException>(() =>
-            Machine.Create(null));
+        await Assert.ThrowsAsync<ArgumentNullException>( async () =>
+            await Machine.CreateAsync(null));
     }
         
     [Fact]
-    public void Create_When_Invoke_Without_InitialState_Throw_Exception()
+    public async Task Create_When_Invoke_Without_InitialState_Throw_Exception()
     {
         var definition = new Mock<IMachineDefinition>();
 
@@ -49,12 +50,12 @@ public class MachineTest
             .Setup(def => def.InitialState)
             .Returns<IState>(null);
             
-        Assert.Throws<InvalidMachineDefinitionException>(() =>
-            Machine.Create(definition.Object));
+        await Assert.ThrowsAsync<InvalidMachineDefinitionException>(async () =>
+           await Machine.CreateAsync(definition.Object));
     }
         
     [Fact]
-    public void DispatchByString_When_Transition_Has_Unknown_State_Throw_Exception()
+    public async Task DispatchByString_When_Transition_Has_Unknown_State_Throw_Exception()
     {
         var definition   = new Mock<IMachineDefinition>();
         var transition   = new Mock<ITransition>();
@@ -77,14 +78,14 @@ public class MachineTest
                 def.HasState(It.Is<CommonNamedKey>(val => val.Equals(NotFoundStateKey))))
             .Returns(false);
 
-        var machine = Machine.Create(definition.Object);
+        var machine = await Machine.CreateAsync(definition.Object);
             
-        Assert.Throws<StateNotFoundException>(() =>
-            machine.Dispatch("AnyAction"));
+        await Assert.ThrowsAsync<StateNotFoundException>(async () =>
+            await machine.DispatchAsync("AnyAction"));
     }
 
     [Fact] 
-    public void DispatchByString_When_Transition_Is_Valid_Change_State()
+    public async Task DispatchByString_When_Transition_Is_Valid_Change_State()
     {
         var definition   = new Mock<IMachineDefinition>();
         var transition   = new Mock<ITransition>();
@@ -121,19 +122,19 @@ public class MachineTest
                 def.GetState(It.Is<CommonNamedKey>(val => val.Equals(FinalStateKey))))
             .Returns(finalState.Object);
             
-        var machine = Machine.Create(definition.Object);
+        var machine = await Machine.CreateAsync(definition.Object);
                 
-        var firstStateName = machine.State.Key;
-        machine.Dispatch("AnyAction");
-        var secondStateName = machine.State.Key;
+        var firstStateName = machine.Current.Key;
+        await machine.DispatchAsync("AnyAction");
+        var secondStateName = machine.Current.Key;
             
-        Assert.NotNull(machine.State);
+        Assert.NotNull(machine.Current);
         Assert.NotEqual(firstStateName, secondStateName);
         Assert.Equal(FinalStateKey, secondStateName);
     }
         
     [Fact] 
-    public void DispatchByEnumeration_When_Transition_Has_Unknown_State_Throw_Exception()
+    public async Task DispatchByEnumeration_When_Transition_Has_Unknown_State_Throw_Exception()
     {
         var definition   = new Mock<IMachineDefinition>();
         var transition   = new Mock<ITransition>();
@@ -156,13 +157,13 @@ public class MachineTest
                 def.HasState(It.Is<CommonNamedKey>(val => val.Equals(NotFoundStateKey))))
             .Returns(false);
 
-        var machine = Machine.Create(definition.Object);
+         var machine = await Machine.CreateAsync(definition.Object);
             
-        Assert.Throws<StateNotFoundException>(() =>
-            machine.Dispatch(EnumerationFake.Create(1, "AnyAction")));
+        await Assert.ThrowsAsync<StateNotFoundException>(async () =>
+            await machine.DispatchAsync(EnumerationFake.Create(1, "AnyAction")));
     }
 
-    [Fact] public void DispatchByEnumeration_When_Transition_Is_Valid_Change_State()
+    [Fact] public async Task DispatchByEnumeration_When_Transition_Is_Valid_Change_State()
     {
         var definition   = new Mock<IMachineDefinition>();
         var transition   = new Mock<ITransition>();
@@ -199,19 +200,19 @@ public class MachineTest
                 def.GetState(It.Is<CommonNamedKey>(val => val.Equals(FinalStateKey))))
             .Returns(finalState.Object);
             
-        var machine = Machine.Create(definition.Object);
+        var machine = await Machine.CreateAsync(definition.Object);
                 
-        var firstStateName = machine.State.Key;
-        machine.Dispatch(EnumerationFake.Create(1, "AnyAction")) ;
-        var secondStateName = machine.State.Key;
+        var firstStateName = machine.Current.Key;
+        await machine.DispatchAsync(EnumerationFake.Create(1, "AnyAction")) ;
+        var secondStateName = machine.Current.Key;
             
-        Assert.NotNull(machine.State);
+        Assert.NotNull(machine.Current);
         Assert.NotEqual(firstStateName, secondStateName);
         Assert.Equal(FinalStateKey, secondStateName);
     }
 
     [Fact]
-    public void EqualEnumeration_WhenEnumerationIsEqualToStateKey_ThenReturnTrue()
+    public async Task EqualEnumeration_WhenEnumerationIsEqualToStateKey_ThenReturnTrue()
     {
         var definition   = new Mock<IMachineDefinition>();
         var initialState = new Mock<IState>();
@@ -224,15 +225,15 @@ public class MachineTest
             .Setup(def => def.InitialState)
             .Returns(initialState.Object);
 
-        var machine = Machine.Create(definition.Object);
-        var isEqualToKey   = machine.Equals(EnumerationFake.Create(1, InitialStateKey.Name));
+        var machine = await Machine.CreateAsync(definition.Object);
+        var isEqualToKey = machine.Equals(EnumerationFake.Create(1, InitialStateKey.Name));
         
-        Assert.NotNull(machine.State);
+        Assert.NotNull(machine.Current);
         Assert.True(isEqualToKey);
     }
         
     [Fact]
-    public void EqualCommonKey_WhenEnumerationIsEqualToStateKey_ThenReturnTrue()
+    public async Task EqualCommonKey_WhenEnumerationIsEqualToStateKey_ThenReturnTrue()
     {
         var definition   = new Mock<IMachineDefinition>();
         var initialState = new Mock<IState>();
@@ -245,10 +246,10 @@ public class MachineTest
             .Setup(def => def.InitialState)
             .Returns(initialState.Object);
 
-        var machine = Machine.Create(definition.Object);
+        var machine = await Machine.CreateAsync(definition.Object);
         var isEqualToKey = machine.Equals(CommonNamedKey.Create(InitialStateKey.Name));
         
-        Assert.NotNull(machine.State);
+        Assert.NotNull(machine.Current);
         Assert.True(isEqualToKey);
     }
 }

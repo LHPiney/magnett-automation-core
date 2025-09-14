@@ -4,6 +4,6 @@ internal class ContextVault : DictionaryWrapper<object>, IContextVault
 {
     public static ContextVault Create()
     {
-        return new();
+        return new ContextVault();
     }
 }

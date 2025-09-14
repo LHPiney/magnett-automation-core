@@ -8,14 +8,15 @@
 
         <AssemblyVersion>0.5.0</AssemblyVersion>
 
-        <LangVersion>10</LangVersion>
+        <LangVersion>13</LangVersion>
 
-        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+        <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+        <PackageReference Include="Moq" Version="4.16.1" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Events\Fakes\" />
       <Folder Include="StateMachines" />
     </ItemGroup>
 

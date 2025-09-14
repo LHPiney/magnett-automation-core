@@ -16,7 +16,7 @@ public class FlowDefinitionTest
     private static readonly CommonNamedKey InitialNodeKey = CommonNamedKey.Create("InitialNode");
     private static readonly CommonNamedKey SecondNodeKey  = CommonNamedKey.Create("SecondNode");
         
-    #region Create
+    #region Completed
 
     [Fact]
     public void Create_WhenInitialNodeIsNull_ThrowException()
@@ -92,11 +92,11 @@ public class FlowDefinitionTest
     [Fact]
     public void GetNodeByNodeAndCode_WhenLinkExist_ReturnTargetNode()
     {
-        var initialNode  = new Mock<INodeDefinition>();
-        var secondNode   = new Mock<INodeDefinition>();
-        var nodeLink = new Mock<INodeLink>();
+        var initialNode        = new Mock<INodeDefinition>();
+        var secondNode         = new Mock<INodeDefinition>();
+        var nodeLink           = new Mock<INodeLink>();
         var nodeDefinitionList = new Mock<NodeDefinitionList>();
-        var nodeLinkList = new Mock<NodeLinkList>();
+        var nodeLinkList       = new Mock<NodeLinkList>();
 
         var definition = FlowDefinition.Create(
             InitialNodeKey, 
@@ -117,7 +117,7 @@ public class FlowDefinitionTest
             .Setup(list => list.Get(SecondNodeKey))
             .Returns(secondNode.Object);
 
-        var node = definition.GetNode(initialNode.Object, ExitCode);
+        var node = definition.GetNode(initialNode.Object.Key, ExitCode);
             
         Assert.NotNull(node);
         Assert.Equal(SecondNodeKey, node.Key);
@@ -156,7 +156,7 @@ public class FlowDefinitionTest
             nodeDefinitionList.Object, 
             nodeLinkList.Object);
 
-        _ = definition.HasLink(initialNode.Object, ExitCode);
+        _ = definition.HasLink(initialNode.Object.Key, ExitCode);
 
         var nodeLinkKey = NodeLinkKey.Create(InitialNodeKey, ExitCode);
             

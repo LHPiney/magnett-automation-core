@@ -1,6 +1,4 @@
 ﻿using Magnett.Automation.Core.WorkFlows.Definitions.Collections;
-using Magnett.Automation.Core.WorkFlows.Runtimes;
-using Magnett.Automation.Core.WorkFlows.Runtimes.Collections;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
@@ -37,12 +35,12 @@ internal class  FlowDefinition : IFlowDefinition
         return _nodes.Get(nodeKey);
     }
 
-    public INodeDefinition GetNode(INodeBase sourceNode, string code)
+    public INodeDefinition GetNode(CommonNamedKey key, string code)
     {
         INodeDefinition result = null;
 
-        var link = HasLink(sourceNode, code)
-            ? GetLink(sourceNode, code)
+        var link = HasLink(key, code)
+            ? GetLink(key, code)
             : null;
 
         if (link != null)
@@ -53,18 +51,18 @@ internal class  FlowDefinition : IFlowDefinition
         return result;
     }
 
-    public bool HasLink(INodeBase sourceNode, string code)
+    public bool HasLink(CommonNamedKey key, string code)
     {
-        var linkKey = NodeLinkKey.Create(sourceNode?.Key, code);
+        var linkKey = NodeLinkKey.Create(key, code);
 
         return _links.HasItem(linkKey);
     }
        
-    public INodeLink GetLink(INodeBase sourceNode, string code)
+    public INodeLink GetLink(CommonNamedKey key, string code)
     {
-        var linkKey = NodeLinkKey.Create(sourceNode?.Key, code);
+        var linkKey = NodeLinkKey.Create(key, code);
 
-        return  _links.Get(linkKey);
+        return _links.Get(linkKey);
     }
     #endregion
        

@@ -1,8 +1,9 @@
-﻿using Magnett.Automation.Core.WorkFlows.Runtimes;
+﻿namespace Magnett.Automation.Core.WorkFlows.Definitions;
 
-namespace Magnett.Automation.Core.WorkFlows.Definitions;
-
-public interface INodeDefinition:  INodeBase
+public interface INodeDefinition
 {
+    public CommonNamedKey Key { get; }
+    public string Name => Key?.Name;
+    
     public Type NodeType { get; }
 }
