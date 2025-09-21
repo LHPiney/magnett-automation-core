@@ -65,18 +65,6 @@ public class Saga
             context.Value(_creditLimitField),
             context.Value(_canMakePayment));
         
-        /*
-        var eventMonitor = Task.Run(async () => 
-        {
-            var eventStream = _eventBus.GetEventStream();
-            while (await eventStream.Reader.WaitToReadAsync())
-            {  
-                var eventItem = await eventStream.Reader.ReadAsync();
-                _logger.LogTrace("Event: {Event}", eventItem);
-            }
-        });
-        */
-        
         var flowExit= flow.Run();
         
         await Task.WhenAll(flowExit);

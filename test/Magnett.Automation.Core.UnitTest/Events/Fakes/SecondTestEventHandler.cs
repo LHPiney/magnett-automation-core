@@ -1,4 +1,4 @@
-using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Magnett.Automation.Core.Events;
 using Microsoft.Extensions.Logging;
@@ -13,7 +13,7 @@ public class SecondTestEventHandler : IEventHandler<SecondTestEvent>
     public bool WasHandled { get; private set; }
     public SecondTestEvent LastHandledEvent { get; private set; }
     
-    public Task Handle(SecondTestEvent @event, ILogger logger)
+    public Task Handle(SecondTestEvent @event, ILogger logger, CancellationToken cancellationToken)
     {
         WasHandled = true;
         LastHandledEvent = @event;

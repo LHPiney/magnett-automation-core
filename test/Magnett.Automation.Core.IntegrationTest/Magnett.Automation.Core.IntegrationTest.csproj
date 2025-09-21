@@ -29,7 +29,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Events\Fakes\" />
       <Folder Include="StateMachines" />
     </ItemGroup>
 

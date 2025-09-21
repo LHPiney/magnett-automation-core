@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Magnett.Automation.Core.Events;
 using Magnett.Automation.Core.Events.Implementations;
 
@@ -13,5 +14,22 @@ public class TestEntity(IEventBus? eventBus)
         var testEvent = new TestEvent(data, nameof(TestEntity));
         
         return EmitEventAsync(testEvent);
+    }
+
+    public Task DoSomethingAsync(string data, CancellationToken cancellationToken)
+    {
+        var testEvent = new TestEvent(data, nameof(TestEntity));
+        
+        return EmitEventAsync(testEvent, cancellationToken);
+    }
+
+    public Task EmitNullEventAsync()
+    {
+        return EmitEventAsync<IEvent>(null!);
+    }
+
+    public new void ClearLocalEvents()
+    {
+        base.ClearLocalEvents();
     }
 }

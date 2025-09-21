@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Magnett.Automation.Core.Events;
 using Microsoft.Extensions.Logging;
@@ -13,7 +14,7 @@ public class TestEventHandler : IEventHandler<TestEvent>
     public bool WasHandled { get; private set; }
     public TestEvent LastHandledEvent { get; private set; }
     
-    public Task Handle(TestEvent @event, ILogger logger)
+    public Task Handle(TestEvent @event, ILogger logger, CancellationToken cancellationToken)
     {
         WasHandled = true;
         LastHandledEvent = @event;
@@ -30,7 +31,7 @@ public class AnotherTestEventHandler : IEventHandler<TestEvent>
     public bool WasHandled { get; private set; }
     public TestEvent LastHandledEvent { get; private set; }
     
-    public Task Handle(TestEvent @event, ILogger logger)
+    public Task Handle(TestEvent @event, ILogger logger, CancellationToken cancellationToken)
     {
         WasHandled = true;
         LastHandledEvent = @event;
@@ -47,7 +48,7 @@ public class AnotherTestEventEventHandler : IEventHandler<AnotherTestEvent>
     public bool WasHandled { get; private set; }
     public AnotherTestEvent LastHandledEvent { get; private set; }
     
-    public Task Handle(AnotherTestEvent @event, ILogger logger)
+    public Task Handle(AnotherTestEvent @event, ILogger logger, CancellationToken cancellationToken)
     {
         WasHandled = true;
         LastHandledEvent = @event;
@@ -63,7 +64,7 @@ public class FailingTestEventHandler : IEventHandler<TestEvent>
 {
     public bool WasHandled { get; private set; }
     
-    public Task Handle(TestEvent @event, ILogger logger)
+    public Task Handle(TestEvent @event, ILogger logger, CancellationToken cancellationToken)
     {
         WasHandled = true;
         throw new InvalidOperationException("Simulated handler failure");
@@ -83,5 +84,5 @@ public class InvalidHandler
 /// </summary>
 public abstract class AbstractTestEventHandler : IEventHandler<TestEvent>
 {
-    public abstract Task Handle(TestEvent @event, ILogger logger);
+    public abstract Task Handle(TestEvent @event, ILogger logger, CancellationToken cancellationToken);
 } 
