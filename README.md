@@ -61,9 +61,8 @@ dotnet add package Magnett.Automation.Core
 ```csharp
 using Magnett.Automation.Core;
 
-// Create context and event bus with automatic metrics
+// Create context
 var context = Context.Create();
-var eventBus = EventBus.CreateWithDefaultMetrics(logger);
 
 // Define workflow with nodes and transitions
 var definition = FlowDefinitionBuilder.Create()
@@ -128,7 +127,7 @@ All components work together seamlessly:
 ### Events System
 ```csharp
 // Simple setup with automatic metrics
-var eventBus = EventBus.CreateWithDefaultMetrics(logger);
+var eventBus = EventBus.Create(logger);
 
 // Publish events
 await eventBus.PublishAsync(new OrderCreatedEvent(orderId));
@@ -274,7 +273,7 @@ During workflow execution, the system automatically emits different types of eve
 
 ```csharp
 // Simple setup with automatic metrics collection
-var eventBus = EventBus.CreateWithDefaultMetrics(logger);
+var eventBus = EventBus.Create(logger);
 
 // Register handlers for specific events
 eventBus.EventHandlerRegistry.Register<OnNodeExecuteEventHandler>();
