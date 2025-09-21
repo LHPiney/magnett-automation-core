@@ -12,8 +12,9 @@ v.1.0.0
 - Add support for net Core 9.0
 
 v.1.1.0 (2025-09-14)
-- New: Introduce event subsystem under Magnett.Automation.Core.Events (Event, EventBus, EventStream, registries, consumers, options).
-- New: Add node lifecycle events under WorkFlows.Runtimes.Events (OnNodeInit/Execute/Completed/Failed/Cancelled/Paused) and supporting types (NodeAction, NodeState, ExitState).
+- New: Introduce event subsystem under Magnett.Automation.Core.Events
+- New: Introduce metrics subsystem under Magnett.Automation.Core.Metrics
+- New: Add node lifecycle events under WorkFlows.Runtimes.Events
 - Change: Workflows runtime now emits lifecycle events from NodeBase/Node/NodeAsync and FlowRunner; update IFlow/IFlowRunner/INode*; adjust NodeFactory; refine NodeExit/NodeLinkKey.
 - Change: StateMachines add OnMachineInit and OnMachineChangeState events; updates to builders/collections/interfaces/exceptions; minor tweaks to Machine/State/Transition.
 - Change: Contexts add OnChangeFieldValueEvent; refactor Context/ContextField/ContextVault; adjust IContextVault.
