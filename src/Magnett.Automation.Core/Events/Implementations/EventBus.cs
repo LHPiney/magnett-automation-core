@@ -2,6 +2,11 @@
 using System.Threading;
 using System.Threading.Channels;
 using Microsoft.Extensions.Logging;
+using Magnett.Automation.Core.Metrics;
+using Magnett.Automation.Core.Events.Metrics;
+
+using DefaultHandlerRegistry = Magnett.Automation.Core.Events.Implementations.EventHandlerRegistry;
+using Magnett.Automation.Core.Metrics.Implementations;
 
 namespace Magnett.Automation.Core.Events.Implementations;
 
@@ -13,26 +18,31 @@ namespace Magnett.Automation.Core.Events.Implementations;
 public sealed class EventBus : IEventBus
 {
     private readonly ILogger<EventBus> _logger;
-    private readonly Channel<IEvent> _eventChannel;
+    private readonly Channel<EventContext> _eventChannel;
     private readonly IEventStream? _eventStream;
+    private readonly IMetricsCollector? _metricsCollector;
     private readonly object _stateLock = new();
-
+    private bool _disposed = false;
     private CancellationTokenSource? _cancellationTokenSource;
     private Task? _processingTask;
-
     public EventBusState State { get; private set; }    
-    public IEventConsumerRegistry ConsumerRegistry { get; }
+    public IEventHandlerRegistry EventHandlerRegistry { get; }
     public IEventReader EventReader => _eventStream;
+    public int QueueSize => _eventChannel.Reader.CanCount ? _eventChannel.Reader.Count : 0;
+    public IMetricsRegistry? MetricsRegistry => _metricsCollector is MetricsCollector collector ? collector.Registry : null;
 
     private EventBus(
-        IEventConsumerRegistry consumerRegistry,
+        IEventHandlerRegistry eventHandlerRegistry,
         ILogger<EventBus> logger,
-        IEventStream? eventStream = null)
+        IEventStream? eventStream = null,
+        IMetricsCollector? metricsCollector = null)
     {
-        ConsumerRegistry = consumerRegistry ?? throw new ArgumentNullException(nameof(consumerRegistry));
+        EventHandlerRegistry = eventHandlerRegistry ?? throw new ArgumentNullException(nameof(eventHandlerRegistry));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _eventStream = eventStream;
-        _eventChannel = Channel.CreateUnbounded<IEvent>();
+        _metricsCollector = metricsCollector;
+        _eventChannel = Channel.CreateUnbounded<EventContext>();
+
         State = EventBusState.Stopped;
     }
 
@@ -46,11 +56,17 @@ public sealed class EventBus : IEventBus
                 return  this;
             }
 
-            _logger.LogInformation("EventBus is starting...");
-            _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            _processingTask = Task.Run(() => ProcessingTask(_cancellationTokenSource.Token), cancellationToken);
-            State = EventBusState.Ready;
-            _logger.LogInformation("EventBus has started and is ready to process events");
+            using (_logger.BeginScope("EventBus Start"))
+            {
+                _logger.LogInformation("EventBus is starting...");
+                _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                _processingTask = Task.Run(() => ProcessingTask(_cancellationTokenSource.Token), cancellationToken);
+                State = EventBusState.Ready;
+                
+                _metricsCollector?.Set(new QueueSize("eventbus"), QueueSize);
+                
+                _logger.LogInformation("EventBus has started and is ready to process events");
+            }
 
             return this;
         }
@@ -66,13 +82,17 @@ public sealed class EventBus : IEventBus
                 return;
             }
 
-            _logger.LogInformation("EventBus is stopping...");
-            if (_cancellationTokenSource is { IsCancellationRequested: false })
+            using (_logger.BeginScope("EventBus Stop"))
             {
-                _cancellationTokenSource.Cancel();
+
+                _logger.LogInformation("EventBus is stopping...");
+                if (_cancellationTokenSource is { IsCancellationRequested: false })
+                {
+                    _cancellationTokenSource.Cancel();
+                }
+                State = EventBusState.Stopped;
+                _logger.LogInformation("EventBus has been stopped");
             }
-            
-            State = EventBusState.Stopped;
         }
 
         if (_processingTask != null)
@@ -88,10 +108,26 @@ public sealed class EventBus : IEventBus
         }
 
         _logger.LogInformation("EventBus has been stopped");
+        
+        if (_eventStream != null)
+        {
+            try
+            {
+                _eventStream.Writer.Complete();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to complete EventStream writer during stop");
+            }
+        }
     } 
-    public async Task PublishAsync(IEvent @event, CancellationToken cancellationToken = default)
+    public async Task PublishAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default) 
+        where TEvent : IEvent
     {
+        if (_disposed) throw new ObjectDisposedException(nameof(EventBus));
+        
         ArgumentNullException.ThrowIfNull(@event);
+
         if (cancellationToken.IsCancellationRequested) return;
 
         if (State != EventBusState.Ready)
@@ -101,7 +137,13 @@ public sealed class EventBus : IEventBus
 
         try
         {
-            await _eventChannel.Writer.WriteAsync(@event, cancellationToken);
+            _metricsCollector?.Increment(new EventsPublished(@event.GetType().Name));
+            
+            var processor = CreateTypedProcessor<TEvent>();
+            var context = new EventContext(@event, processor);
+            _logger.LogDebug("Writing event context {EventType} to channel", @event.GetType().Name);
+            await _eventChannel.Writer.WriteAsync(context, cancellationToken);
+            _logger.LogDebug("Successfully wrote event context {EventType} to channel", @event.GetType().Name);
         }
         catch (OperationCanceledException)
         {
@@ -114,10 +156,12 @@ public sealed class EventBus : IEventBus
         _logger.LogInformation("Event processing task started");
         try
         {
-            await foreach (var @event in _eventChannel.Reader.ReadAllAsync(cancellationToken))
+            _logger.LogDebug("Starting to read from event channel");
+            await foreach (var context in _eventChannel.Reader.ReadAllAsync(cancellationToken))
             {
-                await ProcessEvent(@event, cancellationToken);
+                await ProcessEventContext(context, cancellationToken);
             }
+            _logger.LogInformation("Event channel reader completed - no more events to process");
         }
         catch (OperationCanceledException)
         {
@@ -133,75 +177,187 @@ public sealed class EventBus : IEventBus
         }
     }   
 
-    private async Task ProcessEvent(IEvent @event, CancellationToken cancellationToken)
+    private async Task ProcessEventContext(EventContext context, CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(@event);  
-
-        var consumers = ConsumerRegistry.GetConsumers(@event.GetType());
-        var consumerTasks = consumers.Select(consumer =>
-        {
-            try
-            {
-                return consumer.HandleEventAsync(@event, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Event consumer {ConsumerType} failed while handling {EventType}",
-                    consumer.GetType().Name, @event.GetType().Name);
-                return Task.CompletedTask;
-            }
-        });
-        await Task.WhenAll(consumerTasks);
-
+        ArgumentNullException.ThrowIfNull(context);
+        
+        var startTime = DateTime.UtcNow;
+        var success = false;
+        
         if (_eventStream != null)
         {
             try
             {
-                await _eventStream.Writer.WriteAsync(@event, cancellationToken);
+                await _eventStream.Writer.WriteAsync(context.Event, cancellationToken);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to write event {EventType} to the event stream", @event.GetType().Name);
+                _logger.LogError(ex, "Failed to write event {EventType} to the event stream", context.EventType.Name);
             }
+        }
+        
+        try
+        {
+            await context.ProcessAsync(cancellationToken);
+            success = true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to process event context {EventType}", context.EventType.Name);
+        }
+        
+        var processingTime = DateTime.UtcNow - startTime;
+        
+        if (_metricsCollector != null)
+        {
+            if (success)
+            {
+                _metricsCollector.Increment(new EventsProcessed(context.EventType.Name));
+            }
+            else
+            {
+                _metricsCollector.Increment(new EventsFailed(context.EventType.Name));
+            }
+            
+            _metricsCollector.Record(new ProcessingTime(context.EventType.Name), processingTime.TotalMilliseconds);
+        }
+    }
+
+    private Func<EventContext, CancellationToken, Task> CreateTypedProcessor<TEvent>() 
+        where TEvent : IEvent
+    {
+        return async (context, cancellationToken) =>
+        {
+            var typedEvent = (TEvent)context.Event;
+            var handlers = EventHandlerRegistry.GetEventHandlers(typedEvent);
+            var handlerTasks = handlers.Select(handler =>
+            {
+                try
+                {
+                    return handler.Handle(typedEvent, _logger, cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Event handler {HandlerType} failed while handling {EventType}",
+                        handler.GetType().Name, typedEvent.GetType().Name);
+                    return Task.CompletedTask;
+                }
+            });
+            await Task.WhenAll(handlerTasks);
+        };
+    }
+
+    public void Dispose()
+    {
+        if (_disposed) return;
+        
+        try
+        {
+            if (State != EventBusState.Stopped)
+            {
+                _cancellationTokenSource?.Cancel();
+            }
+            
+            _cancellationTokenSource?.Dispose();
+            _processingTask?.Dispose();
+            _eventChannel.Writer.Complete();
+        }
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Error occurred during EventBus disposal");
+        }
+        finally
+        {
+            _disposed = true;
         }
     }
 
     public async ValueTask DisposeAsync()
     {
-        if (State != EventBusState.Stopped)
-        { 
-            await StopAsync();
+        if (_disposed) return;
+        
+        try
+        {
+            if (State != EventBusState.Stopped)
+            { 
+                await StopAsync();
+            }
+            
+            _cancellationTokenSource?.Dispose();
+            _processingTask?.Dispose();
+            _eventChannel.Writer.Complete();
         }
-        _cancellationTokenSource?.Dispose();
-        _processingTask?.Dispose();
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Error occurred during EventBus async disposal");
+        }
+        finally
+        {
+            _disposed = true;
+        }
     }
 
+    /// <summary>
+    /// Creates a new EventBus instance with the provided logger. The event bus will be started automatically.
+    /// </summary>
+    /// <param name="logger">The logger to use for logging.</param>
+    /// <returns>A new EventBus instance.</returns>
+    public static IEventBus Create(ILogger<EventBus> logger)
+    {
+        ArgumentNullException.ThrowIfNull(logger);
+
+        return EventBus.Create(
+            logger, 
+            null, 
+            null,
+            true);
+    }
+
+    /// <summary>
+    /// Creates a new EventBus instance with the provided logger, event stream, and metrics collector.
+    /// </summary>
+    /// <param name="logger">The logger to use for logging.</param>
+    /// <param name="eventStream">The event stream to use for persisting events.</param>
+    /// <param name="metricsCollector">The metrics collector to use for collecting metrics.</param>
+    /// <param name="startOnCreate">Whether to start the event bus automatically.</param>
+    /// <returns>A new EventBus instance.</returns>
     public static IEventBus Create(
         ILogger<EventBus> logger,
         IEventStream? eventStream = null,
+        IMetricsCollector? metricsCollector = null,
         bool startOnCreate = true)
     {
         ArgumentNullException.ThrowIfNull(logger);
 
-        var consumerRegistry = new EventConsumerRegistry();
+        var handlerRegistry = DefaultHandlerRegistry.Create(logger);
 
-        return Create(consumerRegistry, logger, eventStream, startOnCreate);
+        return Create(logger, handlerRegistry, eventStream, metricsCollector, startOnCreate);
     }
 
-
+    /// <summary>
+    /// Creates a new EventBus instance with the provided logger, handler registry, event stream, and metrics collector.
+    /// </summary>
+    /// <param name="logger">The logger to use for logging.</param>
+    /// <param name="handlerRegistry">The handler registry to use for event handling.</param>
+    /// <param name="eventStream">The event stream to use for persisting events.</param>
+    /// <param name="metricsCollector">The metrics collector to use for collecting metrics.</param>
+    /// <param name="startOnCreate">Whether to start the event bus automatically.</param>
+    /// <returns>A new EventBus instance.</returns>
     public static IEventBus Create(
-        IEventConsumerRegistry consumerRegistry,
         ILogger<EventBus> logger,
+        IEventHandlerRegistry handlerRegistry,
         IEventStream? eventStream = null,
+        IMetricsCollector? metricsCollector = null,
         bool startOnCreate = true)
     {
-        ArgumentNullException.ThrowIfNull(consumerRegistry);
+        ArgumentNullException.ThrowIfNull(handlerRegistry);
         ArgumentNullException.ThrowIfNull(logger);
 
-        var eventStreamToUse = eventStream ?? new EventStream(logger);
+        var eventStreamToUse = eventStream ?? EventStream.Create(logger);
+        var metricsCollectorToUse = metricsCollector ?? MetricsCollector.Create();
 
         return startOnCreate 
-            ? new EventBus(consumerRegistry, logger, eventStreamToUse).Start()
-            : new EventBus(consumerRegistry, logger, eventStreamToUse);
+            ? new EventBus(handlerRegistry, logger, eventStreamToUse, metricsCollectorToUse).Start()
+            : new EventBus(handlerRegistry, logger, eventStreamToUse, metricsCollectorToUse);
     }   
 }

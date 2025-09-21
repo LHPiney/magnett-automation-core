@@ -16,8 +16,7 @@ public interface IEventHandlerRegistry
     /// </summary>
     /// <param name="event">Event source</param>
     /// <returns>Collection of handler instances</returns>
-    IReadOnlyList<IEventHandler<TEvent>> GetEventHandlers<TEvent>(TEvent @event) 
-    where TEvent : IEvent;
+    IReadOnlyList<IEventHandler<TEvent>> GetEventHandlers<TEvent>(TEvent @event) where TEvent : IEvent;
     
     /// <summary>
     /// Registers event handlers from a specific assembly

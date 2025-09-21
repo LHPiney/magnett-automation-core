@@ -18,7 +18,8 @@ public abstract class EventEmitterEntity(IEventBus? eventBus)
     /// <summary>
     /// Emits an event for state change. The actual state change will be handled by event handlers.
     /// </summary>
-    protected async Task EmitEventAsync(IEvent @event, CancellationToken cancellationToken = default)
+    protected async Task EmitEventAsync<TEvent>(TEvent @event, CancellationToken cancellationToken = default)
+        where TEvent : IEvent
     {
         ArgumentNullException.ThrowIfNull(@event);
 

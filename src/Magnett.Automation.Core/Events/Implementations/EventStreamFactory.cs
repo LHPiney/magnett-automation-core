@@ -7,7 +7,7 @@ public class EventStreamFactory : IEventStreamFactory
 {
     public IEventStream CreateStream(ILogger logger)
     {
-        return new EventStream(logger, new EventStreamOptions
+        return EventStream.Create(logger, new EventStreamOptions
         {
             AllowMultipleReaders = true,
             AllowMultipleWriters = false,
@@ -17,6 +17,6 @@ public class EventStreamFactory : IEventStreamFactory
 
     public IEventStream CreateStream(ILogger logger, EventStreamOptions options)
     {
-        return new EventStream(logger, options);
+        return EventStream.Create(logger, options);
     }
 } 

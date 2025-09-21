@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Magnett.Automation.Core.Events.Implementations;
 
@@ -35,7 +32,7 @@ public sealed class EventHandlerRegistry : IEventHandlerRegistry, IDisposable
             .Where(handler => handler.GetInterfaces()
             .Any(@interface => @interface.IsGenericType && 
                                @interface.GetGenericTypeDefinition() == typeof(IEventHandler<>) &&
-                               @interface.GetGenericArguments().First() == typeof(TEvent)))];
+                               @interface.GetGenericArguments().First() == @event.GetType()))];
     }
 
     
@@ -75,7 +72,7 @@ public sealed class EventHandlerRegistry : IEventHandlerRegistry, IDisposable
             var assembly = Assembly.Load(assemblyName);
             var handlers = FindEventHandlersInAssembly(assembly);
             
-            foreach (var handler in handlers)
+            foreach (var handler in handlers.ToList())
             {
                 _eventHandlers.Add(handler);
                 _logger?.LogDebug("Registered event handler {HandlerType} from assembly {Assembly}", 
@@ -185,9 +182,9 @@ public sealed class EventHandlerRegistry : IEventHandlerRegistry, IDisposable
                     {
                         var loggerType = paramType.GenericTypeArguments[0];
                         value = typeof(LoggerFactoryExtensions)
-                            .GetMethod("CreateLogger", new[] { typeof(ILoggerFactory) })
+                            .GetMethod("CreateLogger", [typeof(ILoggerFactory)])?
                             .MakeGenericMethod(loggerType)
-                            .Invoke(null, new object[] { loggerFactory });
+                            .Invoke(null, [loggerFactory]);
                     }
                 }
                 else
@@ -268,14 +265,12 @@ public sealed class EventHandlerRegistry : IEventHandlerRegistry, IDisposable
 
     /// <summary>
     /// Creates a new EventHandlerRegistry instance
-    /// </summary
+    /// </summary>
     public static EventHandlerRegistry Create(ILogger logger = null, IServiceProvider serviceProvider = null)
     {
         return new EventHandlerRegistry(logger, serviceProvider);
     }
 
-
-    
     /// <summary>
     /// Creates a new EventHandlerRegistry with automatic discovery of all event handlers
     /// </summary>

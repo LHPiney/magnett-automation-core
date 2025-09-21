@@ -11,16 +11,20 @@ namespace Magnett.Automation.Core.Events.Implementations;
 /// This class provides a mechanism for managing an unbounded channel of events
 /// with dedicated readers and writers.
 /// </remarks>
-public sealed class EventStream(ILogger logger, EventStreamOptions? options = null)
-    : IEventStream
+public sealed class EventStream : IEventStream
 {
-    private readonly Channel<IEvent> _channel = CreateChannelFromOptions(options ?? new EventStreamOptions());
-    private readonly ILogger _logger = logger;
+    private readonly Channel<IEvent> _channel;
+    private readonly ILogger _logger;
     private bool _disposed;
 
     public ChannelReader<IEvent> Reader => _channel.Reader;
     public ChannelWriter<IEvent> Writer => _channel.Writer;
-    public Task Completion => _channel.Reader.Completion;
+
+    private EventStream(ILogger logger, EventStreamOptions options)
+    {
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _channel = CreateChannelFromOptions(options);
+    }
 
     private static Channel<IEvent> CreateChannelFromOptions(EventStreamOptions options)
     {
@@ -51,19 +55,32 @@ public sealed class EventStream(ILogger logger, EventStreamOptions? options = nu
         }
     }
 
-    public async ValueTask DisposeAsync()
+    public ValueTask DisposeAsync()
     {
-        if (_disposed) return;
+        if (_disposed) return ValueTask.CompletedTask;
 
         try
         {
             _disposed = true;
-            _channel.Writer.Complete();
-            await Completion;
+            _channel.Writer.TryComplete();
         }
         catch (Exception e)
         {
             _logger.LogError(e, "Error disposing event stream");
         }
+
+        return ValueTask.CompletedTask;
+    }
+
+    /// <summary>
+    /// Creates a new EventStream instance with the provided logger and options.
+    /// </summary>
+    /// <param name="logger">The logger to use for event stream operations.</param>
+    /// <param name="options">Optional configuration options for the event stream.</param>
+    /// <returns>A new EventStream instance.</returns>
+    public static IEventStream Create(ILogger logger, EventStreamOptions? options = null)
+    {
+        ArgumentNullException.ThrowIfNull(logger);
+        return new EventStream(logger, options ?? new EventStreamOptions());
     }
 }
