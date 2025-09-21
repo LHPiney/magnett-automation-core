@@ -46,7 +46,7 @@ public class ConfirmPayment(CommonNamedKey name, IEventBus eventBus) : NodeAsync
         if (cancellationToken.IsCancellationRequested)
         {
             return NodeExit.Cancelled(
-                ExitCode.Done, 
+                ExitCode.Cancelled, 
                 $"Operation cancelled at {DateTime.UtcNow} ");
         }
         

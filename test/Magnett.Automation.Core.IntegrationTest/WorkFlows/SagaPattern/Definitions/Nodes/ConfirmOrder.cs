@@ -21,8 +21,8 @@ public class ConfirmOrder(CommonNamedKey name, IEventBus eventBus) : NodeAsync(n
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            return NodeExit.Failed(
-                ExitCode.Done, 
+            return NodeExit.Cancelled(
+                ExitCode.Cancelled, 
                 "Operation cancelled");
         }
     

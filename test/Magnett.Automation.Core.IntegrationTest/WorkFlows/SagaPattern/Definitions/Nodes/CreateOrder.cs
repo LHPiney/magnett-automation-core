@@ -25,7 +25,7 @@ public class CreateOrder(CommonNamedKey name, IEventBus eventBus) : NodeAsync(na
         if (cancellationToken.IsCancellationRequested)
         {
             return NodeExit.Cancelled(
-                ExitCode.Done, 
+                ExitCode.Cancelled, 
                 $"Operation cancelled at {DateTime.UtcNow} ");
         }
         

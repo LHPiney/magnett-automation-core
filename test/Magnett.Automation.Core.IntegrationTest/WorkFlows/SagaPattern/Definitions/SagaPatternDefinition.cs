@@ -14,19 +14,19 @@ public static class SagaPatternDefinition
         Definition = FlowDefinitionBuilder.Create()
             .WithInitialNode<CreateOrder>(NodeName.CreateOrder)
                 .OnExitCode(ExitCode.Created).GoTo(NodeName.PreAuthorizePayment)
-                .OnExitCode(ExitCode.Canceled).GoTo(NodeName.CancelOrder)
+                .OnExitCode(ExitCode.Cancelled).GoTo(NodeName.CancelOrder)
                 .Build()
             
             .WithNode<PreAuthorizePayment>(NodeName.PreAuthorizePayment)
                 .OnExitCode(ExitCode.PreAuthorized).GoTo(NodeName.ConfirmPayment)
                 .OnExitCode(ExitCode.Denied).GoTo(NodeName.CancelPayment)
-                .OnExitCode(ExitCode.Canceled).GoTo(NodeName.CancelPayment)
+                .OnExitCode(ExitCode.Cancelled).GoTo(NodeName.CancelPayment)
                 .Build()
             
             .WithNode<ConfirmPayment>(NodeName.ConfirmPayment)
                 .OnExitCode(ExitCode.Done).GoTo(NodeName.ConfirmOrder)
                 .OnExitCode(ExitCode.Failed).GoTo(NodeName.CancelPayment)
-                .OnExitCode(ExitCode.Canceled).GoTo(NodeName.CancelPayment)
+                .OnExitCode(ExitCode.Cancelled).GoTo(NodeName.CancelPayment)
                 .Build()
  
             .WithNode<ConfirmOrder>(NodeName.ConfirmOrder).Build()     

@@ -49,7 +49,7 @@ public class PreAuthorizePayment(CommonNamedKey name, IEventBus eventBus) : Node
         if (cancellationToken.IsCancellationRequested)
         {
             return NodeExit.Cancelled(
-                ExitCode.Done,
+                ExitCode.Cancelled,
                 $"Operation cancelled at {DateTime.UtcNow} ");
         }
         
