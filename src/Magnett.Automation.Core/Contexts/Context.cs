@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using System.Linq;
 using System.Threading;
 using Magnett.Automation.Core.Contexts.Events;
 using Magnett.Automation.Core.Events;
@@ -86,11 +85,22 @@ public class Context : EventEmitterEntity
         }
     }
 
+    /// <summary>
+    /// Creates a new Context instance with the provided context vault and optional event bus.
+    /// </summary>
+    /// <param name="contextVault">The context vault to use for data storage.</param>
+    /// <param name="eventBus">Optional event bus for context change events.</param>
+    /// <returns>A new Context instance.</returns>
     public static Context Create(IContextVault contextVault, IEventBus? eventBus = null)
     {
         return new Context(contextVault, eventBus);
     }
         
+    /// <summary>
+    /// Creates a new Context instance with a default context vault and optional event bus.
+    /// </summary>
+    /// <param name="eventBus">Optional event bus for context change events.</param>
+    /// <returns>A new Context instance.</returns>
     public static Context Create(IEventBus? eventBus = null)
     {
         return new Context(ContextVault.Create(), eventBus);
