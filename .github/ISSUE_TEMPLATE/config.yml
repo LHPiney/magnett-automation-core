@@ -1,0 +1,20 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 GitHub Discussions
+    url: https://github.com/LHPiney/magnett-automation-core/discussions
+    about: Ask questions, share ideas, or discuss the project
+  - name: 📚 Documentation
+    url: https://github.com/LHPiney/magnett-automation-core/tree/main/test/Magnett.Automation.Core.IntegrationTest
+    about: Check integration tests for complete examples
+  - name: 🐛 Bug Reports
+    url: https://github.com/LHPiney/magnett-automation-core/issues/new?template=bug_report.yml
+    about: Report a bug or unexpected behavior
+  - name: ✨ Feature Requests
+    url: https://github.com/LHPiney/magnett-automation-core/issues/new?template=feature_request.yml
+    about: Suggest a new feature or enhancement
+  - name: ❓ Support Questions
+    url: https://github.com/LHPiney/magnett-automation-core/issues/new?template=support.yml
+    about: Ask a question or get help with usage
+  - name: 💬 Feedback
+    url: https://github.com/LHPiney/magnett-automation-core/issues/new?template=feedback.yml
+    about: Share feedback or start a discussion

@@ -1,0 +1,68 @@
+---
+name: 🐛 Bug Report
+about: Report a bug or unexpected behavior
+title: '[BUG] '
+labels: ['bug', 'needs-triage']
+assignees: ''
+---
+
+## 🐛 Bug Description
+
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+## 🔄 Steps to Reproduce
+
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
+
+## ✅ Expected Behavior
+
+A clear and concise description of what you expected to happen.
+
+## ❌ Actual Behavior
+
+A clear and concise description of what actually happened.
+
+## 📋 Environment Information
+
+- **OS**: [e.g. Windows 10, macOS 12.0, Ubuntu 20.04]
+- **.NET Version**: [e.g. .NET 6.0, .NET 8.0, .NET 9.0]
+- **Package Version**: [e.g. Magnett.Automation.Core 1.1.0]
+- **IDE**: [e.g. Visual Studio 2022, VS Code, Rider]
+
+## 📝 Code Sample
+
+```csharp
+// Minimal code sample that reproduces the issue
+var context = Context.Create();
+// ... your code here
+```
+
+## 📊 Additional Context
+
+- **Error Messages**: Any error messages or stack traces
+- **Logs**: Relevant log output
+- **Screenshots**: If applicable, add screenshots
+- **Related Issues**: Link to any related issues
+
+## 🔍 Investigation
+
+- [ ] I have searched existing issues to avoid duplicates
+- [ ] I have checked the [Release Notes](RELEASE-NOTES.MD) for known issues
+- [ ] I have tested with the latest version
+- [ ] I can provide a minimal reproduction case
+
+## 🎯 Impact
+
+**How critical is this bug?**
+- [ ] Critical - Blocks core functionality
+- [ ] High - Major feature affected
+- [ ] Medium - Minor feature affected
+- [ ] Low - Cosmetic issue
+
+---
+
+**Thank you for reporting this bug! We'll investigate and get back to you.**

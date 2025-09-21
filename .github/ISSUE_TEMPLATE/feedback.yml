@@ -1,0 +1,82 @@
+---
+name: 💬 Feedback & Discussion
+about: Share feedback, ask questions, or start a discussion
+title: '[FEEDBACK] '
+labels: ['discussion', 'feedback']
+assignees: ''
+---
+
+## 💬 Feedback Type
+
+**What kind of feedback are you sharing?**
+- [ ] General feedback about the library
+- [ ] Question about usage or best practices
+- [ ] Documentation improvement suggestion
+- [ ] Performance feedback
+- [ ] User experience feedback
+- [ ] Other: _______________
+
+## 📝 Description
+
+**Share your thoughts**
+Please describe your feedback, question, or discussion topic in detail.
+
+## 🎯 Context
+
+**How are you using the library?**
+- [ ] Workflow orchestration
+- [ ] State machine management
+- [ ] Event-driven architecture
+- [ ] Microservices integration
+- [ ] Business process automation
+- [ ] Learning/experimentation
+- [ ] Other: _______________
+
+## 📊 Experience Level
+
+**Your experience with the library:**
+- [ ] New user - Just getting started
+- [ ] Beginner - Used basic features
+- [ ] Intermediate - Used advanced features
+- [ ] Advanced - Contributing to the project
+- [ ] Expert - Deep understanding of internals
+
+## 🔍 Specific Areas
+
+**What aspects would you like to discuss?**
+- [ ] API design and usability
+- [ ] Performance characteristics
+- [ ] Documentation quality
+- [ ] Examples and tutorials
+- [ ] Integration with other libraries
+- [ ] Community and support
+- [ ] Roadmap and future plans
+
+## 📋 Questions
+
+**If you have specific questions:**
+1. Question 1?
+2. Question 2?
+3. Question 3?
+
+## 💡 Suggestions
+
+**Any suggestions for improvement?**
+Share any ideas you have for making the library better.
+
+## 🎨 Examples
+
+**If applicable, share code examples:**
+```csharp
+// Your code example or use case
+var context = Context.Create();
+// ... your implementation
+```
+
+## 📚 Additional Context
+
+Add any other context, links, or resources that might be helpful for the discussion.
+
+---
+
+**Thank you for sharing your feedback! We value your input and will engage in the discussion.**
