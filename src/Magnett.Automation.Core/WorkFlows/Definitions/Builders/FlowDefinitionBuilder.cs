@@ -1,6 +1,5 @@
 ﻿using Magnett.Automation.Core.WorkFlows.Definitions.Collections;
 using Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
-using Magnett.Automation.Core.WorkFlows.Runtimes;
 
 namespace Magnett.Automation.Core.WorkFlows.Definitions.Builders;
 
@@ -59,6 +58,10 @@ public class FlowDefinitionBuilder
         return FlowDefinition.Create(_initialNode, _nodes, _links);
     }
 
+    /// <summary>
+    /// Creates a new FlowDefinitionBuilder instance.
+    /// </summary>
+    /// <returns>A new FlowDefinitionBuilder instance.</returns>
     public static FlowDefinitionBuilder Create()
     {
         return new FlowDefinitionBuilder();

@@ -9,6 +9,14 @@ public record OnNodeCancelledEvent(
     string Code,
     string Data) : Event(Name, Caller)
 {
+    /// <summary>
+    /// Creates a new OnNodeCancelledEvent instance for the specified cancelled node.
+    /// </summary>
+    /// <param name="nodeName">The name of the cancelled node.</param>
+    /// <param name="code">The cancellation code.</param>
+    /// <param name="data">Additional cancellation data.</param>
+    /// <param name="callerName">The name of the caller method.</param>
+    /// <returns>A new OnNodeCancelledEvent instance.</returns>
     public static OnNodeCancelledEvent Create(
         CommonNamedKey nodeName,
         string code,

@@ -25,6 +25,11 @@ public class Flow : IFlow
 
     #endregion  
         
+    /// <summary>
+    /// Creates a new Flow instance with the specified flow runner.
+    /// </summary>
+    /// <param name="flowRunner">The flow runner to execute the flow.</param>
+    /// <returns>A new Flow instance.</returns>
     public static IFlow Create(IFlowRunner flowRunner)
     {
         return new Flow(flowRunner);

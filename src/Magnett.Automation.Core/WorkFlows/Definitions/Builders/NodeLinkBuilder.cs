@@ -51,6 +51,13 @@ public class NodeLinkBuilder : INodeLinkBuilder, IGotoNodeLinkBuilder
     }
     #endregion
 
+    /// <summary>
+    /// Creates a new NodeLinkBuilder instance for the specified from node.
+    /// </summary>
+    /// <param name="fromNode">The source node key.</param>
+    /// <param name="storeAction">Function to store the node link configuration.</param>
+    /// <param name="returnAction">Function to return to the flow definition builder.</param>
+    /// <returns>A new NodeLinkBuilder instance.</returns>
     public static INodeLinkBuilder Create(
         CommonNamedKey fromNode,  
         Func<CommonNamedKey, INodeLink, INodeLinkBuilder> storeAction, 

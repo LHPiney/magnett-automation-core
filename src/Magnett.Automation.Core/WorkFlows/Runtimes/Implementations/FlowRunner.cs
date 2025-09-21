@@ -46,6 +46,14 @@ public sealed class FlowRunner : FlowRunnerBase
         
     #endregion
         
+    /// <summary>
+    /// Creates a new FlowRunner instance with the provided flow definition and context.
+    /// </summary>
+    /// <param name="definition">The flow definition to execute.</param>
+    /// <param name="context">The context to use during execution.</param>
+    /// <param name="eventBus">Optional event bus for workflow events.</param>
+    /// <param name="logger">Optional logger for the flow runner.</param>
+    /// <returns>A new FlowRunner instance.</returns>
     public static IFlowRunner  Create(
         IFlowDefinition definition, 
         Context context, 

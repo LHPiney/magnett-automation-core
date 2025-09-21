@@ -47,6 +47,13 @@ public class StateBuilder
         return _storeAction.Invoke(state, IsInitialState);
     }
 
+    /// <summary>
+    /// Creates a new StateBuilder instance for the specified state.
+    /// </summary>
+    /// <param name="stateName">The name of the state.</param>
+    /// <param name="isInitialState">Whether this state is the initial state.</param>
+    /// <param name="storeAction">Function to store the state configuration.</param>
+    /// <returns>A new StateBuilder instance.</returns>
     public static StateBuilder Create(
         string stateName,
         bool isInitialState,

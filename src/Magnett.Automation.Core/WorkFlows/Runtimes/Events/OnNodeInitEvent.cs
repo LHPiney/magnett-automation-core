@@ -7,6 +7,12 @@ public record OnNodeInitEvent(
     string Caller, 
     CommonNamedKey NodeName) : Event(Name, Caller)
 {
+    /// <summary>
+    /// Creates a new OnNodeInitEvent instance for the specified initialized node.
+    /// </summary>
+    /// <param name="nodeName">The name of the initialized node.</param>
+    /// <param name="callerName">The name of the caller method.</param>
+    /// <returns>A new OnNodeInitEvent instance.</returns>
     public static OnNodeInitEvent Create(
         CommonNamedKey nodeName,
         [CallerMemberName] string callerName = "")

@@ -36,6 +36,12 @@ internal class MachineDefinition : IMachineDefinition
     
     #endregion
         
+    /// <summary>
+    /// Creates a new MachineDefinition instance with the specified initial state and state list.
+    /// </summary>
+    /// <param name="initialState">The initial state of the machine.</param>
+    /// <param name="stateList">The list of all states in the machine.</param>
+    /// <returns>A new MachineDefinition instance.</returns>
     public static IMachineDefinition Create(
         IState initialState,
         StateList stateList)

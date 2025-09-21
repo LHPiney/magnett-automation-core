@@ -24,6 +24,13 @@ internal class Transition : ITransition
             this.onTransitionAsync = onTransitionAsync;
     }
 
+    /// <summary>
+    /// Creates a new Transition instance with the specified action and target state.
+    /// </summary>
+    /// <param name="actionName">The name of the transition action.</param>
+    /// <param name="toStateName">The name of the target state.</param>
+    /// <param name="onTransitionAsync">Optional async action to execute during transition.</param>
+    /// <returns>A new Transition instance.</returns>
     public static Transition Create(
         string actionName,
         string toStateName,

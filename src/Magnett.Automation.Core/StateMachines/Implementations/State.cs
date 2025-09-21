@@ -62,6 +62,12 @@ internal class State : IState
         return Key.Name;
     }
 
+    /// <summary>
+    /// Creates a new State instance with the specified name and transition list.
+    /// </summary>
+    /// <param name="name">The name of the state.</param>
+    /// <param name="transitionList">The list of transitions from this state.</param>
+    /// <returns>A new State instance.</returns>
     public static State Create(string name, TransitionList transitionList)
     {
         return new State(name, transitionList);

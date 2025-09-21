@@ -34,6 +34,12 @@ public class TransitionBuilder
             Transition.Create(_actionName, stateName, _asyncAction));
     }
 
+    /// <summary>
+    /// Creates a new TransitionBuilder instance for the specified action.
+    /// </summary>
+    /// <param name="actionName">The name of the transition action.</param>
+    /// <param name="storeAction">Function to store the transition configuration.</param>
+    /// <returns>A new TransitionBuilder instance.</returns>
     public static TransitionBuilder Create(
         string actionName,
         Func<ITransition, StateBuilder> storeAction)
