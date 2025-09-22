@@ -1,0 +1,54 @@
+# Site settings
+title: "Magnett Automation Core"
+description: "A powerful .NET library for business process automation, state machines, workflows and event-driven architecture"
+url: "https://magnett-automation-core.github.io"
+baseurl: "/magnett-automation-core"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: just-the-docs
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Just the Docs theme settings
+just_the_docs:
+  color_scheme: "light"
+  search_enabled: true
+  search_heading: "Search results"
+  search_placeholder: "Search documentation"
+  
+  aux_links:
+    "GitHub":
+      - "https://github.com/magnett-automation-core/magnett-automation-core"
+  
+  aux_links_new_tab: true
+  nav_sort: case_insensitive
+  
+  external_links:
+    - title: "GitHub Repository"
+      url: "https://github.com/magnett-automation-core/magnett-automation-core"
+    - title: "NuGet Package"
+      url: "https://www.nuget.org/packages/Magnett.Automation.Core"
+  
+  footer_content: "Copyright &copy; 2024 Magnett Automation Core. Distributed under the MIT License."
+  
+  github:
+    repository_url: "https://github.com/magnett-automation-core/magnett-automation-core"
+    repository_label: "View on GitHub"
+  
+  logo: "/assets/logo.png"
+  favicon_ico: "/assets/favicon.ico"
