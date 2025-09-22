@@ -15,7 +15,7 @@ This guide will help you get started with Magnett Automation Core quickly.
 ### Prerequisites
 
 - .NET 6.0 or higher
-- Visual Studio 2022 or VS Code
+- Jetbrains Rider, Visual Studio 2022, VS Code
 - Basic knowledge of C# and asynchronous programming
 
 ### Install Package
