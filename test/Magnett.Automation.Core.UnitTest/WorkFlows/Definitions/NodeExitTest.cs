@@ -142,4 +142,62 @@ public class NodeExitTest
         Assert.True(instance.State == ExitState.Paused);
     }
     #endregion
+    
+    #region Cancelled with String
+    [Fact]
+    public void CancelledAsString_WhenCodeIsNull_ThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            _ = NodeExit.Cancelled((string) null));
+    }
+        
+    [Fact]
+    public void CancelledAsString_WhenCodeNotIsNull_ReturnValidInstance()
+    {
+        var instance = NodeExit.Cancelled(GoodCode);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(GoodCode, instance.Code);
+        Assert.True(instance.State == ExitState.Cancelled);
+    }
+        
+    [Fact]
+    public void CancelledAsString_WhenDataIsInformed_ValueIsCorrectlyStored()
+    {
+        var instance = NodeExit.Cancelled(GoodCode, Data);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(Data, instance.Data);
+        Assert.True(instance.State == ExitState.Cancelled);
+    }
+    #endregion
+    
+    #region Cancelled with Enumeration
+    [Fact]
+    public void CancelledAsEnumeration_WhenCodeIsNull_ThrowException()
+    {
+        Assert.Throws<ArgumentNullException>(() =>
+            _ = NodeExit.Cancelled((Enumeration) null));
+    }
+        
+    [Fact]
+    public void CancelledAsEnumeration_WhenCodeNotIsNull_ReturnValidInstance()
+    {
+        var instance = NodeExit.Cancelled(GoodEnumerationCode);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(GoodCode, instance.Code);
+        Assert.True(instance.State == ExitState.Cancelled);
+    }
+        
+    [Fact]
+    public void CancelledAsEnumeration_WhenDataIsInformed_ValueIsCorrectlyStored()
+    {
+        var instance = NodeExit.Cancelled(GoodEnumerationCode, Data);
+            
+        Assert.NotNull(instance);
+        Assert.Equal(Data, instance.Data);
+        Assert.True(instance.State == ExitState.Cancelled);
+    }
+    #endregion
 }
