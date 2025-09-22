@@ -215,10 +215,9 @@ public sealed class EventHandlerRegistry : IEventHandlerRegistry, IDisposable
             {
                 handler = _serviceProvider.GetService(handlerType);
             }
-            if (handler == null)
-            {
-                handler = CreateWithActivator(handlerType);
-            }
+            
+            handler ??= CreateWithActivator(handlerType);
+            
             _handlerCache.Set(key, handler);
             _logger?.LogDebug("Created and cached handler instance for {HandlerType}", handlerType.Name);
             
@@ -240,9 +239,25 @@ public sealed class EventHandlerRegistry : IEventHandlerRegistry, IDisposable
     private static IEnumerable<Type> FindEventHandlersInNamespace(string @namespace)
     {
         return AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(assembly => assembly.GetTypes())
+            .SelectMany(assembly => GetTypesSafely(assembly))
             .Where(type => type.Namespace?.StartsWith(@namespace, StringComparison.OrdinalIgnoreCase) == true)
             .Where(IsValidEventHandler);
+    }
+    
+    private static IEnumerable<Type> GetTypesSafely(Assembly assembly)
+    {
+        try
+        {
+            return assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            return ex.Types.Where(type => type != null);
+        }
+        catch (Exception)
+        {
+            return Enumerable.Empty<Type>();
+        }
     }
     
     private static bool IsValidEventHandler(Type type)
