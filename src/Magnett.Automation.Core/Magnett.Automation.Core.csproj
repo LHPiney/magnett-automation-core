@@ -57,6 +57,7 @@ v.1.1.0 (2025-09-14)
     <ItemGroup>
       <None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
       <None Include="..\..\RELEASE-NOTES.md" Pack="true" PackagePath="\" />
+      <None Include="..\..\README-NuGet.md" Pack="true" PackagePath="README.md" />
       <None Include="PackageIcon.png" Pack="true" PackagePath="\PackageIcon.png" />
     </ItemGroup>
     <ItemGroup>

@@ -8,7 +8,7 @@
 ![.NET](https://img.shields.io/badge/.NET-6.0%20%7C%207.0%20%7C%208.0%20%7C%209.0-blue)
 
 <div align="center">
-  <img src="./assets/logo.png" alt="Magnett Automation" width="300">
+  <img src="./assets/logo.png" alt="Magnett Automation" width="400">
 </div>
 
 **A powerful .NET library for building workflows, orchestrating processes, and managing state machines with event-driven architecture.**
