@@ -10,3 +10,13 @@ v.1.0.0
 - Total separation between Definition and Runtime
 - Minor changes in runtime to increase performance
 - Add support for net Core 9.0
+
+v.1.1.0 (2025-09-14)
+- New: Introduce event subsystem under Magnett.Automation.Core.Events
+- New: Introduce metrics subsystem under Magnett.Automation.Core.Metrics
+- New: Add node lifecycle events under WorkFlows.Runtimes.Events
+- Change: Workflows runtime now emits lifecycle events from NodeBase/Node/NodeAsync and FlowRunner; update IFlow/IFlowRunner/INode*; adjust NodeFactory; refine NodeExit/NodeLinkKey.
+- Change: StateMachines add OnMachineInit and OnMachineChangeState events; updates to builders/collections/interfaces/exceptions; minor tweaks to Machine/State/Transition.
+- Change: Contexts add OnChangeFieldValueEvent; refactor Context/ContextField/ContextVault; adjust IContextVault.
+- Change: Workflow Definitions update FlowDefinition, IFlowDefinition and INodeDefinition; minor builder changes.
+- Change: Commons refine CommonNamedKey, DictionaryWrapper, Enumeration.

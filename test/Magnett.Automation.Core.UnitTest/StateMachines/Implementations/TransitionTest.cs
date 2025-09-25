@@ -6,7 +6,7 @@ namespace Magnett.Automation.Core.UnitTest.StateMachines.Implementations;
 public class TransitionTest
 {
     private const string ActionName = "Action";
-    private const string StateName  = "State";
+    private const string StateName  = "Current";
             
     [Fact]
     public void Create_When_Invoke_Return_Instance()

@@ -2,7 +2,7 @@
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions;
 
-internal class NodeName : CommonNamedKey 
+internal record NodeName : CommonNamedKey 
 {
     public static readonly NodeName Reset     = new("Reset");
     public static readonly NodeName SetValue  = new("SetValue");

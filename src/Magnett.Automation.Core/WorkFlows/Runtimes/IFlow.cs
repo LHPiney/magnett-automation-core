@@ -1,4 +1,6 @@
-﻿namespace Magnett.Automation.Core.WorkFlows.Runtimes;
+﻿using System.Threading;
+
+namespace Magnett.Automation.Core.WorkFlows.Runtimes;
 
 public interface IFlow
 {
@@ -6,5 +8,5 @@ public interface IFlow
         
     Context Context { get; }
 
-    Task<NodeExit> Run();
+    Task<NodeExit> Run(CancellationToken cancellationToken = default);
 }

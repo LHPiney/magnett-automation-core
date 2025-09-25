@@ -1,4 +1,5 @@
-﻿using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
+﻿using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Codes;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitions.Nodes;
 using Magnett.Automation.Core.WorkFlows.Definitions;
 using Magnett.Automation.Core.WorkFlows.Definitions.Builders;
 
@@ -6,7 +7,7 @@ namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SimpleFlow.Definitio
 
 public static class SimpleFlowDefinition
 {
-    private static IFlowDefinition   _definition;
+    private static IFlowDefinition _definition;
         
     static SimpleFlowDefinition()
     {
@@ -17,16 +18,16 @@ public static class SimpleFlowDefinition
     {
         _definition = FlowDefinitionBuilder.Create()
             .WithInitialNode<ResetValue>(NodeName.Reset)
-            .OnExitCode(ResetValue.ExitCode.Ok).GoTo(NodeName.SetValue)
-            .Build()
-                
+                .OnExitCode(ExitCode.Ok).GoTo(NodeName.SetValue)
+                .Build()
+            
             .WithNode<SetValue>(NodeName.SetValue)
-            .OnExitCode(SetValue.ExitCode.Assigned).GoTo(NodeName.SumValue)
-            .Build()
-                
+                .OnExitCode(ExitCode.Assigned).GoTo(NodeName.SumValue)
+                .Build()
+            
             .WithNode<SumValue>(NodeName.SumValue)
-            .Build()
-                
+                .Build()
+            
             .BuildDefinition();
     }
 

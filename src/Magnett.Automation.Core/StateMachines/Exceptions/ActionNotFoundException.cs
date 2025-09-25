@@ -4,11 +4,12 @@
 public class ActionNotFoundException : Exception 
 {
     public ActionNotFoundException(string stateName, string actionName) : 
-        base($"Action [{actionName}] not found in State [{stateName}]")
+        base($"Action [{actionName}] not found in Current [{stateName}]")
     {
 
     }
 
+    [Obsolete("Obsolete")]
     protected ActionNotFoundException(SerializationInfo info, StreamingContext context) :
         base(info, context)
     {

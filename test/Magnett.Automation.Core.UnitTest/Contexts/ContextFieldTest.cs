@@ -11,8 +11,17 @@ public class ContextFieldTest
     [Fact]
     public void Create_When_Invoke_Return_Valid_Instance()
     {
-        var instance = ContextField<string>.Create(FieldName);
+        var instance = ContextField<string>.WithName(FieldName);
             
+        Assert.NotNull(instance);
+        Assert.IsType<ContextField<string>>(instance);
+    }
+    
+    [Fact]
+    public void ImplicitOperator_When_Invoke_Return_Valid_Instance()
+    {
+        ContextField<string> instance = FieldName;
+        
         Assert.NotNull(instance);
         Assert.IsType<ContextField<string>>(instance);
     }

@@ -1,54 +1,46 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Codes;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
-using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
 using Magnett.Automation.Core.WorkFlows.Runtimes;
 using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes;
 
 /// <summary>
-/// Create order record, begin transaction
+/// Completed order record, begin transaction
 /// </summary>
-public class CreateOrder : NodeAsync    
+public class CreateOrder(CommonNamedKey name, IEventBus eventBus) : NodeAsync(name, eventBus)
 {
-    private readonly ContextField<Order> _orderField = ContextField<Order>.Create("Order");
-    private readonly ContextField<double> _amountField = ContextField<double>.Create("Amount");
-    private readonly ContextField<string> _descriptionField = ContextField<string>.Create("Description");
-    
-    #region ExitCodes
+    private readonly ContextField<Order> _orderField = ContextField<Order>.WithName("Order");
+    private readonly ContextField<double> _amountField = ContextField<double>.WithName("Amount");
+    private readonly ContextField<string> _descriptionField = ContextField<string>.WithName("Description");
 
-    public class ExitCode : Enumeration
+    protected override async Task<NodeExit> HandleAsync(Context context, CancellationToken cancellationToken = default)
     {
-        public static readonly ExitCode Created  = new ExitCode(1, nameof(Created)); 
-
-        private ExitCode(int id, string name) : base(id, name)
+        if (cancellationToken.IsCancellationRequested)
         {
+            return NodeExit.Cancelled(
+                ExitCode.Cancelled, 
+                $"Operation cancelled at {DateTime.UtcNow} ");
         }
-    }
         
-    #endregion
-    
-    public CreateOrder(CommonNamedKey name) : base(name)
-    {
-    }
-
-    public override async Task<NodeExit> Execute(Context context)
-    {
-        var order = Order.Create(
+        var order = await Order.CreateAsync(
             context.Value(_amountField), 
-            context.Value(_descriptionField));
+            context.Value(_descriptionField),
+            EventBus);
 
-        order.State.Dispatch(OrderStateDefinition.Action.Validate);
+        await order.Validate();
+
+        await context.StoreAsync(_orderField, order);
+        await Task.Delay(1000, cancellationToken);
         
-        context.Store(_orderField, order);
-        
-        await Task.Delay(1000);
-        
-        return NodeExit.Create(
+        return NodeExit.Completed(
             ExitCode.Created, 
-            false, 
-            $"Order id [{order.Id}] [{order.State.State.Key}]");
+            $"Order id [{order.Id}] [{order.State.Current.Key}]");
     }
 }

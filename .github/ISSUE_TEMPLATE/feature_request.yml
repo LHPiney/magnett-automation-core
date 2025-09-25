@@ -1,0 +1,84 @@
+---
+name: ✨ Feature Request
+about: Suggest a new feature or enhancement
+title: '[FEATURE] '
+labels: ['enhancement', 'needs-discussion']
+assignees: ''
+---
+
+## ✨ Feature Description
+
+**What feature would you like to see?**
+A clear and concise description of the feature you'd like to see implemented.
+
+## 🎯 Problem Statement
+
+**What problem does this solve?**
+Describe the problem or use case this feature would address. Is your feature request related to a problem? Please describe.
+
+## 💡 Proposed Solution
+
+**How should this work?**
+Describe the solution you'd like to see implemented. Be as detailed as possible.
+
+## 🔄 Alternative Solutions
+
+**Have you considered alternatives?**
+Describe any alternative solutions or workarounds you've considered.
+
+## 📋 Use Cases
+
+**Who would benefit from this feature?**
+- [ ] Workflow developers
+- [ ] State machine users
+- [ ] Event-driven applications
+- [ ] Microservices orchestration
+- [ ] Business process automation
+- [ ] Other: _______________
+
+## 🎨 Proposed API Design
+
+```csharp
+// Example of how the new feature might look
+public class NewFeature
+{
+    public void NewMethod()
+    {
+        // Implementation details
+    }
+}
+```
+
+## 📊 Impact Assessment
+
+**What components would be affected?**
+- [ ] Core library
+- [ ] Events system
+- [ ] Workflows
+- [ ] State machines
+- [ ] Context management
+- [ ] Metrics system
+- [ ] Documentation
+
+## 🔍 Research
+
+- [ ] I have searched existing issues to avoid duplicates
+- [ ] I have checked if this feature exists in similar libraries
+- [ ] I have considered the impact on existing APIs
+- [ ] I am willing to help implement this feature
+
+## 🎯 Priority
+
+**How important is this feature?**
+- [ ] Critical - Essential for core use cases
+- [ ] High - Would significantly improve usability
+- [ ] Medium - Nice to have enhancement
+- [ ] Low - Minor improvement
+
+## 📚 Additional Context
+
+Add any other context, mockups, or examples about the feature request here.
+
+---
+
+**Thank you for suggesting this feature! We'll review and discuss the proposal.**

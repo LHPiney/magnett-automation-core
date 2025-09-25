@@ -21,8 +21,8 @@ public class SagaPatternTest
         var result = await saga.Execute();
 
         Assert.NotNull(result);
-        Assert.True(result.Order.State.Equals(OrderStateDefinition.State.Confirmed));
-        Assert.True(result.Payment.State.Equals(PaymentStateDefinition.State.Confirmed));
+        Assert.True(result.Order.State.Equals(OrderDefinition.Status.Confirmed));
+        Assert.True(result.Payment.State.Equals(PaymentDefinition.Status.Confirmed));
     }
     
     [Fact]
@@ -38,7 +38,7 @@ public class SagaPatternTest
         var result = await saga.Execute();
         
         Assert.NotNull(result);
-        Assert.True(result.Order.State.Equals(OrderStateDefinition.State.Cancelled));
-        Assert.True(result.Payment.State.Equals(PaymentStateDefinition.State.Cancelled));
+        Assert.True(result.Order.State.Equals(OrderDefinition.Status.Cancelled));
+        Assert.True(result.Payment.State.Equals(PaymentDefinition.Status.Cancelled));
     }
 }   

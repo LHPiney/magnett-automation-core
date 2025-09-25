@@ -49,8 +49,12 @@ public class MachineDefinitionBuilder
         return MachineDefinition.Create(_initialState, _states);
     }
 
+    /// <summary>
+    /// Creates a new MachineDefinitionBuilder instance.
+    /// </summary>
+    /// <returns>A new MachineDefinitionBuilder instance.</returns>
     public static MachineDefinitionBuilder Create()
     {
-        return new();
+        return new MachineDefinitionBuilder();
     }
 }

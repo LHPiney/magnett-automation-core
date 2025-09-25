@@ -1,0 +1,62 @@
+---
+name: ❓ Support Question
+about: Ask a question or get help with usage
+title: '[SUPPORT] '
+labels: ['question', 'support']
+assignees: ''
+---
+
+## ❓ Question
+
+**What do you need help with?**
+A clear and concise description of your question or problem.
+
+## 🔍 What I've Tried
+
+**What have you already attempted?**
+- [ ] Checked the [Integration Tests](test/Magnett.Automation.Core.IntegrationTest/) for examples
+- [ ] Reviewed the [Unit Tests](test/Magnett.Automation.Core.UnitTest/) for API usage
+- [ ] Searched existing issues and discussions
+- [ ] Read the [Release Notes](RELEASE-NOTES.MD)
+- [ ] Other: _______________
+
+## 📋 Environment
+
+- **OS**: [e.g. Windows 10, macOS 12.0, Ubuntu 20.04]
+- **.NET Version**: [e.g. .NET 6.0, .NET 8.0, .NET 9.0]
+- **Package Version**: [e.g. Magnett.Automation.Core 1.1.0]
+- **IDE**: [e.g. Visual Studio 2022, VS Code, Rider]
+
+## 💻 Code Sample
+
+```csharp
+// Your code that's not working as expected
+var context = Context.Create();
+var eventBus = EventBus.Create(logger);
+// ... your implementation
+```
+
+## 🎯 Expected Outcome
+
+**What are you trying to achieve?**
+Describe what you want to accomplish with the library.
+
+## ❌ Current Issue
+
+**What's happening instead?**
+Describe the current behavior or error you're experiencing.
+
+## 📊 Error Information
+
+**If applicable:**
+- **Error Message**: 
+- **Stack Trace**: 
+- **Log Output**: 
+
+## 🔍 Additional Context
+
+Add any other context, screenshots, or information that might help us understand your question.
+
+---
+
+**We'll do our best to help you! Please be patient as we review your question.**

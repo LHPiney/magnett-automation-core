@@ -26,6 +26,13 @@ public class NodeLink : INodeLink
         Key = NodeLinkKey.Create(FromNodeKey, code);
     }
 
+    /// <summary>
+    /// Creates a new NodeLink instance connecting two nodes.
+    /// </summary>
+    /// <param name="fromNodeKey">The source node key.</param>
+    /// <param name="toNodeKey">The target node key.</param>
+    /// <param name="code">The link code identifier.</param>
+    /// <returns>A new NodeLink instance.</returns>
     public static INodeLink Create(
         CommonNamedKey fromNodeKey,
         CommonNamedKey toNodeKey,

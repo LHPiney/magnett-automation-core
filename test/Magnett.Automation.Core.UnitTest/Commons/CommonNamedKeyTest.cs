@@ -11,7 +11,7 @@ public class CommonNamedKeyTest
     private const string KeyName = "Key";
     private const string AlternativeKeyName = "AlternativeKey";
 
-    #region Create
+    #region Completed
 
     [Fact]
     public void Create_When_Invoke_Return_Instance()
@@ -112,82 +112,27 @@ public class CommonNamedKeyTest
 
         Assert.False(areEquals);
     }
-    #endregion
 
-    #region IEqualityComparer
-        
     [Fact]
-    public void Equals_WhenSameInstanceIsCompared_ShouldReturnTrue()
+    public void Equals_WhenInstancesWithSameNameButDifferentScope_ShouldReturnFalse()
     {
-        var instanceOne = CommonNamedKey.Create(KeyName);
-            
-        var areEquals = instanceOne.Equals(instanceOne, instanceOne);
-
-        Assert.True(areEquals);
-    }
-        
-    [Fact]
-    public void Equals_WhenFirstInstanceIsNull_ShouldReturnFalse()
-    {
-        var instanceOne = CommonNamedKey.Create(KeyName);
-            
-        var areEquals = instanceOne.Equals(null, instanceOne);
-
-        Assert.False(areEquals);
+        var instanceOne = CommonNamedKey.Create(KeyName, "scope1");
+        var instanceTwo = CommonNamedKey.Create(KeyName, "scope2");
+        Assert.False(instanceOne.Equals(instanceTwo));
     }
 
     [Fact]
-    public void Equals_WhenSecondInstanceIsNull_ShouldReturnFalse()
+    public void ImplicitOperator_WithNullOrEmptyString_ThrowsException()
     {
-        var instanceOne = CommonNamedKey.Create(KeyName);
-            
-        var areEquals = instanceOne.Equals(instanceOne, null);
-
-        Assert.False(areEquals);
-    }        
-            
-    [Fact]
-    public void Equals_WhenInstancesHasSameName_ShouldReturnTrue()
-    {
-        var instanceOne = CommonNamedKey.Create(KeyName);
-        var instanceTwo = CommonNamedKey.Create(KeyName);
-            
-        var areEquals = instanceOne.Equals(instanceOne, instanceTwo);
-
-        Assert.True(areEquals);
-    }  
-        
-    [Fact]
-    public void Equals_WhenInstancesHasDifferentName_ShouldReturnTrue()
-    {
-        var instanceOne = CommonNamedKey.Create(KeyName);
-        var instanceTwo = CommonNamedKey.Create(AlternativeKeyName);
-            
-        var areEquals = instanceOne.Equals(instanceOne, instanceTwo);
-
-        Assert.False(areEquals);
-    }          
-    
-    [Fact]
-    public void GetHashCode_WhenInvoked_ShouldReturnNameHashCode()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
-            
-        var nameHasCode = instance.Name.GetHashCode();
-
-        Assert.Equal(nameHasCode, instance.GetHashCode());
-    }
-    
-    [Fact]
-    public void GetHashCode_WhenInvokedWithAName_ShouldReturnNameHashCode()
-    {
-        var instance = CommonNamedKey.Create(KeyName);
-        var key = CommonNamedKey.Create(AlternativeKeyName);
-            
-        var keyHasCode = instance.GetHashCode(key);
-
-        Assert.Equal(keyHasCode, key.GetHashCode());
+        Assert.Throws<ArgumentNullException>(() => { CommonNamedKey key = (string)null; });
+        Assert.Throws<ArgumentNullException>(() => { CommonNamedKey key = ""; });
     }
 
+    [Fact]
+    public void ToString_WithCustomScope_ReturnsExpectedFormat()
+    {
+        var instance = CommonNamedKey.Create(KeyName, "myscope");
+        Assert.Equal($"{KeyName}.myscope", instance.ToString());
+    }
     #endregion
 }

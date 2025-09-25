@@ -1,15 +1,16 @@
-﻿using Magnett.Automation.Core.WorkFlows.Definitions;
+﻿using Magnett.Automation.Core.Events;
+using Magnett.Automation.Core.WorkFlows.Definitions;
 
 namespace Magnett.Automation.Core.WorkFlows.Runtimes.Factories;
 
 public static class NodeFactory
 {
-    public static INodeBase CreateNode(INodeDefinition nodeDefinition)
+    public static INodeBase CreateNode(INodeDefinition nodeDefinition, IEventBus eventBus)
     {
         ArgumentNullException.ThrowIfNull(nodeDefinition);
 
         var constructor = nodeDefinition.NodeType
-            .GetConstructor(new[] { typeof(CommonNamedKey) });
+            .GetConstructor([typeof(CommonNamedKey), typeof(IEventBus)]);
 
         if (constructor is null)
         {
@@ -17,6 +18,6 @@ public static class NodeFactory
         }
         
         return (INodeBase)constructor
-            .Invoke(new object[] { nodeDefinition.Key });
+            .Invoke([nodeDefinition.Key, eventBus]);
     }
 }

@@ -1,55 +1,77 @@
-﻿namespace Magnett.Automation.Core.Commons;
+﻿using System.Diagnostics;
 
-public class CommonNamedKey : IEqualityComparer<CommonNamedKey>
+namespace Magnett.Automation.Core.Commons;
+
+/// <summary>
+/// Represents a strongly-typed key with name and scope for identifying entities.
+/// Provides value-based equality and immutability.
+/// </summary>
+[DebuggerDisplay("{Name}.{Scope}")]
+public record CommonNamedKey
 {
+    /// <summary>
+    /// The key name.
+    /// </summary>
     public string Name { get; }
+    /// <summary>
+    /// The key scope (default is "default").
+    /// </summary>
+    public string Scope { get; }
 
-    protected CommonNamedKey(string name)
+    /// <summary>
+    /// Initializes a new instance of <see cref="CommonNamedKey"/>.
+    /// </summary>
+    /// <param name="name">The key name.</param>
+    /// <param name="scope">The key scope (optional).</param>
+    /// <exception cref="ArgumentNullException">Thrown if the name is null or empty.</exception>
+    protected CommonNamedKey(string name, string scope = "default")
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentNullException(nameof(name));
-
+        
         Name = name;
+        Scope = scope;
     }
 
-    public bool Equals(string str)
-    {
-        return !string.IsNullOrEmpty(str) && Name.Equals(str);
-    }
-        
-    public bool Equals(Enumeration enumeration)
-    {
-        return enumeration != null && Name.Equals(enumeration.Name);
-    }
-        
-    public override bool Equals(object obj)
-    {
-        return obj is CommonNamedKey key && Name.Equals(key.Name);
-    }
-        
-    public override int GetHashCode()
-    {
-        return Name != null 
-            ? Name.GetHashCode() 
-            : 0;
-    }
-
-    public bool Equals(CommonNamedKey x, CommonNamedKey y)
-    {
-        if (ReferenceEquals(x, y)) return true;
-        if (ReferenceEquals(x, null)) return false;
-        if (ReferenceEquals(y, null)) return false;
-            
-        return x.GetType() == y.GetType() && x.Name.Equals(y.Name);
-    }
-
-    public int GetHashCode(CommonNamedKey obj)
-    {
-        return obj.Name.GetHashCode();
-    }
-        
-    public static CommonNamedKey Create(string name)
+    /// <summary>
+    /// Implicitly converts a string to a <see cref="CommonNamedKey"/> with default scope.
+    /// </summary>
+    /// <param name="name">The key name.</param>
+    public static implicit operator CommonNamedKey(string name)
     {
         return new CommonNamedKey(name);
+    }
+
+    /// <summary>
+    /// Compares the key with an <see cref="Enumeration"/> instance by name.
+    /// </summary>
+    /// <param name="other">Enumeration to compare.</param>
+    /// <returns>True if the name matches; otherwise, false.</returns>
+    public bool Equals(Enumeration other)
+    {
+        if (other is null)
+            return false;
+
+        return other.Name == Name;
+    }
+
+    /// <summary>
+    /// Returns the string representation of the key (name.scope).
+    /// </summary>
+    /// <returns>String in the format "Name.Scope".</returns>
+    public override string ToString()
+    {
+        return $"{Name}.{Scope}";
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="CommonNamedKey"/>.
+    /// </summary>
+    /// <param name="name">The key name.</param>
+    /// <param name="scope">The key scope (optional).</param>
+    /// <returns>An instance of <see cref="CommonNamedKey"/>.</returns>
+    public static CommonNamedKey Create(string name, string scope = "default")
+    {
+        return new CommonNamedKey(name, scope);
     }
 }

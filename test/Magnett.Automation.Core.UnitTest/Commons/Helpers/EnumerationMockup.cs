@@ -2,7 +2,7 @@
 
 namespace Magnett.Automation.Core.UnitTest.Commons.Helpers;
 
-public class EnumerationMockup : Enumeration
+public record EnumerationMockup : Enumeration
 {
     public int GetId()
     {

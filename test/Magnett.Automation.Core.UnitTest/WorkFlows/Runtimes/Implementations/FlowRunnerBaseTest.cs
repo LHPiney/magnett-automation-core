@@ -1,6 +1,7 @@
 ﻿using System;
 using Magnett.Automation.Core.Commons;
 using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Events;
 using Magnett.Automation.Core.UnitTest.WorkFlows.Fakes;
 using Magnett.Automation.Core.WorkFlows.Definitions;
 using Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
@@ -27,30 +28,36 @@ public class FlowRunnerBaseTest
     [Fact]
     public void Ctor_WhenDefinitionIsNull_ThrowException()
     {
+        var eventBus = new Mock<IEventBus>();   
+        
         Assert.Throws<ArgumentNullException>(() =>
-            new FlowRunnerBaseFake(null, Context.Create(), GetLogger()));
+            new FlowRunnerBaseFake(null, Context.Create(eventBus.Object), eventBus.Object, GetLogger()));
     }
         
     [Fact]
     public void Ctor_WhenContextIsNull_ThrowException()
     {
+        var eventBus = new Mock<IEventBus>();
         var definition = new Mock<IFlowDefinition>();
             
         Assert.Throws<ArgumentNullException>(() =>
-            new FlowRunnerBaseFake(definition.Object, null, GetLogger()));
+            new FlowRunnerBaseFake(definition.Object, null, eventBus.Object, GetLogger()));
     }
     
+    [Fact]
     public void Ctor_WhenLoggerIsNull_ThrowException()
     {
+        var eventBus = new Mock<IEventBus>();   
         var definition = new Mock<IFlowDefinition>();
             
         Assert.Throws<ArgumentNullException>(() =>
-            new FlowRunnerBaseFake(definition.Object, Context.Create(), null));
+            new FlowRunnerBaseFake(definition.Object, Context.Create(eventBus.Object), eventBus.Object, null));
     }
     
     [Fact]
     public void Ctor_WhenDefinitionIsValid_ReturnInstance()
     {
+        var eventBus = new Mock<IEventBus>();   
         var definition = new Mock<IFlowDefinition>();
         definition.Setup(mock => mock.InitialNode)
             .Returns(InitialNodeKey);
@@ -59,7 +66,8 @@ public class FlowRunnerBaseTest
         
         var instance = new FlowRunnerBaseFake(
             definition.Object, 
-            Context.Create(), 
+            Context.Create(eventBus.Object), 
+            eventBus.Object,
             GetLogger());
             
         Assert.NotNull(instance);
@@ -69,14 +77,15 @@ public class FlowRunnerBaseTest
     [Fact]
     public void Ctor_WhenInstanceIsCreated_ContextIsAssigned()
     {
+        var eventBus = new Mock<IEventBus>();   
         var definition = new Mock<IFlowDefinition>();
         definition.Setup(mock => mock.InitialNode)
             .Returns(InitialNodeKey);
         definition.Setup(mock => mock.GetNode(InitialNodeKey))
             .Returns(NodeDefinition.Create<NodeFake>(InitialNodeKey));
         
-        var context = Context.Create();
-        var instance = new FlowRunnerBaseFake(definition.Object, context, GetLogger());
+        var context = Context.Create(eventBus.Object);
+        var instance = new FlowRunnerBaseFake(definition.Object, context, eventBus.Object, GetLogger());
             
         Assert.NotNull(instance.Context);
         Assert.Equal(context, instance.Context);
@@ -86,8 +95,9 @@ public class FlowRunnerBaseTest
     [Fact]
     public void ExecuteNode_WhenNodeImplementsOnlyINodeBase_ThrowException()
     {
+        var eventBus = new Mock<IEventBus>();   
         var definition = new Mock<IFlowDefinition>();
-        var context = Context.Create();
+        var context = Context.Create(eventBus.Object);
         
         definition.Setup(mock => mock.InitialNode)
             .Returns(InitialNodeKey);
@@ -97,6 +107,7 @@ public class FlowRunnerBaseTest
         var instance = new FlowRunnerBaseFake(
             definition.Object, 
             context,
+            eventBus.Object,
             GetLogger());
 
         Assert.ThrowsAsync<ArgumentOutOfRangeException>(async ()=> 
@@ -106,8 +117,9 @@ public class FlowRunnerBaseTest
     [Fact]
     public void ExecuteNode_WhenNodeIsNull_ThrowException()
     {
+        var eventBus = new Mock<IEventBus>();
         var definition = new Mock<IFlowDefinition>();
-        var context = Context.Create();
+        var context = Context.Create(eventBus.Object);
  
         definition.Setup(mock => mock.InitialNode)
             .Returns(InitialNodeKey);
@@ -117,6 +129,7 @@ public class FlowRunnerBaseTest
         var instance = new FlowRunnerBaseFake(
             definition.Object, 
             context,
+            eventBus.Object,
             GetLogger());
 
         Assert.ThrowsAsync<ArgumentNullException>(async ()=> 

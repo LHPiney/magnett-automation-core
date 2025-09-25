@@ -1,0 +1,35 @@
+# Main navigation
+main:
+  - title: Home
+    url: /
+  - title: Getting Started
+    url: /getting-started/
+    children:
+      - title: Installation
+        url: /getting-started/installation/
+      - title: Quick Start
+        url: /getting-started/quick-start/
+  - title: Architecture
+    url: /architecture/
+  - title: Examples
+    url: /examples/
+    children:
+      - title: Saga Pattern
+        url: /examples/saga-pattern/
+      - title: Event-Driven Architecture
+        url: /examples/event-driven/
+      - title: State Machine Patterns
+        url: /examples/state-machines/
+  - title: Patterns
+    url: /patterns/
+    children:
+      - title: Event Sourcing
+        url: /patterns/event-sourcing/
+      - title: CQRS
+        url: /patterns/cqrs/
+      - title: State Machine Pattern
+        url: /patterns/state-machine/
+  - title: API Reference
+    url: /api/
+  - title: Contributing
+    url: /contributing/

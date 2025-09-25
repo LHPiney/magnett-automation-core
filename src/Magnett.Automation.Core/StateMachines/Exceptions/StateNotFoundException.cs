@@ -4,10 +4,11 @@
 public class StateNotFoundException : Exception
 {
     public StateNotFoundException(string stateName): 
-        base($"State [{stateName}] not found")
+        base($"Current [{stateName}] not found")
     {
     }
         
+    [Obsolete("Obsolete")]
     protected StateNotFoundException(SerializationInfo info, StreamingContext context) :
         base(info, context)
     {
