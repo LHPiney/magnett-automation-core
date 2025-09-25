@@ -26,11 +26,18 @@ public class ConfirmOrder(CommonNamedKey name, IEventBus eventBus) : NodeAsync(n
                 "Operation cancelled");
         }
     
-        var order = await context.Value(_orderField)
-            .Confirm();
+        var order = context.Value(_orderField);
+        if (order == null)
+        {
+            return NodeExit.Failed(
+                ExitCode.Failed,
+                "Order field not found in context");
+        }
+        
+        var confirmedOrder = await order.Confirm();
         
         return NodeExit.Completed(
             ExitCode.Done,
-            $"Order confirmed id [{order.Id}] [{order.State}]");
+            $"Order confirmed id [{confirmedOrder.Id}] [{confirmedOrder.State}]");
     }
 }

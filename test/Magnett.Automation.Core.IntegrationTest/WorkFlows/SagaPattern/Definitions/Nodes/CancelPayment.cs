@@ -27,11 +27,18 @@ public class CancelPayment(CommonNamedKey name, IEventBus eventBus) : NodeAsync(
                 $"Operation cancelled at {DateTime.UtcNow} ");
         }
         
-        var payment = await context.Value(_paymentField)
-            .Cancel();
+        var payment = context.Value(_paymentField);
+        if (payment == null)
+        {
+            return NodeExit.Failed(
+                ExitCode.Failed,
+                "Payment field not found in context");
+        }
+        
+        var cancelledPayment = await payment.Cancel();
         
         return NodeExit.Completed(
             ExitCode.Done,
-            $"Payment cancelled id [{payment.Id}] [{payment.State}]");
+            $"Payment cancelled id [{cancelledPayment.Id}] [{cancelledPayment.State}]");
     }
 }
