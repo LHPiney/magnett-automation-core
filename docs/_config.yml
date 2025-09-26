@@ -53,5 +53,5 @@ just_the_docs:
     repository_url: "https://github.com/magnett-automation-core/magnett-automation-core"
     repository_label: "View on GitHub"
   
-  logo: "/assets/logo.png"
-  favicon_ico: "/assets/favicon.ico"
+  logo: "/magnett-automation-core/assets/logo.png"
+  favicon_ico: "/magnett-automation-core/assets/favicon.ico"
