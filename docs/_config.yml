@@ -13,6 +13,9 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
 
+# GitHub Pages specific settings
+github: [metadata]
+
 # Exclude from processing
 exclude:
   - README.md
