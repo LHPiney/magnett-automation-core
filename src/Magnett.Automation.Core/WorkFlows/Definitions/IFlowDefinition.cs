@@ -2,6 +2,8 @@
 
 public interface IFlowDefinition
 {
+    public CommonNamedKey Key { get; }
+    public int Version { get; }
     public CommonNamedKey InitialNode { get; }
     public bool HasLink(CommonNamedKey nodeKe, string code);        
     public INodeLink GetLink(CommonNamedKey nodeKe, string code);

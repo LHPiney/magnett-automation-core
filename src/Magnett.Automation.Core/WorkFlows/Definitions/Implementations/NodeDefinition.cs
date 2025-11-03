@@ -13,4 +13,16 @@ public class NodeDefinition : INodeDefinition
             NodeType = typeof(TNodeType)
         };
     }
+
+    public static NodeDefinition Create(Type nodeType, CommonNamedKey nodeName)
+    {
+        if (nodeType == null)
+            throw new ArgumentNullException(nameof(nodeType));
+            
+        return new NodeDefinition
+        {
+            Key = nodeName,
+            NodeType = nodeType
+        };
+    }
 }

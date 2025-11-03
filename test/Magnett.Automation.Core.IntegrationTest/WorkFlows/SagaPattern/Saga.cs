@@ -68,6 +68,8 @@ public class Saga
         var flowExit= flow.Run();
         
         await Task.WhenAll(flowExit);
+
+        var snapShot = context.GetSnapshot();
         
         return new SagaResponse(
             context.Value(_orderField),

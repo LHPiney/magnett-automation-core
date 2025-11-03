@@ -1,0 +1,79 @@
+{
+  "key": "saga-pattern",
+  "version": 1,
+  "initialNode": "CreateOrder",
+  "nodes": [
+    {
+      "key": "CreateOrder",
+      "nodeType": "Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes.CreateOrder, Magnett.Automation.Core.IntegrationTest"
+    },
+    {
+      "key": "PreAuthorizePayment",
+      "nodeType": "Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes.PreAuthorizePayment, Magnett.Automation.Core.IntegrationTest"
+    },
+    {
+      "key": "ConfirmPayment",
+      "nodeType": "Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes.ConfirmPayment, Magnett.Automation.Core.IntegrationTest"
+    },
+    {
+      "key": "ConfirmOrder",
+      "nodeType": "Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes.ConfirmOrder, Magnett.Automation.Core.IntegrationTest"
+    },
+    {
+      "key": "CancelPayment",
+      "nodeType": "Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes.CancelPayment, Magnett.Automation.Core.IntegrationTest"
+    },
+    {
+      "key": "CancelOrder",
+      "nodeType": "Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Nodes.CancelOrder, Magnett.Automation.Core.IntegrationTest"
+    }
+  ],
+  "links": [
+    {
+      "fromNodeKey": "CreateOrder",
+      "toNodeKey": "PreAuthorizePayment",
+      "code": "Created"
+    },
+    {
+      "fromNodeKey": "CreateOrder",
+      "toNodeKey": "CancelOrder",
+      "code": "Cancelled"
+    },
+    {
+      "fromNodeKey": "PreAuthorizePayment",
+      "toNodeKey": "ConfirmPayment",
+      "code": "PreAuthorized"
+    },
+    {
+      "fromNodeKey": "PreAuthorizePayment",
+      "toNodeKey": "CancelPayment",
+      "code": "Denied"
+    },
+    {
+      "fromNodeKey": "PreAuthorizePayment",
+      "toNodeKey": "CancelPayment",
+      "code": "Cancelled"
+    },
+    {
+      "fromNodeKey": "ConfirmPayment",
+      "toNodeKey": "ConfirmOrder",
+      "code": "Done"
+    },
+    {
+      "fromNodeKey": "ConfirmPayment",
+      "toNodeKey": "CancelPayment",
+      "code": "Failed"
+    },
+    {
+      "fromNodeKey": "ConfirmPayment",
+      "toNodeKey": "CancelPayment",
+      "code": "Cancelled"
+    },
+    {
+      "fromNodeKey": "CancelPayment",
+      "toNodeKey": "CancelOrder",
+      "code": "Done"
+    }
+  ]
+}
+
