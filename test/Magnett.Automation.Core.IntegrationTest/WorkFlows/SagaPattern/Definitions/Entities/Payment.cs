@@ -1,17 +1,26 @@
 ﻿using System;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Magnett.Automation.Core.Contexts;
+using Magnett.Automation.Core.Contexts.Serializations;
+using Magnett.Automation.Core.Contexts.Serializations.Attributes;
 using Magnett.Automation.Core.Events;
 using Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.States;
 
 namespace Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities;
 
-public class Payment
+[ContextSerializable]
+public class Payment : IContextSerializable
 {
-    private readonly IEventBus _eventBus;
-    public Guid Id { get; }
-    public double Amount { get; }
-    public PaymentState State { get; private set; }
+    private IEventBus? _eventBus;
 
+    public Guid Id { get; private set; }
+    public double Amount { get; private set; }
+    public PaymentState? State { get; private set; }
+
+    private Payment()
+    {
+    }
 
     private Payment(double amount, IEventBus eventBus)
     {
@@ -23,47 +32,108 @@ public class Payment
 
     private async Task<Payment> InitStateMachineAsync()
     {
-        State = await PaymentState.CreateAsync(_eventBus);
+        if (_eventBus != null)
+        {
+            State = await PaymentState.CreateAsync(_eventBus);
+        }
 
         return this;
     }
-
      
     public bool IsPreAuthorized()
     {
-        return State.Current.Equals(PaymentDefinition.Status.PreAuthorized);
+        return State?.Current.Equals(PaymentDefinition.Status.PreAuthorized) ?? false;
     }
     
     public async Task<Payment> Confirm()
     {
-        await State.DispatchAsync(PaymentDefinition.Action.Confirm);
+        if (State != null)
+        {
+            await State.DispatchAsync(PaymentDefinition.Action.Confirm);
+        }
 
         return this;
     }
     
     public async Task<Payment> Rollback()
     {
-        await State.DispatchAsync(PaymentDefinition.Action.Cancel);
+        if (State != null)
+        {
+            await State.DispatchAsync(PaymentDefinition.Action.Cancel);
+        }
         
         return this;
     }
     
     public async Task<Payment> Cancel()
     {
-        await State.DispatchAsync(PaymentDefinition.Action.Cancel);
+        if (State != null)
+        {
+            await State.DispatchAsync(PaymentDefinition.Action.Cancel);
+        }
 
         return this;
     }
 
     public async Task<Payment> PreAuthorize()
     {
-        await State.DispatchAsync(PaymentDefinition.Action.PreAuthorize);
+        if (State != null)
+        {
+            await State.DispatchAsync(PaymentDefinition.Action.PreAuthorize);
+        }
 
         return this;
     }
+    
     public static async Task<Payment> CreateAsync(double amount, IEventBus eventBus)
     {
         return await new Payment(amount, eventBus)
             .InitStateMachineAsync();
+    }
+
+    public ContextFieldSnapshot Serialize(string fieldName, ISerializationContext context)
+    {
+        var data = new PaymentData
+        {
+            Id = Id,
+            Amount = Amount
+        };
+
+        return new ContextFieldSnapshot
+        {
+            FieldName = fieldName,
+            FieldType = typeof(Payment).AssemblyQualifiedName ?? "Magnett.Automation.Core.IntegrationTest.WorkFlows.SagaPattern.Definitions.Entities.Payment",
+            Value = null,
+            SerializedValue = JsonSerializer.Serialize(data)
+        };
+    }
+
+    public static object Deserialize(ContextFieldSnapshot snapshot, ISerializationContext context)
+    {
+        if (string.IsNullOrEmpty(snapshot.SerializedValue))
+        {
+            throw new InvalidOperationException("Cannot deserialize Payment: SerializedValue is null or empty");
+        }
+
+        var data = JsonSerializer.Deserialize<PaymentData>(snapshot.SerializedValue);
+        if (data == null)
+        {
+            throw new InvalidOperationException("Failed to deserialize Payment data");
+        }
+
+        var payment = new Payment
+        {
+            Id = data.Id,
+            Amount = data.Amount,
+            _eventBus = context.EventBus
+        };
+
+        return payment;
+    }
+
+    private class PaymentData
+    {
+        public Guid Id { get; set; }
+        public double Amount { get; set; }
     }
 }

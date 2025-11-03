@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>Magnett.Automation.Server</PackageId>
+        <RootNamespace>Magnett.Automation.Server</RootNamespace>
+        <Title>Magnett Automation Server</Title>
+        <authors>Magnett</authors>
+        <owners>@LHPiney</owners>
+        <Description>Magnett Automation Server provides infrastructure for managing multiple workflow instances, persistence, and coordination. Built on top of Magnett.Automation.Core for enterprise workflow orchestration and SaaS solutions.</Description>
+        <Product>Magnett.Automation.Server</Product>
+        <Icon>PackageIcon.png</Icon>
+        <PackageVersion>0.1.0</PackageVersion>
+        <RepositoryUrl>https://github.com/LHPiney/magnett-automation-core</RepositoryUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <PackageTags>workflow orchestration automation server saas persistence multi-tenant enterprise net netcore</PackageTags>
+        <AssemblyVersion>0.1.0</AssemblyVersion>
+        <LangVersion>13</LangVersion>
+        <PackageProjectUrl>https://github.com/LHPiney/magnett-automation-core</PackageProjectUrl>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <IncludeSource>true</IncludeSource>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageLicenseUrl>https://github.com/LHPiney/magnett-automation-core/blob/main/LICENSE.md</PackageLicenseUrl>
+        <PackageReleaseNotes>v.0.1.0 (Initial Release)
+- Initial release of Magnett.Automation.Server
+- IFlowVault interface for workflow instance management
+- Foundation for SaaS workflow orchestration platform</PackageReleaseNotes>
+        <TargetFrameworks>net9.0;net6.0;net7.0;net8.0</TargetFrameworks>
+    </PropertyGroup>
+    
+    <PropertyGroup Label="Package">
+      <PackageIcon>PackageIcon.png</PackageIcon>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+      <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <None Include="..\..\LICENSE.md" Pack="true" PackagePath="LICENSE.md" />
+      <None Include="..\..\RELEASE-NOTES.md" Pack="true" PackagePath="\" />
+      <None Include="packageIcon.png" Pack="true" PackagePath="\PackageIcon.png" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Magnett.Automation.Core\Magnett.Automation.Core.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />
+      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+</Project>
+

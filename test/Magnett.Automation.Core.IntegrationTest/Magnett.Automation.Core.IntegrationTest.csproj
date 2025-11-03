@@ -36,4 +36,10 @@
       <ProjectReference Include="..\..\src\Magnett.Automation.Core\Magnett.Automation.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="WorkFlows\Definitions\saga-pattern.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

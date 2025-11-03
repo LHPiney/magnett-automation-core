@@ -3,6 +3,7 @@ using Magnett.Automation.Core.WorkFlows.Runtimes.Implementations;
 
 [assembly: InternalsVisibleTo("Magnett.Automation.Core.UnitTest")]
 namespace Magnett.Automation.Core.WorkFlows.Definitions.Implementations;
+
 internal class  FlowDefinition : IFlowDefinition
 {
     private readonly NodeDefinitionList _nodes;
@@ -11,7 +12,9 @@ internal class  FlowDefinition : IFlowDefinition
     private FlowDefinition(
         CommonNamedKey     initialNode,
         NodeDefinitionList nodes,
-        NodeLinkList       links)
+        NodeLinkList       links,
+        CommonNamedKey     key = null,
+        int                version = 1)
     {
         InitialNode = initialNode
                       ?? throw new ArgumentNullException(nameof(initialNode));
@@ -19,9 +22,14 @@ internal class  FlowDefinition : IFlowDefinition
                  ?? throw new ArgumentNullException(nameof(nodes));
         _links = links
                  ?? throw new ArgumentNullException(nameof(links));
+        Version = version;
+        Key = key ?? CommonNamedKey.Create(Guid.NewGuid().ToString());
     }
 
     #region IFlowDefinition
+
+    public CommonNamedKey Key { get; } = CommonNamedKey.Create(Guid.NewGuid().ToString());
+    public int Version { get; } = 1;
 
     public CommonNamedKey InitialNode { get; }
 
@@ -80,5 +88,16 @@ internal class  FlowDefinition : IFlowDefinition
 
     {
         return new FlowDefinition(initialNode, nodes, links);
+    }
+
+    public static FlowDefinition Create(
+        string             key,
+        int                version,
+        CommonNamedKey     initialNode,
+        NodeDefinitionList nodes,
+        NodeLinkList       links)
+
+    {
+        return new FlowDefinition(initialNode, nodes, links, CommonNamedKey.Create(key), version);
     }
 }

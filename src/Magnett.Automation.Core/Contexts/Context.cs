@@ -2,8 +2,11 @@
 
 using System.Threading;
 using Magnett.Automation.Core.Contexts.Events;
+using Magnett.Automation.Core.Contexts.Serializations;
 using Magnett.Automation.Core.Events;
 using Magnett.Automation.Core.Events.Implementations;
+using Magnett.Automation.Core.WorkFlows.Serialization;
+using Microsoft.Extensions.Logging;
 
 namespace Magnett.Automation.Core.Contexts;
 
@@ -34,6 +37,15 @@ public class Context : EventEmitterEntity
 
         Id = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
+    }
+
+    private Context(IContextVault contextVault, Guid id, DateTime createdAt, IEventBus? eventBus) 
+        : base(eventBus)
+    {
+        _contextVault = contextVault ?? throw new ArgumentNullException(nameof(contextVault));
+
+        Id = id;
+        CreatedAt = createdAt;
     }
     
     public async Task<Context> StoreAsync<TValue>(
@@ -104,6 +116,23 @@ public class Context : EventEmitterEntity
     public static Context Create(IEventBus? eventBus = null)
     {
         return new Context(ContextVault.Create(), eventBus);
+    }
+
+    public ContextSnapshot GetSnapshot(IFlowCodec? codec = null, ILogger? logger = null)
+    {
+        codec ??= GetDefaultCodec();
+        return ContextSerializationHelper.CreateSnapshot(this, codec, logger);
+    }
+
+    public static Context FromSnapshot(ContextSnapshot snapshot, IFlowCodec? codec = null, IEventBus? eventBus = null, ILogger? logger = null)
+    {
+        codec ??= GetDefaultCodec();
+        return ContextSerializationHelper.CreateFromSnapshot(snapshot, codec, eventBus, logger);
+    }
+
+    private static IFlowCodec GetDefaultCodec()
+    {
+        return FlowCodecFactory.Get("json");
     }
 
 }
