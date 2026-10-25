@@ -46,7 +46,7 @@ v.1.1.0 (2025-09-14)
 - Change: Contexts add OnChangeFieldValueEvent; refactor Context/ContextField/ContextVault; adjust IContextVault.
 - Change: Workflow Definitions update FlowDefinition, IFlowDefinition and INodeDefinition; minor builder changes.
 - Change: Commons refine CommonNamedKey, DictionaryWrapper, Enumeration.</PackageReleaseNotes>
-        <TargetFrameworks>net9.0;net6.0;net7.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     </PropertyGroup>
     <PropertyGroup Label="Package">
       <PackageIcon>PackageIcon.png</PackageIcon>

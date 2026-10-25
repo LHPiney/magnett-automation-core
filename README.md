@@ -5,7 +5,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=magnett_automation&metric=coverage)](https://sonarcloud.io/dashboard?id=magnett_automation)
 ![NuGet](https://img.shields.io/nuget/v/Magnett.Automation.Core)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/Magnett.Automation.Core)
-![.NET](https://img.shields.io/badge/.NET-6.0%20%7C%207.0%20%7C%208.0%20%7C%209.0-blue)
+![.NET](https://img.shields.io/badge/.NET-8.0%20%7C%209.0%20%7C%2010.0-blue)
 
 <div align="center">
   <img src="./assets/Logo.png" alt="Magnett Automation" width="400">
@@ -330,7 +330,7 @@ var queueSize = metricsRegistry.GetGaugeValue("queue.size");
 
 ## 🔧 Requirements
 
-- .NET 6.0 or later
+- .NET 8.0 or later
 - Microsoft.Extensions.Logging
 - Microsoft.Extensions.Caching.Memory
 

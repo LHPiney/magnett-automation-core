@@ -28,7 +28,7 @@
 - Initial release of Magnett.Automation.Server
 - IFlowVault interface for workflow instance management
 - Foundation for SaaS workflow orchestration platform</PackageReleaseNotes>
-        <TargetFrameworks>net9.0;net6.0;net7.0;net8.0</TargetFrameworks>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     </PropertyGroup>
     
     <PropertyGroup Label="Package">

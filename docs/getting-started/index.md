@@ -14,7 +14,7 @@ This guide will help you get started with Magnett Automation Core quickly.
 
 ### Prerequisites
 
-- .NET 6.0 or higher
+- .NET 8.0 or higher
 - Jetbrains Rider, Visual Studio 2022, VS Code
 - Basic knowledge of C# and asynchronous programming
 
@@ -173,7 +173,7 @@ public class MyNode : NodeAsync
 
 If you encounter compilation errors, make sure you have:
 
-1. .NET 6.0 or higher installed
+1. .NET 8.0 or higher installed
 2. Restored NuGet packages: `dotnet restore`
 3. Cleaned and rebuilt: `dotnet clean && dotnet build`
 

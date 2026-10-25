@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/Magnett.Automation.Core)](https://www.nuget.org/packages/Magnett.Automation.Core)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Magnett.Automation.Core)](https://www.nuget.org/packages/Magnett.Automation.Core)
-[![.NET](https://img.shields.io/badge/.NET-6.0%20%7C%207.0%20%7C%208.0%20%7C%209.0-blue)](https://dotnet.microsoft.com/download)
+[![.NET](https://img.shields.io/badge/.NET-8.0%20%7C%209.0%20%7C%2010.0-blue)](https://dotnet.microsoft.com/download)
 
 A powerful .NET library for building workflows, orchestrating processes, and managing state machines with event-driven architecture.
 
@@ -157,10 +157,9 @@ var eventCount = metricsRegistry.GetCounterValue("events.published");
 
 ## 📦 Supported Frameworks
 
-- .NET 6.0+
-- .NET 7.0+
 - .NET 8.0+
 - .NET 9.0+
+- .NET 10.0+
 
 ## 🔧 Requirements
 
