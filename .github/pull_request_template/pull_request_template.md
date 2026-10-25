@@ -32,7 +32,7 @@ A clear and concise description of what this pull request accomplishes.
 
 **Test Configuration:**
 - **OS**: [e.g. Windows 10, macOS 12.0, Ubuntu 20.04]
-- **.NET Version**: [e.g. .NET 6.0, .NET 8.0, .NET 9.0]
+- **.NET Version**: [e.g. .NET 8.0, .NET 9.0, .NET 10.0]
 - **IDE**: [e.g. Visual Studio 2022, VS Code, Rider]
 
 ## 📊 Code Coverage
